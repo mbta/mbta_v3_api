@@ -1,6 +1,6 @@
 # V3Api
 
-**TODO: Add description**
+Client library for the [MBTA V3 API](https://www.mbta.com/developers/v3-api).
 
 ## Installation
 
@@ -18,4 +18,3 @@ end
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/v3_api>.
-
