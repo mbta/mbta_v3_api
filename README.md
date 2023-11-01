@@ -10,7 +10,7 @@ by adding `v3_api` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:v3_api, "~> 0.1.0"}
+    {:v3_api, "~> 0.0.1"}
   ]
 end
 ```
