@@ -5,7 +5,7 @@ defmodule V3Api.MixProject do
     [
       app: :v3_api,
       version: "0.0.1",
-      elixir: "~> 1.15",
+      elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
