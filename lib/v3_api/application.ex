@@ -10,6 +10,8 @@ defmodule V3Api.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
+      RepoCache.Supervisor,
+      Routes.Supervisor,
       V3Api.Cache
     ]
 

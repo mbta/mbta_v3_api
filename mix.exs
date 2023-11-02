@@ -23,6 +23,7 @@ defmodule V3Api.MixProject do
   defp deps do
     [
       {:bypass, "~> 2.1", only: :test},
+      {:con_cache, "~> 0.12.0"},
       {:credo, "~> 1.7", only: [:dev, :test]},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:httpoison, "~> 1.5"},
