@@ -2,9 +2,12 @@ defmodule MBTAV3APITest do
   use ExUnit.Case, async: true
 
   import Plug.Conn, only: [fetch_query_params: 1, send_resp: 3]
+  import Test.Support.Helpers
 
   setup _ do
     bypass = Bypass.open()
+    reassign_env(:mbta_v3_api, :base_url, "")
+    reassign_env(:mbta_v3_api, :api_key, "")
     {:ok, %{bypass: bypass, url: "http://localhost:#{bypass.port}"}}
   end
 
