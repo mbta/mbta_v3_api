@@ -20,7 +20,7 @@ erl_crash.dump
 *.ez
 
 # Ignore package tarball (built via "mix hex.build").
-v3_api-*.tar
+mbta_v3_api-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/

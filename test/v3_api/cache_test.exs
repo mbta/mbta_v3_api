@@ -1,6 +1,6 @@
-defmodule V3Api.CacheTest do
+defmodule MBTAV3API.CacheTest do
   use ExUnit.Case, async: true
-  import V3Api.Cache
+  import MBTAV3API.Cache
   alias HTTPoison.Response
 
   @url "/url"

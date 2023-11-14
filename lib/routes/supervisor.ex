@@ -15,7 +15,7 @@ defmodule Routes.Supervisor do
     ]
 
     children =
-      if Application.get_env(:v3_api, :populate_caches?) do
+      if Application.get_env(:mbta_v3_api, :populate_caches?) do
         children ++
           [
             Routes.PopulateCaches

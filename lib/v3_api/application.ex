@@ -1,4 +1,4 @@
-defmodule V3Api.Application do
+defmodule MBTAV3API.Application do
   @moduledoc """
   Start the supervision tree for the application.
   """
@@ -12,10 +12,10 @@ defmodule V3Api.Application do
     children = [
       RepoCache.Supervisor,
       Routes.Supervisor,
-      V3Api.Cache
+      MBTAV3API.Cache
     ]
 
-    opts = [strategy: :one_for_one, name: V3Api.Supervisor]
+    opts = [strategy: :one_for_one, name: MBTAV3API.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

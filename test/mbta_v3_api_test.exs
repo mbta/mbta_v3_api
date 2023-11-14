@@ -1,4 +1,4 @@
-defmodule V3ApiTest do
+defmodule MBTAV3APITest do
   use ExUnit.Case, async: true
 
   import Plug.Conn, only: [fetch_query_params: 1, send_resp: 3]
@@ -16,7 +16,7 @@ defmodule V3ApiTest do
         send_resp(conn, 200, ~s({"data": []}))
       end)
 
-      response = V3Api.get_json("/normal_response", [], base_url: url)
+      response = MBTAV3API.get_json("/normal_response", [], base_url: url)
       assert %JsonApi{} = response
       refute response.data == %{}
     end
@@ -28,7 +28,7 @@ defmodule V3ApiTest do
         send_resp(conn, 200, ~s({"data": []}))
       end)
 
-      response = V3Api.get_json("/normal response", [], base_url: url)
+      response = MBTAV3API.get_json("/normal response", [], base_url: url)
       assert %JsonApi{} = response
       refute response.data == %{}
     end
@@ -40,7 +40,7 @@ defmodule V3ApiTest do
         send_resp(conn, 200, ~s({"data": []}))
       end)
 
-      V3Api.get_json("/normal_response", [], base_url: url)
+      MBTAV3API.get_json("/normal_response", [], base_url: url)
     end
 
     @tag :capture_log
@@ -50,7 +50,7 @@ defmodule V3ApiTest do
         send_resp(conn, 404, ~s({"errors":[{"code": "not_found"}]}))
       end)
 
-      response = V3Api.get_json("/missing", [], base_url: url)
+      response = MBTAV3API.get_json("/missing", [], base_url: url)
       assert {:error, [%JsonApi.Error{code: "not_found"}]} = response
     end
 
@@ -58,7 +58,7 @@ defmodule V3ApiTest do
     test "can't connect returns an error", %{bypass: bypass, url: url} do
       Bypass.down(bypass)
 
-      response = V3Api.get_json("/cant_connect", [], base_url: url)
+      response = MBTAV3API.get_json("/cant_connect", [], base_url: url)
       assert {:error, %{reason: _}} = response
     end
 
@@ -78,7 +78,7 @@ defmodule V3ApiTest do
       end)
 
       # make sure we keep other params
-      V3Api.get_json("/with_api_key", [other: "value"], base_url: url, api_key: "test_key")
+      MBTAV3API.get_json("/with_api_key", [other: "value"], base_url: url, api_key: "test_key")
     end
 
     @tag :capture_log
@@ -89,14 +89,14 @@ defmodule V3ApiTest do
         send_resp(conn, 200, "")
       end)
 
-      V3Api.get_json("/without_api_key", [], base_url: url, api_key: nil)
+      MBTAV3API.get_json("/without_api_key", [], base_url: url, api_key: nil)
     end
   end
 
   describe "body/1" do
     test "returns a normal body if there's no content-encoding" do
       response = %HTTPoison.Response{headers: [], body: "body"}
-      assert V3Api.body(response) == {:ok, "body"}
+      assert MBTAV3API.body(response) == {:ok, "body"}
     end
 
     test "decodes a gzip encoded body" do
@@ -104,19 +104,19 @@ defmodule V3ApiTest do
       encoded_body = :zlib.gzip(body)
       header = {"Content-Encoding", "gzip"}
       response = %HTTPoison.Response{headers: [header], body: encoded_body}
-      assert {:ok, ^body} = V3Api.body(response)
+      assert {:ok, ^body} = MBTAV3API.body(response)
     end
 
     test "returns an error if the gzip body is invalid" do
       encoded_body = "bad gzip"
       header = {"Content-Encoding", "gzip"}
       response = %HTTPoison.Response{headers: [header], body: encoded_body}
-      assert {:error, :data_error} = V3Api.body(response)
+      assert {:error, :data_error} = MBTAV3API.body(response)
     end
 
     test "returns an error if we have an error instead of a response" do
       error = %HTTPoison.Error{}
-      assert ^error = V3Api.body(error)
+      assert ^error = MBTAV3API.body(error)
     end
   end
 end

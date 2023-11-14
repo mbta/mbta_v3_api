@@ -1,16 +1,16 @@
-defmodule V3Api do
+defmodule MBTAV3API do
   @moduledoc "Handles fetching and caching generic JSON:API responses from the V3 API."
 
   use HTTPoison.Base
   require Logger
   alias Util
-  alias V3Api.Cache
+  alias MBTAV3API.Cache
 
   @spec get_json(String.t(), Keyword.t()) :: JsonApi.t() | {:error, any}
   def get_json(url, params \\ [], opts \\ []) do
     _ =
       Logger.debug(fn ->
-        "V3Api.get_json url=#{url} params=#{params |> Map.new() |> Jason.encode!()}"
+        "MBTAV3API.get_json url=#{url} params=#{params |> Map.new() |> Jason.encode!()}"
       end)
 
     body = ""
@@ -40,7 +40,7 @@ defmodule V3Api do
     base_url = Keyword.fetch!(opts, :base_url)
 
     headers =
-      V3Api.Headers.build(
+      MBTAV3API.Headers.build(
         api_key,
         params: params,
         url: url,
@@ -77,7 +77,7 @@ defmodule V3Api do
   @spec log_response(String.t(), Keyword.t(), integer, any) :: :ok
   defp log_response(url, params, time, response) do
     entry = fn ->
-      "V3Api.get_json_response url=#{inspect(url)} " <>
+      "MBTAV3API.get_json_response url=#{inspect(url)} " <>
         "params=#{params |> Map.new() |> Jason.encode!()} " <>
         log_body(response) <>
         " duration=#{time / 1000}" <>
@@ -91,7 +91,7 @@ defmodule V3Api do
   @spec log_response_error(String.t(), Keyword.t(), String.t()) :: :ok
   defp log_response_error(url, params, body) do
     entry = fn ->
-      "V3Api.get_json_response url=#{inspect(url)} " <>
+      "MBTAV3API.get_json_response url=#{inspect(url)} " <>
         "params=#{params |> Map.new() |> Jason.encode!()} response=" <> body
     end
 
@@ -137,8 +137,8 @@ defmodule V3Api do
 
   defp default_options do
     [
-      base_url: Application.fetch_env!(:v3_api, :base_url),
-      api_key: Application.fetch_env!(:v3_api, :api_key),
+      base_url: Application.fetch_env!(:mbta_v3_api, :base_url),
+      api_key: Application.fetch_env!(:mbta_v3_api, :api_key),
       timeout: 10_000
     ]
   end

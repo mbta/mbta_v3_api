@@ -99,12 +99,12 @@ defmodule JsonApi do
   end
 
   defp parse_data(data) when is_list(data) do
-    # V3Api.Stream receives :reset data as a list of items
+    # MBTAV3API.Stream receives :reset data as a list of items
     parse_data(%{"data" => data})
   end
 
   defp parse_data(%{"id" => _} = data) do
-    # V3Api.Stream receives :add, :update, and :remove data as single items
+    # MBTAV3API.Stream receives :add, :update, and :remove data as single items
     parse_data(%{"data" => data})
   end
 

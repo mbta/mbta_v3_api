@@ -1,4 +1,4 @@
-defmodule V3Api.Cache do
+defmodule MBTAV3API.Cache do
   @moduledoc """
   Cache HTTP responses from the V3 API.
 
@@ -98,7 +98,7 @@ defmodule V3Api.Cache do
 
     timeout = Keyword.get(opts, :timeout, 60_000)
     Process.send_after(self(), :expire, timeout)
-    size = Keyword.get(opts, :size, Application.get_env(:v3_api, :cache_size))
+    size = Keyword.get(opts, :size, Application.get_env(:mbta_v3_api, :cache_size))
     {:ok, %{name: name, size: size, timeout: timeout}}
   end
 

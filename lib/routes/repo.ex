@@ -11,7 +11,7 @@ defmodule Routes.Repo do
   alias JsonApi
   # alias Routes.{Route, Shape}
   alias Routes.Route
-  # alias V3Api.{Shapes}
+  # alias MBTAV3API.{Shapes}
 
   @default_opts [include: "route_patterns"]
 
@@ -29,7 +29,7 @@ defmodule Routes.Repo do
   @impl Routes.RepoApi
   def all do
     case cache(@default_opts, fn _ ->
-           result = handle_response(V3Api.Routes.all(@default_opts))
+           result = handle_response(MBTAV3API.Routes.all(@default_opts))
 
            for {:ok, routes} <- [result],
                route <- routes do
@@ -62,7 +62,7 @@ defmodule Routes.Repo do
     opts = @default_opts
 
     case cache({id, opts}, fn {id, opts} ->
-           with %{data: [route]} <- V3Api.Routes.get(id, opts) do
+           with %{data: [route]} <- MBTAV3API.Routes.get(id, opts) do
              {:ok, parse_route(route)}
            end
          end) do
@@ -149,7 +149,7 @@ defmodule Routes.Repo do
     opts = Keyword.merge(@default_opts, opts)
 
     case cache({stop_id, opts}, fn {stop_id, opts} ->
-           stop_id |> V3Api.Routes.by_stop(opts) |> handle_response
+           stop_id |> MBTAV3API.Routes.by_stop(opts) |> handle_response
          end) do
       {:ok, routes} -> routes
       {:error, _} -> []
@@ -162,7 +162,7 @@ defmodule Routes.Repo do
 
     case cache({stop_id, direction_id, opts}, fn {stop_id, direction_id, opts} ->
            stop_id
-           |> V3Api.Routes.by_stop_and_direction(direction_id, opts)
+           |> MBTAV3API.Routes.by_stop_and_direction(direction_id, opts)
            |> handle_response
          end) do
       {:ok, routes} -> routes
@@ -174,7 +174,7 @@ defmodule Routes.Repo do
   def by_stop_with_route_pattern(stop_id) do
     cache({stop_id, [include: "route_patterns"]}, fn {stop_id, _opts} ->
       [stop: stop_id, include: "route_patterns"]
-      |> V3Api.Routes.all()
+      |> MBTAV3API.Routes.all()
       |> Map.get(:data, [])
       |> Enum.map(&parse_route_with_route_pattern/1)
     end)
@@ -211,7 +211,7 @@ defmodule Routes.Repo do
          } = route
        ) do
     Enum.flat_map(connecting_stops, fn %JsonApi.Item{id: stop_id} ->
-      case V3Api.Routes.by_stop(stop_id) do
+      case MBTAV3API.Routes.by_stop(stop_id) do
         %JsonApi{data: data} -> data
         _ -> []
       end
