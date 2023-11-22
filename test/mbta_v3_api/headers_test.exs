@@ -1,4 +1,5 @@
 defmodule MBTAV3API.HeadersTest do
+  @moduledoc false
   use ExUnit.Case
   import Test.Support.Helpers
 
