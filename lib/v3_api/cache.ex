@@ -98,7 +98,7 @@ defmodule MBTAV3API.Cache do
 
     timeout = Keyword.get(opts, :timeout, 60_000)
     Process.send_after(self(), :expire, timeout)
-    size = Keyword.get(opts, :size, Application.get_env(:mbta_v3_api, :cache_size))
+    size = Keyword.get(opts, :size, Application.get_env(:mbta_v3_api, :cache_size, 10_000))
     {:ok, %{name: name, size: size, timeout: timeout}}
   end
 
