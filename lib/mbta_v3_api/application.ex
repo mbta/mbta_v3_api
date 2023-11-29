@@ -11,6 +11,7 @@ defmodule MBTAV3API.Application do
     # Define workers and child supervisors to be supervised
     children = [
       RepoCache.Supervisor,
+      MBTAV3API.Facilities.Supervisor,
       MBTAV3API.Routes.Supervisor,
       MBTAV3API.Cache
     ]
