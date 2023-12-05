@@ -1,36 +1,51 @@
-defmodule MBTAV3API.MixProject do
+defmodule MBTA.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :mbta_v3_api,
-      version: "0.0.1",
-      elixir: "~> 1.14",
+      app: :mbta,
+      version: "3.0.0",
+      elixir: "~> 1.10",
+      build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
+      package: package(),
+      description: """
+      MBTA service API. https://www.mbta.com Source code: https://github.com/mbta/api
+      """,
       deps: deps()
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
+  # Configuration for the OTP application
+  #
+  # Type "mix help compile.app" for more information
   def application do
+    # Specify extra applications you'll use from Erlang/Elixir
+    [extra_applications: [:logger]]
+  end
+
+  # Dependencies can be Hex packages:
+  #
+  #   {:my_dep, "~> 0.3.0"}
+  #
+  # Or git/path repositories:
+  #
+  #   {:my_dep, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.3.0"}
+  #
+  # Type "mix help deps" for more examples and options
+  defp deps do
     [
-      extra_applications: [:logger],
-      mod: {MBTAV3API.Application, []}
+      {:tesla, "~> 1.7"},
+      {:jason, "~> 1.4"},
+      {:ex_doc, "~> 0.30", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.3", only: [:dev, :test], runtime: false}
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
-  defp deps do
+  defp package do
     [
-      {:bypass, "~> 2.1", only: :test},
-      {:con_cache, "~> 0.12.0"},
-      {:credo, "~> 1.7", only: [:dev, :test]},
-      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:httpoison, "~> 1.5"},
-      {:jason, "~> 1.1"},
-      {:plug, "~> 1.15", only: :test},
-      {:sentry, "~> 7.0"},
-      {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false}
+      name: "mbta",
+      files: ~w(.formatter.exs config lib mix.exs README* LICENSE*)
     ]
   end
 end
