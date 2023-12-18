@@ -38,6 +38,29 @@ defmodule MBTAV3API.JSONAPI do
     result
   end
 
+  @type include_arg :: atom() | list(atom() | {atom, include_arg()})
+
+  @doc """
+  Turns an include option into a correctly formatted query parameter.
+
+  ## Examples
+
+      iex> MBTAV3API.JSONAPI.include(:connecting_stops)
+      "connecting_stops"
+
+      iex> MBTAV3API.JSONAPI.include(parent_station: :connecting_stops)
+      "parent_station,parent_station.connecting_stops"
+
+      iex> MBTAV3API.JSONAPI.include([:facilities, connecting_stops: [:child_stops, parent_station: :facilities]])
+      "facilities,connecting_stops,connecting_stops.child_stops,connecting_stops.parent_station,connecting_stops.parent_station.facilities"
+  """
+  @spec include(include_arg()) :: String.t()
+  def include(rels) do
+    flatten_include(rels)
+    |> List.wrap()
+    |> Enum.join(",")
+  end
+
   defp parse_data!(nil), do: nil
 
   defp parse_data!(data) when is_map(data) do
@@ -55,5 +78,19 @@ defmodule MBTAV3API.JSONAPI do
 
   defp parse_included!(data) when is_list(data) do
     Enum.map(data, &Resource.parse!/1)
+  end
+
+  defp flatten_include(rel) when is_atom(rel), do: to_string(rel)
+
+  defp flatten_include({rel, subrel}) when is_atom(rel) do
+    flatten_include(subrel)
+    |> List.wrap()
+    |> then(fn subrel ->
+      Enum.concat([rel], Enum.map(subrel, &"#{rel}.#{&1}"))
+    end)
+  end
+
+  defp flatten_include(rels) when is_list(rels) do
+    Enum.flat_map(rels, &List.wrap(flatten_include(&1)))
   end
 end

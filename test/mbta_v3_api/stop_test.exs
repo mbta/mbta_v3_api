@@ -6,7 +6,7 @@ defmodule MBTAV3API.StopTest do
   test "decodes including everything" do
     stop =
       MBTAV3API.get!(Stop, "place-boyls",
-        params: [include: "child_stops,connecting_stops,parent_station"]
+        include: [:child_stops, :connecting_stops, :parent_station]
       )
 
     assert %Stop{
