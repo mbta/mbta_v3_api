@@ -6,7 +6,9 @@ defmodule MBTAV3API do
   alias MBTAV3API.Cache
   alias Util
 
+  @spec get_json(String.t()) :: JsonApi.t() | {:error, any}
   @spec get_json(String.t(), Keyword.t()) :: JsonApi.t() | {:error, any}
+  @spec get_json(String.t(), Keyword.t(), Keyword.t()) :: JsonApi.t() | {:error, any}
   def get_json(url, params \\ [], opts \\ []) do
     _ =
       Logger.debug(fn ->
