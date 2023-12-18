@@ -1,0 +1,346 @@
+defmodule MBTAV3API.Stops.NearbyTest do
+  @moduledoc false
+  use ExUnit.Case, async: false
+
+  import MBTAV3API.Stops.Nearby
+  import MBTAV3API.Support.Factory
+  import Mock
+
+  alias JsonApi.Item
+  alias MBTAV3API.Routes.Repo, as: RoutesRepo
+  alias MBTAV3API.Routes.Route
+  alias MBTAV3API.Stops
+  alias MBTAV3API.Stops.Stop
+  alias Util.Distance
+
+  @latitude 42.577
+  @longitude -71.225
+  @position {@latitude, @longitude}
+
+  doctest MBTAV3API.Stops.Nearby
+
+  describe "nearby_with_varying_radius_by_mode/2" do
+    test "gets CR/subway/bus stops, gathers then, and fetches them" do
+      commuter = random_stops(5)
+      subway = random_stops(5)
+      bus = random_stops(5)
+
+      route_type_map = %{
+        "0,1" => subway,
+        2 => commuter,
+        3 => bus
+      }
+
+      api_fn = fn _, opts -> route_type_map[opts[:route_type]] end
+      keys_fn = fn %{id: id} -> [id] end
+      fetch_fn = fn id -> {:fetch, id} end
+
+      actual =
+        nearby_with_varying_radius_by_mode(@position,
+          api_fn: api_fn,
+          keys_fn: keys_fn,
+          fetch_fn: fetch_fn
+        )
+
+      expected =
+        @position
+        |> gather_stops(commuter, subway, bus)
+        # verifies calling fetch
+        |> Enum.map(&{:fetch, &1.id})
+
+      assert expected == actual
+    end
+
+    test "does not include more than two bus stops with a given key" do
+      bus = [
+        %{id: 1, latitude: @latitude, longitude: @longitude, keys: [1, 2]},
+        %{id: 2, latitude: @latitude, longitude: @longitude, keys: [1]},
+        %{id: 3, latitude: @latitude, longitude: @longitude, keys: [1]},
+        %{id: 4, latitude: @latitude, longitude: @latitude, keys: [2]}
+      ]
+
+      api_fn = fn _, opts -> if opts[:route_type] == 3, do: bus, else: [] end
+      keys_fn = fn %{keys: keys} -> keys end
+      fetch_fn = fn id -> id end
+
+      actual =
+        nearby_with_varying_radius_by_mode(@position,
+          api_fn: api_fn,
+          keys_fn: keys_fn,
+          fetch_fn: fetch_fn
+        )
+
+      expected = [1, 2, 4]
+
+      assert expected == actual
+    end
+
+    test "does not include more than one subway stop with a given key" do
+      subway = [
+        %{id: 1, latitude: @latitude, longitude: @longitude, keys: [1, 2]},
+        %{id: 2, latitude: @latitude, longitude: @longitude, keys: [1]},
+        %{id: 3, latitude: @latitude, longitude: @latitude, keys: [2]}
+      ]
+
+      api_fn = fn _, opts -> if opts[:route_type] == "0,1", do: subway, else: [] end
+      keys_fn = fn %{keys: keys} -> keys end
+      fetch_fn = fn id -> id end
+
+      actual =
+        nearby_with_varying_radius_by_mode(@position,
+          api_fn: api_fn,
+          keys_fn: keys_fn,
+          fetch_fn: fetch_fn
+        )
+
+      expected = [1]
+
+      assert expected == actual
+    end
+  end
+
+  describe "api_around/2" do
+    test "returns positions around a lat/long" do
+      with_mock(Stops,
+        all: fn _opts ->
+          %JsonApi{
+            data: [
+              %Item{
+                id: "place-NHRML-0218",
+                attributes: %{"latitude" => 42.593248, "longitude" => -71.280995}
+              },
+              %Item{
+                id: "place-NHRML-0152",
+                attributes: %{"latitude" => 42.546624, "longitude" => -71.174334}
+              },
+              %Item{id: "6902", attributes: %{"latitude" => 42.519675, "longitude" => -71.21163}}
+            ]
+          }
+        end
+      ) do
+        actual = @position |> api_around(radius: 0.06) |> distance_sort()
+
+        expected = [
+          %{id: "place-NHRML-0218", latitude: 42.593248, longitude: -71.280995},
+          %{id: "place-NHRML-0152", latitude: 42.546624, longitude: -71.174334},
+          %{id: "6902", latitude: 42.519675, longitude: -71.21163}
+        ]
+
+        assert expected == actual
+      end
+    end
+
+    test "returns the parent station if it exists" do
+      with_mock(Stops, all: fn _opts -> %JsonApi{data: [build(:child_stop_data)]} end) do
+        actual = {42.516987, -71.144475} |> api_around(radius: 0.001) |> distance_sort()
+
+        parent = %{id: "place-NHRML-0127", latitude: 42.516987, longitude: -71.144475}
+        assert parent in actual
+      end
+    end
+  end
+
+  describe "keys/1" do
+    test "returns a list of {route_id, direction_id} tuples" do
+      with_mock(RoutesRepo,
+        by_stop: fn
+          "place-kencl", [direction_id: 0] ->
+            [
+              %Route{id: "19"},
+              %Route{id: "57"},
+              %Route{id: "60"},
+              %Route{id: "65"},
+              %Route{id: "8"},
+              %Route{id: "Green-B"},
+              %Route{id: "Green-C"},
+              %Route{id: "Green-D"}
+            ]
+
+          "place-kencl", [direction_id: 1] ->
+            [
+              %Route{id: "19"},
+              %Route{id: "57"},
+              %Route{id: "60"},
+              %Route{id: "65"},
+              %Route{id: "8"},
+              %Route{id: "9"},
+              %Route{id: "Green-B"},
+              %Route{id: "Green-C"},
+              %Route{id: "Green-D"}
+            ]
+        end
+      ) do
+        actual = %{id: "place-kencl"} |> keys() |> Enum.sort()
+
+        expected = [
+          {"19", 0},
+          {"19", 1},
+          {"57", 0},
+          {"57", 1},
+          {"60", 0},
+          {"60", 1},
+          {"65", 0},
+          {"65", 1},
+          {"8", 0},
+          {"8", 1},
+          {"9", 1},
+          {"Green-B", 0},
+          {"Green-B", 1},
+          {"Green-C", 0},
+          {"Green-C", 1},
+          {"Green-D", 0},
+          {"Green-D", 1}
+        ]
+
+        assert expected == actual
+      end
+    end
+
+    test "returns one direction of stops if that's all there is" do
+      with_mock(RoutesRepo,
+        by_stop: fn
+          "46", [direction_id: 0] -> []
+          "46", [direction_id: 1] -> [%Route{id: "10"}]
+        end
+      ) do
+        actual = keys(%{id: "46"})
+        expected = [{"10", 1}]
+
+        assert expected == actual
+      end
+    end
+  end
+
+  describe "gather_stops/4" do
+    test "given no results, returns an empty list" do
+      assert gather_stops(@position, [], [], []) == []
+    end
+
+    test "takes the 4 closest commuter and subway stops" do
+      commuter = random_stops(10)
+      subway = random_stops(10)
+
+      actual = gather_stops(@position, commuter, subway, [])
+
+      [first_commuter | commuter_sorted] = commuter |> distance_sort
+      [first_subway | subway_sorted] = subway |> distance_sort
+      assert first_commuter in actual
+      assert first_subway in actual
+      assert ((commuter_sorted ++ subway_sorted) |> distance_sort |> List.first()) in actual
+      assert ((commuter_sorted ++ subway_sorted) |> distance_sort |> Enum.at(1)) in actual
+    end
+
+    test "if there are no CR or Bus stops, takes the 12 closest subway" do
+      subway = random_stops(20)
+
+      actual = gather_stops(@position, [], subway, [])
+      assert Distance.closest(subway, @position, 12) == actual
+    end
+
+    test "if there are no Subway or Bus stops, takes the 4 closest CR" do
+      commuter = random_stops(10)
+
+      actual = gather_stops(@position, commuter, [], [])
+      assert Distance.closest(commuter, @position, 4) == actual
+    end
+
+    test "if subway and CR stops overlap, does not return duplicates" do
+      both = random_stops(20)
+
+      actual = gather_stops(@position, both, both, [])
+      assert Distance.closest(both, @position, 12) == actual
+    end
+
+    test "if non-closest subway and CR stops overlap, does not return duplicates" do
+      commuter = random_stops(1)
+      subway = [%{id: "very close", latitude: @latitude, longitude: @longitude}]
+
+      actual = gather_stops(@position, commuter, subway ++ commuter, [])
+      assert [_, _] = actual
+    end
+
+    test "returns 12 closest bus stops" do
+      bus = random_stops(20)
+
+      actual = gather_stops(@position, [], [], bus)
+      assert Distance.closest(bus, @position, 12) == actual
+    end
+
+    test "with subway and commuter, returns 8 bus stops" do
+      commuter = random_stops(10)
+      subway = random_stops(10)
+      bus = random_stops(10)
+
+      actual = gather_stops(@position, commuter, subway, bus)
+
+      assert length(actual) == 12
+
+      for stop <- Distance.closest(bus, @position, 8) do
+        assert stop in actual
+      end
+
+      assert (commuter |> Distance.closest(@position, 1) |> List.first()) in actual
+      assert (subway |> Distance.closest(@position, 1) |> List.first()) in actual
+    end
+
+    test "without enough bus stops, fill with subway" do
+      commuter = random_stops(10)
+      subway = random_stops(10)
+      bus = random_stops(4)
+
+      actual = gather_stops(@position, commuter, subway, bus)
+
+      assert length(actual) == 12
+    end
+
+    @tag iterations: 100
+    test "basic properties", %{iterations: iterations} do
+      for _ <- 1..iterations do
+        stops = random_stops(30)
+        commuter = Enum.take_random(stops, Enum.random(0..10))
+        subway = Enum.take_random(stops, Enum.random(0..10))
+        bus = Enum.take_random(stops, Enum.random(0..10))
+
+        actual = gather_stops(@position, commuter, subway, bus)
+
+        # returns results if there are inputs
+        if [] == commuter ++ subway ++ bus do
+          assert actual == []
+        else
+          refute actual == []
+        end
+
+        # globally sorted
+        assert Distance.sort(actual, @position) == actual
+        # no duplicates
+        assert Enum.uniq(actual) == actual
+        # no more than 12 items
+        assert length(actual) <= 12
+      end
+    end
+  end
+
+  def random_stops(count) do
+    Enum.map(1..count, fn _ -> random_stop() end)
+  end
+
+  defp random_stop do
+    id = System.unique_integer() |> Integer.to_string()
+
+    %Stop{
+      id: id,
+      name: "Stop #{id}",
+      latitude: random_around(@latitude),
+      longitude: random_around(@longitude)
+    }
+  end
+
+  defp random_around(float, range \\ 10_000) do
+    integer = :rand.uniform(range * 2) - range
+    float + integer / range
+  end
+
+  defp distance_sort(stops) do
+    Distance.sort(stops, {@latitude, @longitude})
+  end
+end
