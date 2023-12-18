@@ -5,6 +5,58 @@ defmodule MBTAV3API do
   alias MBTAV3API.JSONAPI
 
   @doc """
+  Get all objects matching the given query.
+
+  Supports a very specific subset of the Ecto Query DSL:
+
+  - `from`
+  """
+  def all(query) do
+    query = Ecto.Queryable.to_query(query)
+
+    %Ecto.Query{
+      aliases: aliases,
+      assocs: [],
+      combinations: [],
+      distinct: nil,
+      from: from,
+      group_bys: [],
+      havings: [],
+      joins: [],
+      limit: nil,
+      lock: nil,
+      offset: nil,
+      order_bys: [],
+      prefix: nil,
+      preloads: [],
+      select: nil,
+      sources: nil,
+      updates: [],
+      wheres: [],
+      windows: [],
+      with_ctes: nil
+    } = query
+
+    0 = map_size(aliases)
+
+    {nil, schema} = from.source
+
+    %Req.Response{status: 200, body: %{} = resp_body} =
+      Req.get!(req(),
+        url:
+          case schema do
+            MBTAV3API.Alert -> "/alerts"
+            MBTAV3API.Facility -> "/facilities"
+            MBTAV3API.Stop -> "/stops"
+          end
+      )
+
+    resp_jsonapi = JSONAPI.parse!(resp_body)
+
+    JSONAPI.decode!(resp_jsonapi)
+  end
+
+  @doc """
   Get an object by its ID.
 
   ## Examples
@@ -37,6 +89,7 @@ defmodule MBTAV3API do
       Req.get!(req(),
         url:
           case obj do
+            MBTAV3API.Alert -> "/alerts/:id"
             MBTAV3API.Facility -> "/facilities/:id"
             MBTAV3API.Stop -> "/stops/:id"
           end,

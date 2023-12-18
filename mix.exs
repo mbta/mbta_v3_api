@@ -36,6 +36,7 @@ defmodule MBTAV3API.MixProject do
       {:ecto, "~> 3.11"},
       {:plug, "~> 1.0", only: :test},
       {:req, "~> 0.4.8"},
+      {:tzdata, "~> 1.1", only: :test},
       {:uniq, "~> 0.6", only: :test}
     ]
   end

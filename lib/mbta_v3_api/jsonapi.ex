@@ -27,7 +27,7 @@ defmodule MBTAV3API.JSONAPI do
     }
   end
 
-  @spec decode!(t()) :: term()
+  @spec decode!(t()) :: term() | list(term())
   def decode!(%__MODULE__{data: %Resource{} = resource, included: included}) do
     included = Included.start(included, [resource])
 
@@ -36,6 +36,16 @@ defmodule MBTAV3API.JSONAPI do
     Included.stop(included)
 
     result
+  end
+
+  def decode!(%__MODULE__{data: resources, included: included}) when is_list(resources) do
+    included = Included.start(included, resources)
+
+    results = Enum.map(resources, &Resource.decode!(&1, included))
+
+    Included.stop(included)
+
+    results
   end
 
   @type include_arg :: atom() | list(atom() | {atom, include_arg()})
@@ -70,6 +80,10 @@ defmodule MBTAV3API.JSONAPI do
     else
       ResourceIdentifier.parse!(data)
     end
+  end
+
+  defp parse_data!(data) when is_list(data) do
+    Enum.map(data, &parse_data!/1)
   end
 
   defp parse_errors!(nil), do: nil

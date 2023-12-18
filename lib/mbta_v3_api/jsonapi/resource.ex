@@ -27,10 +27,13 @@ defmodule MBTAV3API.JSONAPI.Resource do
   @spec decode!(t(), Included.t()) :: term()
   def decode!(resource, included) do
     case resource.type do
-      "stop" -> MBTAV3API.Stop.from_resource!(resource, included)
+      "alert" -> MBTAV3API.Alert.from_resource!(resource, included)
       "facility" -> MBTAV3API.Facility.from_resource!(resource, included)
+      "stop" -> MBTAV3API.Stop.from_resource!(resource, included)
     end
   end
+
+  defp parse_relationships!(nil), do: nil
 
   defp parse_relationships!(data) do
     data
