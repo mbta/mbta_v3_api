@@ -30,7 +30,8 @@ defmodule MBTAV3API.MixProject do
       {:jason, "~> 1.1"},
       {:plug, "~> 1.15", only: :test},
       {:sentry, "~> 7.0"},
-      {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false}
+      {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
+      {:timex, "~> 3.7"}
     ]
   end
 end
