@@ -1,4 +1,4 @@
-defmodule RoutePatterns.RoutePattern do
+defmodule MBTAV3API.RoutePatterns.RoutePattern do
   @moduledoc """
   Route patterns are used to describe the subsets of a route, representing different
   possible patterns of where trips may serve. For example, a bus route may have multiple
@@ -20,9 +20,9 @@ defmodule RoutePatterns.RoutePattern do
   """
 
   alias JsonApi.Item
-  alias Routes.Route
-  alias Schedules.Trip
-  alias Stops.Stop
+  alias MBTAV3API.Routes.Route
+  alias MBTAV3API.Schedules.Trip
+  alias MBTAV3API.Stops.Stop
 
   defstruct [
     :direction_id,

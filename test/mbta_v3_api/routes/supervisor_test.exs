@@ -1,8 +1,8 @@
-defmodule Routes.SupervisorTest do
+defmodule MBTAV3API.Routes.SupervisorTest do
   @moduledoc false
   use ExUnit.Case
 
-  alias Routes.Supervisor
+  alias MBTAV3API.Routes.Supervisor
 
   describe "start_link/1" do
     test "can start the supervisor" do

@@ -1,12 +1,12 @@
-defmodule Routes.RepoApi do
+defmodule MBTAV3API.Routes.RepoApi do
   @moduledoc """
   Behavior for an API client for fetching route data.
   """
 
   @optional_callbacks by_stop_with_route_pattern: 1, by_stop_and_direction: 3
 
-  # alias Routes.{Route, Shape}
-  alias Routes.Route
+  # alias MBTAV3API.Routes.{Route, Shape}
+  alias MBTAV3API.Routes.Route
 
   @doc """
   Returns a list of all the routes

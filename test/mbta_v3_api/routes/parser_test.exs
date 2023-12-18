@@ -1,9 +1,9 @@
-defmodule Routes.ParserTest do
+defmodule MBTAV3API.Routes.ParserTest do
   use ExUnit.Case, async: true
 
-  import Routes.Parser
+  import MBTAV3API.Routes.Parser
   alias JsonApi.Item
-  alias Routes.Shape
+  alias MBTAV3API.Routes.Shape
 
   describe "parse_route/1" do
     test "does not pick an empty name for bus routes" do

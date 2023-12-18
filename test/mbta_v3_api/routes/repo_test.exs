@@ -1,7 +1,7 @@
-defmodule Routes.RepoTest do
+defmodule MBTAV3API.Routes.RepoTest do
   use ExUnit.Case, async: false
-  # alias Routes.{Repo, Route}
-  alias Routes.Repo
+  # alias MBTAV3API.Routes.{Repo, Route}
+  alias MBTAV3API.Routes.Repo
 
   describe "all/0" do
     # test "returns something" do
@@ -150,8 +150,8 @@ defmodule Routes.RepoTest do
   #     with_mock MBTAV3API.Routes, [],
   #       by_stop: &mock_routes_by_stop/1,
   #       by_stop: &mock_routes_by_stop/2 do
-  #       routes = Routes.Repo.by_stop("initial-stop-id")
-  #       more_routes = Routes.Repo.by_stop("initial-stop-id", include: "stop.connecting_stops")
+  #       routes = Repo.by_stop("initial-stop-id")
+  #       more_routes = Repo.by_stop("initial-stop-id", include: "stop.connecting_stops")
   #       assert ["initial-route-id"] = Enum.map(routes, & &1.id)
 
   #       assert ["connecting-route-id-1", "connecting-route-id-2", "initial-route-id"] =

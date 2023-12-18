@@ -1,18 +1,18 @@
-defmodule Routes.PopulateCaches do
+defmodule MBTAV3API.Routes.PopulateCaches do
   @moduledoc """
-  Populate the Routes.Repo cache out-of-band.
+  Populate the MBTAV3API.Routes.Repo cache out-of-band.
   """
   require Logger
   use GenServer
 
-  alias Routes.Shape
+  alias MBTAV3API.Routes.Shape
 
   @repeat_after :timer.hours(24)
 
   @spec start_link([]) :: GenServer.on_start()
   def start_link([]) do
     # no cover
-    GenServer.start_link(__MODULE__, Routes.Repo)
+    GenServer.start_link(__MODULE__, MBTAV3API.Routes.Repo)
   end
 
   @impl GenServer

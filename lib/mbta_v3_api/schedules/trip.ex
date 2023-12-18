@@ -1,10 +1,10 @@
-defmodule Schedules.Trip do
+defmodule MBTAV3API.Schedules.Trip do
   @moduledoc """
   Representation of GTFS trips.
   """
 
-  alias RoutePatterns.RoutePattern
-  alias Routes.Shape
+  alias MBTAV3API.RoutePatterns.RoutePattern
+  alias MBTAV3API.Routes.Shape
   alias Vehicles.Vehicle
 
   @derive Jason.Encoder

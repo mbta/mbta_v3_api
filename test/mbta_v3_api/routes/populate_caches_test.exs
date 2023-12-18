@@ -1,12 +1,12 @@
-defmodule Routes.PopulateCachesTest do
+defmodule MBTAV3API.Routes.PopulateCachesTest do
   @moduledoc false
   use ExUnit.Case, async: true
 
-  alias Routes.{PopulateCaches, Route}
+  alias MBTAV3API.Routes.{PopulateCaches, Route}
 
   defmodule FakeRepo do
     @moduledoc """
-    Fake Routes.Repo for testing without making external calls.
+    Fake MBTAV3API.Routes.Repo for testing without making external calls.
 
     Stores the calls in a MapSet for later retrieval.
     """
