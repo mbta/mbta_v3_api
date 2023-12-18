@@ -7,6 +7,243 @@ defmodule MBTAV3API.Support.Factory do
 
   alias JsonApi.Item
 
+  def stop_data_factory do
+    %Item{
+      id: "place-NHRML-0127",
+      type: "stop",
+      attributes: %{
+        "address" => "100 Atlantic Ave, Woburn, MA 01801",
+        "description" => nil,
+        "latitude" => 42.516987,
+        "location_type" => 1,
+        "longitude" => -71.144475,
+        "municipality" => "Woburn",
+        "name" => "Anderson/Woburn",
+        "platform_code" => nil,
+        "platform_name" => nil,
+        "wheelchair_boarding" => 1
+      },
+      relationships: %{
+        "child_stops" => [
+          %Item{
+            attributes: %{
+              "address" => nil,
+              "description" => "Anderson/Woburn - Commuter Rail - Track 2 (Boston)",
+              "latitude" => 42.516987,
+              "location_type" => 0,
+              "longitude" => -71.144475,
+              "municipality" => "Woburn",
+              "name" => "Anderson/Woburn",
+              "platform_code" => "2",
+              "platform_name" => "Track 2 (Boston)",
+              "wheelchair_boarding" => 1
+            },
+            id: "NHRML-0127-02",
+            relationships: %{
+              "facilities" => [],
+              "parent_station" => [
+                %Item{
+                  attributes: %{
+                    "address" => "100 Atlantic Ave, Woburn, MA 01801",
+                    "description" => nil,
+                    "latitude" => 42.516987,
+                    "location_type" => 1,
+                    "longitude" => -71.144475,
+                    "municipality" => "Woburn",
+                    "name" => "Anderson/Woburn",
+                    "platform_code" => nil,
+                    "platform_name" => nil,
+                    "wheelchair_boarding" => 1
+                  },
+                  id: "place-NHRML-0127",
+                  relationships: %{},
+                  type: "stop"
+                }
+              ],
+              "zone" => [
+                %Item{
+                  attributes: nil,
+                  id: "CR-zone-2",
+                  relationships: nil,
+                  type: "zone"
+                }
+              ]
+            },
+            type: "stop"
+          }
+        ],
+        "facilities" => [
+          %Item{
+            attributes: %{
+              "latitude" => 42.518544,
+              "long_name" => "Anderson/Woburn Park and Ride Parking Lot",
+              "longitude" => -71.144061,
+              "properties" => [
+                %{"name" => "attended", "value" => 1},
+                %{"name" => "capacity", "value" => 1200},
+                %{"name" => "contact", "value" => "Massport"},
+                %{"name" => "contact-phone", "value" => "781-721-0373"},
+                %{
+                  "name" => "contact-url",
+                  "value" =>
+                    "https://www.lazparking.com/local/woburn-ma/anderson-regional-transportation-center"
+                },
+                %{"name" => "enclosed", "value" => 2},
+                %{"name" => "fee-daily", "value" => "$4"},
+                %{"name" => "fee-monthly", "value" => "$70"},
+                %{"name" => "municipality", "value" => "Woburn"},
+                %{
+                  "name" => "note",
+                  "value" =>
+                    "Massport is responsible for parking maintenance, payments, and snow removal."
+                },
+                %{"name" => "operator", "value" => "LAZ Parking"},
+                %{"name" => "owner", "value" => "Local transit authority"},
+                %{"name" => "payment-form-accepted", "value" => "cash"},
+                %{
+                  "name" => "payment-form-accepted",
+                  "value" => "credit-debit-card"
+                }
+              ],
+              "type" => "PARKING_AREA"
+            },
+            id: "park-NHRML-0127-parkride",
+            relationships: %{
+              "stop" => [
+                %Item{
+                  attributes: %{
+                    "address" => "100 Atlantic Ave, Woburn, MA 01801",
+                    "description" => nil,
+                    "latitude" => 42.516987,
+                    "location_type" => 1,
+                    "longitude" => -71.144475,
+                    "municipality" => "Woburn",
+                    "name" => "Anderson/Woburn",
+                    "platform_code" => nil,
+                    "platform_name" => nil,
+                    "wheelchair_boarding" => 1
+                  },
+                  id: "place-NHRML-0127",
+                  relationships: %{},
+                  type: "stop"
+                }
+              ]
+            },
+            type: "facility"
+          },
+          %Item{
+            attributes: %{
+              "latitude" => 42.517377,
+              "long_name" => "Anderson/Woburn fare vending machine 202213",
+              "longitude" => -71.144055,
+              "properties" => [
+                %{"name" => "enclosed", "value" => 1},
+                %{
+                  "name" => "payment-form-accepted",
+                  "value" => "credit-debit-card"
+                }
+              ],
+              "type" => "FARE_VENDING_MACHINE"
+            },
+            id: "fvm-202213",
+            relationships: %{
+              "stop" => [
+                %Item{
+                  attributes: %{
+                    "address" => "100 Atlantic Ave, Woburn, MA 01801",
+                    "description" => nil,
+                    "latitude" => 42.516987,
+                    "location_type" => 1,
+                    "longitude" => -71.144475,
+                    "municipality" => "Woburn",
+                    "name" => "Anderson/Woburn",
+                    "platform_code" => nil,
+                    "platform_name" => nil,
+                    "wheelchair_boarding" => 1
+                  },
+                  id: "place-NHRML-0127",
+                  relationships: %{},
+                  type: "stop"
+                }
+              ]
+            },
+            type: "facility"
+          }
+        ],
+        "parent_station" => [],
+        "zone" => [
+          %Item{
+            attributes: nil,
+            id: "CR-zone-2",
+            relationships: nil,
+            type: "zone"
+          }
+        ]
+      }
+    }
+  end
+
+  def child_stop_data_factory do
+    %JsonApi.Item{
+      id: "NHRML-0127-02",
+      type: "stop",
+      attributes: %{
+        "address" => nil,
+        "description" => "Anderson/Woburn - Commuter Rail - Track 2 (Boston)",
+        "latitude" => 42.516987,
+        "location_type" => 0,
+        "longitude" => -71.144475,
+        "municipality" => "Woburn",
+        "name" => "Anderson/Woburn",
+        "platform_code" => "2",
+        "platform_name" => "Track 2 (Boston)",
+        "wheelchair_boarding" => 1
+      },
+      relationships: %{
+        "child_stops" => [],
+        "facilities" => [],
+        "parent_station" => [
+          %JsonApi.Item{
+            attributes: %{
+              "address" => "100 Atlantic Ave, Woburn, MA 01801",
+              "description" => nil,
+              "latitude" => 42.516987,
+              "location_type" => 1,
+              "longitude" => -71.144475,
+              "municipality" => "Woburn",
+              "name" => "Anderson/Woburn",
+              "platform_code" => nil,
+              "platform_name" => nil,
+              "wheelchair_boarding" => 1
+            },
+            id: "place-NHRML-0127",
+            relationships: %{
+              "facilities" => [],
+              "parent_station" => [],
+              "zone" => [
+                %JsonApi.Item{
+                  attributes: nil,
+                  id: "CR-zone-2",
+                  relationships: nil,
+                  type: "zone"
+                }
+              ]
+            },
+            type: "stop"
+          }
+        ],
+        "zone" => [
+          %JsonApi.Item{
+            attributes: nil,
+            id: "CR-zone-2",
+            relationships: nil,
+            type: "zone"
+          }
+        ]
+      }
+    }
+  end
+
   def route_pattern_data_factory do
     %Item{
       id: "111-5-0",
