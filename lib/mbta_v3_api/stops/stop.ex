@@ -1,9 +1,9 @@
-defmodule Stops.Stop do
+defmodule MBTAV3API.Stops.Stop do
   @moduledoc """
   Domain model for a Stop.
   """
-  # alias Stops.{Api, Stop}
-  alias Stops.Stop
+
+  # alias Stops.Api
 
   @derive {Jason.Encoder, except: [:bike_storage, :fare_facilities]}
 
@@ -35,7 +35,7 @@ defmodule Stops.Stop do
 
   @type stop_type :: :stop | :station | :entrance | :generic_node
 
-  @type t :: %Stop{
+  @type t :: %__MODULE__{
           id: id_t,
           parent_id: id_t | nil,
           child_ids: [id_t],
@@ -44,7 +44,7 @@ defmodule Stops.Stop do
           accessibility: [String.t()],
           address: String.t() | nil,
           municipality: String.t() | nil,
-          parking_lots: [Stop.ParkingLot.t()],
+          # parking_lots: [MBTAV3API.Stops.Stop.ParkingLot.t()],
           # TODO: Restore fare_facilities once we've copied in Stops.Api
           # fare_facilities: MapSet.t(Api.fare_facility()),
           bike_storage: [Api.bike_storage_types()],
@@ -54,7 +54,7 @@ defmodule Stops.Stop do
           station?: boolean,
           has_fare_machine?: boolean,
           has_charlie_card_vendor?: boolean,
-          closed_stop_info: Stops.Stop.ClosedStopInfo.t() | nil,
+          # closed_stop_info: MBTAV3API.Stops.Stop.ClosedStopInfo.t() | nil,
           type: stop_type,
           platform_name: String.t() | nil,
           platform_code: String.t() | nil,
@@ -265,7 +265,7 @@ end
 #   end
 # end
 
-# defmodule Stops.Stop.ParkingLot.Utilization do
+# defmodule MBTAV3API.Stops.Stop.ParkingLot.Utilization do
 #   @moduledoc """
 #   Utilization data for a parking lot.
 #   GTFS Property Mappings:
@@ -303,7 +303,7 @@ end
 #   end
 # end
 
-# defmodule Stops.Stop.ClosedStopInfo do
+# defmodule MBTAV3API.Stops.Stop.ClosedStopInfo do
 #   @moduledoc """
 #   Information about stations not in API data.
 #   """
@@ -312,7 +312,7 @@ end
 #   defstruct reason: "",
 #             info_link: ""
 
-#   @type t :: %Stops.Stop.ClosedStopInfo{
+#   @type t :: %__MODULE__{
 #           reason: String.t(),
 #           info_link: String.t()
 #         }

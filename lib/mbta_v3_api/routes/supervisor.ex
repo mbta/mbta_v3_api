@@ -1,4 +1,4 @@
-defmodule Routes.Supervisor do
+defmodule MBTAV3API.Routes.Supervisor do
   @moduledoc """
   Supervisor for the routes repo.
   """
@@ -11,14 +11,14 @@ defmodule Routes.Supervisor do
 
   def init(:ok) do
     children = [
-      Routes.Repo
+      MBTAV3API.Routes.Repo
     ]
 
     children =
       if Application.get_env(:mbta_v3_api, :populate_caches?) do
         children ++
           [
-            Routes.PopulateCaches
+            MBTAV3API.Routes.PopulateCaches
           ]
       else
         children

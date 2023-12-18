@@ -1,6 +1,6 @@
-defmodule Routes.RouteTest do
+defmodule MBTAV3API.Routes.RouteTest do
   use ExUnit.Case, async: true
-  alias Routes.{Repo, Route}
+  alias MBTAV3API.Routes.{Repo, Route}
 
   describe "type_atom/1" do
     test "returns an atom for the route type" do

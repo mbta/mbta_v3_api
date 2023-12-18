@@ -1,6 +1,6 @@
 defmodule MBTAV3API.Alerts do
   @moduledoc """
-  Fetch Alert data from the V3 API.
+  Fetch Alert data from the MBTA V3 API.
   """
 
   @spec all() :: JsonApi.t() | {:error, any}

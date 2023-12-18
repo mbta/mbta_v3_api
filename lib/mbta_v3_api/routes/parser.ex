@@ -1,9 +1,10 @@
-defmodule Routes.Parser do
+defmodule MBTAV3API.Routes.Parser do
   @moduledoc "Functions for parsing generic JSON:API structs into Routes structs."
 
   alias JsonApi.Item
-  alias RoutePatterns.RoutePattern
-  alias Routes.{Route, Shape}
+  alias MBTAV3API.RoutePatterns.RoutePattern
+  alias MBTAV3API.Routes.{Route, Shape}
+  alias MBTAV3API.Stops.Stop
 
   @spec parse_route(Item.t()) :: Route.t()
   def parse_route(%Item{id: id, attributes: attributes, relationships: relationships}) do
@@ -108,7 +109,7 @@ defmodule Routes.Parser do
     ]
   end
 
-  @spec stop_ids(%{String.t() => list(JsonApi.Item.t())}) :: [Stops.Stop.id_t()]
+  @spec stop_ids(%{String.t() => list(JsonApi.Item.t())}) :: [Stop.id_t()]
   defp stop_ids(%{"stops" => stops}), do: Enum.map(stops, & &1.id)
   defp stop_ids(_), do: []
 end

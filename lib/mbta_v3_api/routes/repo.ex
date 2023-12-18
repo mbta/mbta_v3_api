@@ -1,17 +1,18 @@
-defmodule Routes.Repo do
-  @moduledoc "Repo for fetching Route resources and their associated data from the V3 API."
+defmodule MBTAV3API.Routes.Repo do
+  @moduledoc "Repo for fetching Route resources and their associated data from the MBTA V3 API."
 
-  @behaviour Routes.RepoApi
+  @behaviour MBTAV3API.Routes.RepoApi
 
   require Logger
   use RepoCache, ttl: :timer.hours(1)
 
-  import Routes.Parser
+  import MBTAV3API.Routes.Parser
 
   alias JsonApi
-  # alias Routes.{Route, Shape}
-  alias Routes.Route
-  # alias MBTAV3API.{Shapes}
+  alias MBTAV3API.Routes
+  # alias MBTAV3API.Routes.{RepoApi, Route, Shape}
+  alias MBTAV3API.Routes.{RepoApi, Route}
+  # alias MBTAV3API.Shapes
 
   @default_opts [include: "route_patterns"]
 
@@ -26,10 +27,10 @@ defmodule Routes.Repo do
     color: "00843D"
   }
 
-  @impl Routes.RepoApi
+  @impl RepoApi
   def all do
     case cache(@default_opts, fn _ ->
-           result = handle_response(MBTAV3API.Routes.all(@default_opts))
+           result = handle_response(Routes.all(@default_opts))
 
            for {:ok, routes} <- [result],
                route <- routes do
@@ -45,7 +46,7 @@ defmodule Routes.Repo do
 
   # Used to spoof any Massport route as the data doesn't exist in the API
   # But is in the GTFS data
-  @impl Routes.RepoApi
+  @impl RepoApi
   def get("Massport-" <> id) do
     %Route{
       description: "Massport Generated Route",
@@ -62,7 +63,7 @@ defmodule Routes.Repo do
     opts = @default_opts
 
     case cache({id, opts}, fn {id, opts} ->
-           with %{data: [route]} <- MBTAV3API.Routes.get(id, opts) do
+           with %{data: [route]} <- Routes.get(id, opts) do
              {:ok, parse_route(route)}
            end
          end) do
@@ -72,7 +73,7 @@ defmodule Routes.Repo do
   end
 
   # TODO: Restore get_shapes and filter_shapes_by_priority once we've copied over Shapes.all
-  # @impl Routes.RepoApi
+  # @impl RepoApi
   # def get_shapes(route_id, opts, filter_negative_priority? \\ true) do
   #   opts = Keyword.put(opts, :route, route_id)
 
@@ -109,7 +110,7 @@ defmodule Routes.Repo do
   # end
 
   # TODO: Restore get_shape once we've copied over Shapes.by_id
-  # @impl Routes.RepoApi
+  # @impl RepoApi
   # def get_shape(shape_id) do
   #   cache(shape_id, fn _ ->
   #     case Shapes.by_id(shape_id) do
@@ -122,7 +123,7 @@ defmodule Routes.Repo do
   #   end)
   # end
 
-  @impl Routes.RepoApi
+  @impl RepoApi
   def by_type(types) when is_list(types) do
     types = Enum.sort(types)
 
@@ -144,25 +145,25 @@ defmodule Routes.Repo do
     end
   end
 
-  @impl Routes.RepoApi
+  @impl RepoApi
   def by_stop(stop_id, opts \\ []) do
     opts = Keyword.merge(@default_opts, opts)
 
     case cache({stop_id, opts}, fn {stop_id, opts} ->
-           stop_id |> MBTAV3API.Routes.by_stop(opts) |> handle_response
+           stop_id |> Routes.by_stop(opts) |> handle_response
          end) do
       {:ok, routes} -> routes
       {:error, _} -> []
     end
   end
 
-  @impl Routes.RepoApi
+  @impl RepoApi
   def by_stop_and_direction(stop_id, direction_id, opts \\ []) do
     opts = Keyword.merge(@default_opts, opts)
 
     case cache({stop_id, direction_id, opts}, fn {stop_id, direction_id, opts} ->
            stop_id
-           |> MBTAV3API.Routes.by_stop_and_direction(direction_id, opts)
+           |> Routes.by_stop_and_direction(direction_id, opts)
            |> handle_response
          end) do
       {:ok, routes} -> routes
@@ -170,11 +171,11 @@ defmodule Routes.Repo do
     end
   end
 
-  @impl Routes.RepoApi
+  @impl RepoApi
   def by_stop_with_route_pattern(stop_id) do
     cache({stop_id, [include: "route_patterns"]}, fn {stop_id, _opts} ->
       [stop: stop_id, include: "route_patterns"]
-      |> MBTAV3API.Routes.all()
+      |> Routes.all()
       |> Map.get(:data, [])
       |> Enum.map(&parse_route_with_route_pattern/1)
     end)
@@ -198,7 +199,7 @@ defmodule Routes.Repo do
      |> Enum.sort_by(& &1.sort_order)}
   end
 
-  @impl Routes.RepoApi
+  @impl RepoApi
   def green_line, do: @green_line_virtual_route
 
   @spec fetch_connecting_routes_via_stop(JsonApi.Item.t()) ::
@@ -211,7 +212,7 @@ defmodule Routes.Repo do
          } = route
        ) do
     Enum.flat_map(connecting_stops, fn %JsonApi.Item{id: stop_id} ->
-      case MBTAV3API.Routes.by_stop(stop_id) do
+      case Routes.by_stop(stop_id) do
         %JsonApi{data: data} -> data
         _ -> []
       end

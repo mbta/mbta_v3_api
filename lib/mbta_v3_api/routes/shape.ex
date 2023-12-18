@@ -1,8 +1,8 @@
-defmodule Routes.Shape do
+defmodule MBTAV3API.Routes.Shape do
   @moduledoc """
-  Data model corresponding to the V3 API Shape resource.
+  Data model corresponding to the MBTA V3 API Shape resource.
   """
-  alias Stops.Stop
+  alias MBTAV3API.Stops.Stop
 
   defstruct id: "",
             name: "",

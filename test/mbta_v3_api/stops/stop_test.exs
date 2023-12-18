@@ -1,7 +1,7 @@
-defmodule Stops.StopTest do
+defmodule MBTAV3API.Stops.StopTest do
   use ExUnit.Case
 
-  alias Stops.Stop
+  alias MBTAV3API.Stops.Stop
 
   describe "accessibility_known?/1" do
     test "returns true if accessibilty isn't unknown" do

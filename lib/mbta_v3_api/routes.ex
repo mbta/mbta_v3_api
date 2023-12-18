@@ -1,9 +1,9 @@
 defmodule MBTAV3API.Routes do
   @moduledoc """
-  Responsible for fetching Route data from the V3 API.
+  Responsible for fetching Route data from the MBTA V3 API.
   """
-  alias Routes.Route
-  alias Stops.Stop
+  alias MBTAV3API.Routes.Route
+  alias MBTAV3API.Stops.Stop
 
   @type api_response_t() :: JsonApi.t() | {:error, any}
 

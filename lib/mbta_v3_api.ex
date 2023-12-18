@@ -1,5 +1,5 @@
 defmodule MBTAV3API do
-  @moduledoc "Handles fetching and caching generic JSON:API responses from the V3 API."
+  @moduledoc "Handles fetching and caching generic JSON:API responses from the MBTA V3 API."
 
   use HTTPoison.Base
   require Logger

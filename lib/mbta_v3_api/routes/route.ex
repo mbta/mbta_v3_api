@@ -1,7 +1,7 @@
-defmodule Routes.Route do
-  @moduledoc "Data model and helpers corresponding to the V3 API Route resource."
+defmodule MBTAV3API.Routes.Route do
+  @moduledoc "Data model and helpers corresponding to the MBTA V3 API Route resource."
 
-  alias Routes.Repo
+  alias MBTAV3API.Routes.Repo
 
   @derive Jason.Encoder
 
@@ -163,7 +163,7 @@ defmodule Routes.Route do
     type_name(atom)
   end
 
-  @spec bus_route_list([Routes.Route.t()]) :: String.t()
+  @spec bus_route_list([t()]) :: String.t()
   defp bus_route_list(routes) when is_list(routes) do
     routes
     |> Enum.filter(&(icon_atom(&1) == :bus))
@@ -287,9 +287,9 @@ defmodule Routes.Route do
   end
 end
 
-# defimpl Jason.Encoder, for: Routes.Route do
+# defimpl Jason.Encoder, for: MBTAV3API.Routes.Route do
 #   def encode(
-#         %Routes.Route{
+#         %__MODULE__{
 #           id: id,
 #           type: type,
 #           name: name,

@@ -1,4 +1,4 @@
-defmodule Vehicles.Vehicle do
+defmodule MBTAV3API.Vehicles.Vehicle do
   @moduledoc """
   Representation of a vehicle, e.g. train or bus.
   """
