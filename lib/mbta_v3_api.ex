@@ -37,6 +37,7 @@ defmodule MBTAV3API do
       Req.get!(req(),
         url:
           case obj do
+            MBTAV3API.Facility -> "/facilities/:id"
             MBTAV3API.Stop -> "/stops/:id"
           end,
         params: [include: include] |> Keyword.reject(fn {_, v} -> is_nil(v) end),
@@ -72,7 +73,8 @@ defmodule MBTAV3API do
 
       case schema.__schema__(:association, rel) do
         nil ->
-          raise "Can't include #{rel} on #{schema}"
+          schema_name = schema |> Atom.to_string() |> String.replace_prefix("Elixir.", "")
+          raise "Can't include #{rel} on #{schema_name}"
 
         %_{related: subschema} ->
           unless is_nil(subrel) do

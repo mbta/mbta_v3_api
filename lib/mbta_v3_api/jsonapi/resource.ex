@@ -28,6 +28,7 @@ defmodule MBTAV3API.JSONAPI.Resource do
   def decode!(resource, included) do
     case resource.type do
       "stop" -> MBTAV3API.Stop.from_resource!(resource, included)
+      "facility" -> MBTAV3API.Facility.from_resource!(resource, included)
     end
   end
 

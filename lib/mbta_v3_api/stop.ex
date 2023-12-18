@@ -25,12 +25,9 @@ defmodule MBTAV3API.Stop do
 
     has_many(:child_stops, __MODULE__, foreign_key: :parent_station_id)
     many_to_many(:connecting_stops, __MODULE__, join_through: "_")
-    # has_many(:facilities, MBTAV3API.Facility)
+    has_many(:facilities, MBTAV3API.Facility)
     belongs_to(:parent_station, __MODULE__)
   end
-
-  @doc false
-  def jsonapi_type, do: "stop"
 
   @doc false
   def from_resource!(
@@ -61,6 +58,7 @@ defmodule MBTAV3API.Stop do
     }
     |> Relationship.unpack(relationships, :child_stops, included)
     |> Relationship.unpack(relationships, :connecting_stops, included)
+    |> Relationship.unpack(relationships, :facilities, included)
     |> Relationship.unpack(relationships, :parent_station, included)
   end
 

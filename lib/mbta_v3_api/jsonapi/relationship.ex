@@ -34,6 +34,9 @@ defmodule MBTAV3API.JSONAPI.Relationship do
       %__MODULE__{data: %ResourceIdentifier{} = data} when expected_cardinality == :one ->
         struct!(result_struct, %{field => Included.fetch!(included, data)})
 
+      %__MODULE__{data: nil} ->
+        result_struct
+
       nil ->
         result_struct
     end
