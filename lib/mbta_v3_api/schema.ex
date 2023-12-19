@@ -23,7 +23,7 @@ defmodule MBTAV3API.Schema do
     assoc_fields = module.__schema__(:associations)
 
     relationship_ids =
-      relationships
+      (relationships || [])
       |> Enum.map(fn {name, rel} ->
         id_field_name = "#{name}_id"
 

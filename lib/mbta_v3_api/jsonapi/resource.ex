@@ -29,6 +29,7 @@ defmodule MBTAV3API.JSONAPI.Resource do
     case resource.type do
       "alert" -> MBTAV3API.Alert.from_resource!(resource, included)
       "facility" -> MBTAV3API.Facility.from_resource!(resource, included)
+      "prediction" -> MBTAV3API.Schema.from_resource!(MBTAV3API.Prediction, resource, included)
       "stop" -> MBTAV3API.Stop.from_resource!(resource, included)
     end
   end

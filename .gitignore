@@ -24,3 +24,6 @@ mbta_v3_api-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Environment secrets
+.envrc

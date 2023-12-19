@@ -11,7 +11,7 @@ defmodule MBTAV3API.JSONAPI.Included do
 
     {:ok, pid} = Agent.start_link(fn -> seed_value end)
 
-    %__MODULE__{raw_data: data, agent: pid}
+    %__MODULE__{raw_data: data || [], agent: pid}
   end
 
   def fetch!(
@@ -35,7 +35,7 @@ defmodule MBTAV3API.JSONAPI.Included do
               Resource.decode!(raw_value, included)
 
             nil ->
-              raise "no included resource #{inspect({type, id})}"
+              nil
           end
 
         Agent.update(agent, &Map.put(&1, {type, id}, result))
