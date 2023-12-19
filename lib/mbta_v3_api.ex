@@ -15,6 +15,8 @@ defmodule MBTAV3API do
   def all(query) do
     opts = to_req_opts(query)
 
+    # TODO cache
+
     %Req.Response{status: 200, body: %{} = resp_body} =
       Req.get!(req(), opts)
 
@@ -44,29 +46,42 @@ defmodule MBTAV3API do
   def get!(obj, id, opts \\ []) do
     include =
       case Keyword.get(opts, :include) do
-        nil ->
-          nil
-
-        include ->
-          validate_include(obj, include)
-          JSONAPI.include(include)
+        nil -> nil
+        include -> normalize_include(obj, include)
       end
 
-    %Req.Response{status: 200, body: %{} = resp_body} =
-      Req.get!(req(),
-        url:
-          case obj do
-            MBTAV3API.Alert -> "/alerts/:id"
-            MBTAV3API.Facility -> "/facilities/:id"
-            MBTAV3API.Stop -> "/stops/:id"
-          end,
-        params: [include: include] |> Keyword.reject(fn {_, v} -> is_nil(v) end),
-        path_params: [id: id]
-      )
+    with {:ok, cache_result} <- MBTAV3API.Cache.get(obj, id),
+         {:ok, hydrated_result} <-
+           MBTAV3API.Schema.hydrate_cache(cache_result, include || []) do
+      hydrated_result
+    else
+      _ ->
+        include =
+          case include do
+            nil -> nil
+            include -> JSONAPI.include(include)
+          end
 
-    resp_jsonapi = JSONAPI.parse!(resp_body)
+        %Req.Response{status: 200, body: %{} = resp_body} =
+          Req.get!(req(),
+            url:
+              case obj do
+                MBTAV3API.Alert -> "/alerts/:id"
+                MBTAV3API.Facility -> "/facilities/:id"
+                MBTAV3API.Stop -> "/stops/:id"
+              end,
+            params: [include: include] |> Keyword.reject(fn {_, v} -> is_nil(v) end),
+            path_params: [id: id]
+          )
 
-    JSONAPI.decode!(resp_jsonapi)
+        resp_jsonapi = JSONAPI.parse!(resp_body)
+
+        result = JSONAPI.decode!(resp_jsonapi)
+
+        MBTAV3API.Schema.put_cache(result)
+
+        result
+    end
   end
 
   @doc """
@@ -129,8 +144,8 @@ defmodule MBTAV3API do
     )
   end
 
-  @spec validate_include(module(), JSONAPI.include_arg()) :: :ok
-  defp validate_include(schema, included) do
+  @spec normalize_include(module(), JSONAPI.include_arg()) :: list(atom())
+  defp normalize_include(schema, included) do
     include_list = List.wrap(included)
 
     for included <- include_list do
@@ -147,12 +162,12 @@ defmodule MBTAV3API do
 
         %_{related: subschema} ->
           unless is_nil(subrel) do
-            validate_include(subschema, subrel)
+            normalize_include(subschema, subrel)
           end
       end
     end
 
-    :ok
+    include_list
   end
 
   defp to_req_opts(query) do

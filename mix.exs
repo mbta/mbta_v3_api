@@ -31,6 +31,7 @@ defmodule MBTAV3API.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:con_cache, "~> 1.0", optional: true},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:ecto, "~> 3.11"},

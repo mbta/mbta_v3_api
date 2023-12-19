@@ -62,4 +62,63 @@ defmodule MBTAV3API.Schema do
 
     changeset
   end
+
+  @spec hydrate_cache(Ecto.Schema.embedded_schema(), list(atom())) ::
+          {:ok, Ecto.Schema.embedded_schema()} | :error
+  def hydrate_cache(cached_object, include) do
+    %module{} = cached_object
+
+    for include_field <- include, reduce: {:ok, cached_object} do
+      {:ok, %^module{^include_field => %Ecto.Association.NotLoaded{}} = object} ->
+        case Map.fetch(object, :"#{include_field}_id") do
+          {:ok, include_id} ->
+            include_type = module.__schema__(:association, include_field).related
+
+            case MBTAV3API.Cache.get(include_type, include_id) do
+              {:ok, include_result} -> {:ok, struct!(object, {include_field, include_result})}
+              :error -> :error
+            end
+
+          :error ->
+            :error
+        end
+
+      {:ok, %^module{^include_field => include_result} = object} when is_struct(include_result) ->
+        {:ok, object}
+
+      :error ->
+        :error
+    end
+  end
+
+  @spec put_cache(Ecto.Schema.embedded_schema()) :: :ok
+  def put_cache(object) do
+    %module{} = object
+    assoc_fields = module.__schema__(:associations)
+
+    empty_assocs = struct!(module) |> Map.take(assoc_fields)
+
+    object_without_assocs = struct!(object, empty_assocs)
+
+    MBTAV3API.Cache.put(
+      object_without_assocs,
+      # TODO think about TTL
+      case module do
+        MBTAV3API.Alert -> :timer.minutes(5)
+        MBTAV3API.Facility -> :timer.hours(24)
+        MBTAV3API.Stop -> :timer.hours(24)
+      end
+    )
+
+    object
+    |> Map.take(assoc_fields)
+    |> Enum.map(fn
+      {_, nil} -> :ok
+      {_, %Ecto.Association.NotLoaded{}} -> :ok
+      {_, assoc_objects} when is_list(assoc_objects) -> Enum.map(assoc_objects, &put_cache/1)
+      {_, assoc_object} when is_struct(assoc_object) -> put_cache(assoc_object)
+    end)
+
+    :ok
+  end
 end

@@ -8,8 +8,11 @@ defmodule MBTAV3API.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: MBTAV3API.Worker.start_link(arg)
-      # {MBTAV3API.Worker, arg}
+      {ConCache,
+       name: MBTAV3API.Cache.Backend,
+       ttl_check_interval: :timer.seconds(1),
+       global_ttl: :timer.hours(24)},
+      MBTAV3API.Cache
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

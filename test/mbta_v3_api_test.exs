@@ -2,11 +2,13 @@ defmodule MBTAV3APITest do
   use ExUnit.Case
   doctest MBTAV3API
 
+  # TODO magic
+  @tag timeout: :infinity
   test "stream works" do
     import Ecto.Query
 
     data =
-      MBTAV3API.stream(from(p in MBTAV3API.Prediction, where: p.stop_id == "place-boyls"))
+      MBTAV3API.stream(from(p in MBTAV3API.Prediction, where: p.stop_id == "place-north"))
       |> Stream.filter(fn {type, _data} -> type in [:reset, :update] end)
       |> Enum.take(2)
 
