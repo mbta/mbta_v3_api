@@ -1,19 +1,17 @@
 defmodule MBTAV3API.Alert do
   use MBTAV3API.Schema
 
-  alias MBTAV3API.FlexEnum
-  alias MBTAV3API.JSONAPI
-  alias MBTAV3API.EasternDatetime
+  alias MBTAV3API.EctoType
 
   embedded_schema do
-    embeds_many :active_periods, ActivePeriod, primary_key: false do
-      field(:start, EasternDatetime)
-      field(:end, EasternDatetime)
+    embeds_many :active_period, ActivePeriod, primary_key: false do
+      field(:start, EctoType.EasternDatetime)
+      field(:end, EctoType.EasternDatetime)
     end
 
     field(:banner, :string)
 
-    field(:cause, FlexEnum,
+    field(:cause, EctoType.FlexEnum,
       values: [
         :accident,
         :amtrak,
@@ -61,10 +59,10 @@ defmodule MBTAV3API.Alert do
       ]
     )
 
-    field(:created_at, EasternDatetime)
+    field(:created_at, EctoType.EasternDatetime)
     field(:description, :string)
 
-    field(:effect, FlexEnum,
+    field(:effect, EctoType.FlexEnum,
       values: [
         :access_issue,
         :additional_service,
@@ -106,8 +104,8 @@ defmodule MBTAV3API.Alert do
     field(:image, :string)
     field(:image_alternative_text, :string)
 
-    embeds_many :informed_entities, InformedEntity, primary_key: false do
-      field(:activities, {:array, FlexEnum},
+    embeds_many :informed_entity, InformedEntity, primary_key: false do
+      field(:activities, {:array, EctoType.FlexEnum},
         values: [
           :board,
           :bringing_bike,
@@ -124,7 +122,7 @@ defmodule MBTAV3API.Alert do
       field(:facility, :string)
       field(:route, :string)
 
-      field(:route_type, FlexEnum,
+      field(:route_type, EctoType.FlexEnum,
         values: [light_rail: 0, heavy_rail: 1, commuter_rail: 2, bus: 3, ferry: 4]
       )
 
@@ -132,41 +130,17 @@ defmodule MBTAV3API.Alert do
       field(:trip, :string)
     end
 
-    field(:lifecycle, FlexEnum, values: [:new, :ongoing, :ongoing_upcoming, :upcoming])
+    field(:lifecycle, EctoType.FlexEnum, values: [:new, :ongoing, :ongoing_upcoming, :upcoming])
     field(:service_effect, :string)
     field(:severity, :integer)
     field(:short_header, :string)
     field(:timeframe, :string)
-    field(:updated_at, EasternDatetime)
+    field(:updated_at, EctoType.EasternDatetime)
     field(:url, :string)
   end
 
   @doc false
-  def from_resource!(
-        %JSONAPI.Resource{
-          type: "alert",
-          id: id,
-          attributes: attributes,
-          relationships: _relationships
-        },
-        _included
-      ) do
-    import Ecto.Changeset
-    alias __MODULE__.ActivePeriod
-    alias __MODULE__.InformedEntity
-
-    active_periods =
-      attributes["active_period"]
-      |> Enum.map(&cast(%ActivePeriod{}, &1, ActivePeriod.__schema__(:fields)))
-
-    informed_entities =
-      attributes["informed_entity"]
-      |> Enum.map(&cast(%InformedEntity{}, &1, InformedEntity.__schema__(:fields)))
-
-    %__MODULE__{id: id}
-    |> cast(attributes, __schema__(:fields) -- __schema__(:embeds))
-    |> put_embed(:active_periods, active_periods)
-    |> put_embed(:informed_entities, informed_entities)
-    |> apply_action!(:insert)
+  def from_resource!(resource, included) do
+    MBTAV3API.Schema.from_resource!(__MODULE__, resource, included)
   end
 end

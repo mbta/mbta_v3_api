@@ -1,4 +1,4 @@
-defmodule MBTAV3API.FlexEnum do
+defmodule MBTAV3API.EctoType.FlexEnum do
   @moduledoc """
   Like Ecto.Enum, but also casts `"SOME_VALUE"` and `"some-value"` into `:some_value`.
   With `values: [a: 1, b: 2], can additionally cast `1` into `:a` and `2` into `:b`.

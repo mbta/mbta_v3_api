@@ -14,10 +14,10 @@ defmodule MBTAV3API.AlertTest do
 
     assert %Alert{
              id: "513737",
-             active_periods: [active_period],
+             active_period: [active_period],
              cause: :unknown_cause,
              effect: :service_change,
-             informed_entities: informed_entities,
+             informed_entity: informed_entity,
              lifecycle: :ongoing,
              severity: 10
            } = alert
@@ -26,6 +26,6 @@ defmodule MBTAV3API.AlertTest do
     assert ~N[2023-12-23 02:30:00] = active_period.end |> DateTime.to_naive()
 
     assert ["WML-0252-01", "WML-0252-02", "place-WML-0252"] =
-             informed_entities |> Enum.map(& &1.stop) |> Enum.sort()
+             informed_entity |> Enum.map(& &1.stop) |> Enum.sort()
   end
 end

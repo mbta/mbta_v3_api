@@ -1,4 +1,4 @@
-defmodule MBTAV3API.EasternDatetime do
+defmodule MBTAV3API.EctoType.EasternDatetime do
   use Ecto.Type
 
   def type, do: :utc_datetime

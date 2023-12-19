@@ -47,6 +47,7 @@ defmodule MBTAV3API.Facility do
         },
         included
       ) do
+    # TODO rewrite to use Schema.from_resource!/3
     %__MODULE__{
       id: id,
       latitude: attributes["latitude"],
