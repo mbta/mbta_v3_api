@@ -19,7 +19,7 @@ end
 In your runtime configuration (`config/runtime.exs`) provide the API URL, key, and version (all required).
 
 ```elixir
-config :v3_api,
+config :mbta_v3_api,
   base_url: "API_URL",
   api_key: "API_KEY",
   api_version: "2021-01-09"
