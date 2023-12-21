@@ -46,14 +46,18 @@ defmodule MBTAV3API.RoutePatterns.Repo do
     |> Enum.sort(&reorder_mrts(&1, &2, route_id))
   end
 
-  def by_stop_id(stop_id) do
-    [stop: stop_id]
+  def by_stop_id(stop_id, opts \\ []) do
+    opts
+    |> Keyword.put(:stop, stop_id)
     |> Keyword.put(:include, "representative_trip.shape,representative_trip.stops")
     |> cache(&api_all/1)
   end
 
   defp api_all(opts) do
-    case RoutePatterns.all(opts) do
+    {route_patterns_all_fn, opts} =
+      Keyword.pop(opts, :route_patterns_all_fn, &RoutePatterns.all/1)
+
+    case route_patterns_all_fn.(opts) do
       {:error, error} ->
         _ =
           Logger.warning(
