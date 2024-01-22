@@ -12,6 +12,7 @@ defmodule MBTAV3API.Application do
     children = [
       RepoCache.Supervisor,
       MBTAV3API.Facilities.Supervisor,
+      MBTAV3API.Services.Supervisor,
       MBTAV3API.Routes.Supervisor,
       MBTAV3API.Cache
     ]
