@@ -6,6 +6,7 @@ defmodule MBTAV3API.MixProject do
       app: :mbta_v3_api,
       version: "0.0.1",
       elixir: "~> 1.14",
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -19,6 +20,10 @@ defmodule MBTAV3API.MixProject do
     ]
   end
 
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
@@ -27,6 +32,7 @@ defmodule MBTAV3API.MixProject do
       {:con_cache, "~> 0.12.0"},
       {:credo, "~> 1.7", only: [:dev, :test]},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:ex_machina, "~> 2.7.0", only: :test},
       {:httpoison, "~> 1.5"},
       {:jason, "~> 1.1"},
       {:mock, "~> 0.3", only: :test},
