@@ -23,6 +23,7 @@ defmodule MBTAV3API.MixProject do
   defp deps do
     [
       {:bypass, "~> 2.1", only: :test},
+      {:castore, "~> 0.1"},
       {:con_cache, "~> 0.12.0"},
       {:credo, "~> 1.7", only: [:dev, :test]},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
@@ -31,6 +32,7 @@ defmodule MBTAV3API.MixProject do
       {:mock, "~> 0.3", only: :test},
       {:plug, "~> 1.15", only: :test},
       {:sentry, "~> 7.0"},
+      {:server_sent_event_stage, "~> 1.0"},
       {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
       {:timex, "~> 3.7"}
     ]
