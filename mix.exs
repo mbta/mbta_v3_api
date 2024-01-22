@@ -28,6 +28,7 @@ defmodule MBTAV3API.MixProject do
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:httpoison, "~> 1.5"},
       {:jason, "~> 1.1"},
+      {:mock, "~> 0.3", only: :test},
       {:plug, "~> 1.15", only: :test},
       {:sentry, "~> 7.0"},
       {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
