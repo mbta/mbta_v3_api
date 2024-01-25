@@ -1,7 +1,8 @@
 defmodule MBTAV3API.Routes.RepoTest do
   use ExUnit.Case, async: false
-  # alias MBTAV3API.Routes.{Repo, Route}
-  alias MBTAV3API.Routes.Repo
+
+  alias JsonApi.Item
+  alias MBTAV3API.Routes.{Repo, Route}
 
   describe "all/0" do
     # test "returns something" do
@@ -74,7 +75,7 @@ defmodule MBTAV3API.Routes.RepoTest do
     #            }
     #   end
 
-    #   test "filters out 'hidden' routes'" do
+    #   test "filters out 'hidden' routes" do
     #     all = Repo.all()
     #     assert all |> Enum.filter(fn route -> route.name == "24/27" end) == []
     #   end
@@ -117,12 +118,12 @@ defmodule MBTAV3API.Routes.RepoTest do
   #   test "returns nil for an unknown route" do
   #     refute Repo.get("_unknown_route")
   #   end
-  # end
 
   # test "key bus routes are tagged" do
   #   assert %Route{description: :key_bus_route} = Repo.get("1")
   #   assert %Route{description: :key_bus_route} = Repo.get("741")
   #   assert %Route{description: :local_bus} = Repo.get("47")
+  # end
   # end
 
   # describe "by_stop/1" do
@@ -170,88 +171,88 @@ defmodule MBTAV3API.Routes.RepoTest do
   #   end
   # end
 
-  # describe "handle_response/1" do
-  #   test "parses routes" do
-  #     response = %JsonApi{
-  #       data: [
-  #         %JsonApi.Item{
-  #           attributes: %{
-  #             "description" => "Local Bus",
-  #             "direction_names" => ["Outbound", "Inbound"],
-  #             "direction_destinations" => ["Start", "End"],
-  #             "long_name" => "",
-  #             "short_name" => "16",
-  #             "sort_order" => 1600,
-  #             "type" => 3
-  #           },
-  #           id: "16",
-  #           relationships: %{},
-  #           type: "route"
-  #         },
-  #         %JsonApi.Item{
-  #           attributes: %{
-  #             "description" => "Local Bus",
-  #             "direction_names" => ["Outbound", "Inbound"],
-  #             "direction_destinations" => ["Start", "End"],
-  #             "long_name" => "",
-  #             "short_name" => "36",
-  #             "sort_order" => 3600,
-  #             "type" => 3
-  #           },
-  #           id: "36",
-  #           relationships: %{},
-  #           type: "route"
-  #         }
-  #       ],
-  #       links: %{}
-  #     }
+  describe "handle_response/1" do
+    test "parses routes" do
+      response = %JsonApi{
+        data: [
+          %Item{
+            attributes: %{
+              "description" => "Local Bus",
+              "direction_names" => ["Outbound", "Inbound"],
+              "direction_destinations" => ["Start", "End"],
+              "long_name" => "",
+              "short_name" => "16",
+              "sort_order" => 1600,
+              "type" => 3
+            },
+            id: "16",
+            relationships: %{},
+            type: "route"
+          },
+          %Item{
+            attributes: %{
+              "description" => "Local Bus",
+              "direction_names" => ["Outbound", "Inbound"],
+              "direction_destinations" => ["Start", "End"],
+              "long_name" => "",
+              "short_name" => "36",
+              "sort_order" => 3600,
+              "type" => 3
+            },
+            id: "36",
+            relationships: %{},
+            type: "route"
+          }
+        ],
+        links: %{}
+      }
 
-  #     assert {:ok, [%Route{id: "16"}, %Route{id: "36"}]} = Repo.handle_response(response)
-  #   end
+      assert {:ok, [%Route{id: "16"}, %Route{id: "36"}]} = Repo.handle_response(response)
+    end
 
-  #   test "removes hidden routes" do
-  #     response = %JsonApi{
-  #       data: [
-  #         %JsonApi.Item{
-  #           attributes: %{
-  #             "description" => "Local Bus",
-  #             "direction_names" => ["Outbound", "Inbound"],
-  #             "direction_destinations" => ["Start", "End"],
-  #             "long_name" => "",
-  #             "short_name" => "36",
-  #             "sort_order" => 3600,
-  #             "type" => 3
-  #           },
-  #           id: "36",
-  #           relationships: %{},
-  #           type: "route"
-  #         },
-  #         %JsonApi.Item{
-  #           attributes: %{
-  #             "description" => "Limited Service",
-  #             "direction_names" => ["Outbound", "Inbound"],
-  #             "direction_destinations" => ["Start", "End"],
-  #             "long_name" => "",
-  #             "short_name" => "9701",
-  #             "sort_order" => 970_100,
-  #             "type" => 3
-  #           },
-  #           id: "9701",
-  #           relationships: %{},
-  #           type: "route"
-  #         }
-  #       ],
-  #       links: %{}
-  #     }
+    test "removes hidden routes" do
+      response = %JsonApi{
+        data: [
+          %Item{
+            attributes: %{
+              "description" => "Local Bus",
+              "direction_names" => ["Outbound", "Inbound"],
+              "direction_destinations" => ["Start", "End"],
+              "long_name" => "",
+              "short_name" => "36",
+              "sort_order" => 3600,
+              "type" => 3
+            },
+            id: "36",
+            relationships: %{},
+            type: "route"
+          },
+          %Item{
+            attributes: %{
+              "description" => "Limited Service",
+              "direction_names" => ["Outbound", "Inbound"],
+              "direction_destinations" => ["Start", "End"],
+              "long_name" => "",
+              "short_name" => "9701",
+              "sort_order" => 970_100,
+              "type" => 3
+            },
+            id: "9701",
+            relationships: %{},
+            type: "route"
+          }
+        ],
+        links: %{}
+      }
 
-  #     assert {:ok, [%Route{id: "36"}]} = Repo.handle_response(response)
-  #   end
+      assert {:ok, [%Route{id: "36"}]} = Repo.handle_response(response)
+    end
 
-  #   test "passes errors through" do
-  #     error = {:error, %HTTPoison.Error{id: nil, reason: :timeout}}
-  #     assert Repo.handle_response(error) == error
-  #   end
-  # end
+    test "passes errors through" do
+      error = {:error, %HTTPoison.Error{id: nil, reason: :timeout}}
+      assert Repo.handle_response(error) == error
+    end
+  end
 
   # describe "get_shapes/2" do
   #   test "Get valid response for bus route" do
@@ -271,15 +272,6 @@ defmodule MBTAV3API.Routes.RepoTest do
   #   end
   # end
 
-  # # describe "get_shape/1" do
-  # #   shape =
-  # #     "903_0018"
-  # #     |> Repo.get_shape()
-  # #     |> List.first()
-
-  # #   assert shape.id == "903_0018"
-  # # end
-
   describe "green_line" do
     test "returns a virtual route for the entire Green Line" do
       green_line = Repo.green_line()
@@ -291,7 +283,7 @@ defmodule MBTAV3API.Routes.RepoTest do
   # defp mock_routes_by_stop("connecting-stop-id") do
   #   %JsonApi{
   #     data: [
-  #       %JsonApi.Item{
+  #       %Item{
   #         id: "connecting-route-id-1",
   #         attributes: %{
   #           "direction_names" => ["Outbound", "Inbound"],
@@ -299,7 +291,7 @@ defmodule MBTAV3API.Routes.RepoTest do
   #           "long_name" => "Connecting route at this stop"
   #         }
   #       },
-  #       %JsonApi.Item{
+  #       %Item{
   #         id: "connecting-route-id-2",
   #         attributes: %{
   #           "direction_names" => ["Outbound", "Inbound"],
@@ -314,7 +306,7 @@ defmodule MBTAV3API.Routes.RepoTest do
   # defp mock_routes_by_stop("initial-stop-id", include: "stop.connecting_stops") do
   #   %JsonApi{
   #     data: [
-  #       %JsonApi.Item{
+  #       %Item{
   #         id: "initial-route-id",
   #         attributes: %{
   #           "direction_names" => ["Outbound", "Inbound"],
@@ -323,10 +315,10 @@ defmodule MBTAV3API.Routes.RepoTest do
   #         },
   #         relationships: %{
   #           "stop" => [
-  #             %JsonApi.Item{
+  #             %Item{
   #               id: "initial-stop-id",
   #               relationships: %{
-  #                 "connecting_stops" => [%JsonApi.Item{id: "connecting-stop-id"}]
+  #                 "connecting_stops" => [%Item{id: "connecting-stop-id"}]
   #               }
   #             }
   #           ]
@@ -339,7 +331,7 @@ defmodule MBTAV3API.Routes.RepoTest do
   # defp mock_routes_by_stop("initial-stop-id", _opts) do
   #   %JsonApi{
   #     data: [
-  #       %JsonApi.Item{
+  #       %Item{
   #         id: "initial-route-id",
   #         attributes: %{
   #           "direction_names" => ["Outbound", "Inbound"],
