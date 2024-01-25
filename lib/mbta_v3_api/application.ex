@@ -14,6 +14,7 @@ defmodule MBTAV3API.Application do
       MBTAV3API.Facilities.Supervisor,
       MBTAV3API.RoutePatterns.Supervisor,
       MBTAV3API.Services.Supervisor,
+      MBTAV3API.Schedules.Supervisor,
       MBTAV3API.Stops.Supervisor,
       MBTAV3API.Routes.Supervisor,
       MBTAV3API.Cache
