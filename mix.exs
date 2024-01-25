@@ -37,6 +37,7 @@ defmodule MBTAV3API.MixProject do
       {:httpoison, "~> 1.5"},
       {:jason, "~> 1.1"},
       {:mock, "~> 0.3", only: :test},
+      {:phoenix_pubsub, "~> 2.1"},
       {:plug, "~> 1.15", only: :test},
       {:quixir, "~> 0.9", only: :test},
       {:sentry, "~> 7.0"},

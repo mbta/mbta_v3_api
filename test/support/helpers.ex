@@ -16,6 +16,21 @@ defmodule Test.Support.Helpers do
     end
   end
 
+  defmacro reassign_system_env(var, value) do
+    quote do
+      old_value = System.get_env(unquote(var))
+      System.put_env(unquote(var), unquote(value))
+
+      on_exit(fn ->
+        if old_value == nil do
+          System.delete_env(unquote(var))
+        else
+          System.put_env(unquote(var), old_value)
+        end
+      end)
+    end
+  end
+
   defmacro set_log_level(log_level) do
     quote do
       old_log_level = Logger.level()

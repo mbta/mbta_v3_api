@@ -2,14 +2,14 @@ defmodule MBTAV3API.Stream do
   @moduledoc """
   A GenStage for connecting to the V3Api's Server-Sent Event Stream
   capability. Receives events from the API and parses their data.
-  Subscribers receive events as `%V3Api.Stream.Event{}` structs, which
+  Subscribers receive events as `%MBTAV3API.Stream.Event{}` structs, which
   include the event name and the data as a `%JsonApi{}` struct.
 
   Required options:
   `:path` (e.g. "/vehicles")
   `:name` -- name of module
   `:subscribe_to` -- pid or name of a ServerSentEventStage
-  for the V3Api.Stream to subscribe to. This should be
+  for the MBTAV3API.Stream to subscribe to. This should be
   started as part of a supervision tree.
 
   Other options are made available for tests, and can include:
