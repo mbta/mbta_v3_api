@@ -10,9 +10,8 @@ defmodule MBTAV3API.Routes.Repo do
 
   alias JsonApi
   alias MBTAV3API.Routes
-  # alias MBTAV3API.Routes.{RepoApi, Route, Shape}
-  alias MBTAV3API.Routes.{RepoApi, Route}
-  # alias MBTAV3API.Shapes
+  alias MBTAV3API.Routes.{RepoApi, Route, Shape}
+  alias MBTAV3API.Shapes
 
   @default_opts [include: "route_patterns"]
 
@@ -72,56 +71,54 @@ defmodule MBTAV3API.Routes.Repo do
     end
   end
 
-  # TODO: Restore get_shapes and filter_shapes_by_priority once we've copied over Shapes.all
-  # @impl RepoApi
-  # def get_shapes(route_id, opts, filter_negative_priority? \\ true) do
-  #   opts = Keyword.put(opts, :route, route_id)
+  @impl RepoApi
+  def get_shapes(route_id, opts, filter_negative_priority? \\ true) do
+    opts = Keyword.put(opts, :route, route_id)
 
-  #   shapes =
-  #     cache(Enum.sort(opts), fn _ ->
-  #       case Shapes.all(opts) do
-  #         {:error, _} ->
-  #           []
+    shapes =
+      cache(Enum.sort(opts), fn _ ->
+        case Shapes.all(opts) do
+          {:error, _} ->
+            []
 
-  #         %JsonApi{data: data} ->
-  #           shapes = Enum.flat_map(data, &parse_shape/1)
+          %JsonApi{data: data} ->
+            shapes = Enum.flat_map(data, &parse_shape/1)
 
-  #           for shape <- shapes do
-  #             ConCache.put(__MODULE__, {:get_shape, shape.id}, [shape])
-  #           end
+            for shape <- shapes do
+              ConCache.put(__MODULE__, {:get_shape, shape.id}, [shape])
+            end
 
-  #           shapes
-  #       end
-  #     end)
+            shapes
+        end
+      end)
 
-  #   filter_shapes_by_priority(shapes, filter_negative_priority?)
-  # end
+    filter_shapes_by_priority(shapes, filter_negative_priority?)
+  end
 
-  # @spec filter_shapes_by_priority([Shape.t()], boolean) :: [Shape.t()]
-  # defp filter_shapes_by_priority(shapes, true) do
-  #   for shape <- shapes,
-  #       shape.priority >= 0 do
-  #     shape
-  #   end
-  # end
+  @spec filter_shapes_by_priority([Shape.t()], boolean) :: [Shape.t()]
+  defp filter_shapes_by_priority(shapes, true) do
+    for shape <- shapes,
+        shape.priority >= 0 do
+      shape
+    end
+  end
 
-  # defp filter_shapes_by_priority(shapes, false) do
-  #   shapes
-  # end
+  defp filter_shapes_by_priority(shapes, false) do
+    shapes
+  end
 
-  # TODO: Restore get_shape once we've copied over Shapes.by_id
-  # @impl RepoApi
-  # def get_shape(shape_id) do
-  #   cache(shape_id, fn _ ->
-  #     case Shapes.by_id(shape_id) do
-  #       {:error, _} ->
-  #         []
+  @impl RepoApi
+  def get_shape(shape_id) do
+    cache(shape_id, fn _ ->
+      case Shapes.by_id(shape_id) do
+        {:error, _} ->
+          []
 
-  #       %JsonApi{data: data} ->
-  #         Enum.flat_map(data, &parse_shape/1)
-  #     end
-  #   end)
-  # end
+        %JsonApi{data: data} ->
+          Enum.flat_map(data, &parse_shape/1)
+      end
+    end)
+  end
 
   @impl RepoApi
   def by_type(types) when is_list(types) do

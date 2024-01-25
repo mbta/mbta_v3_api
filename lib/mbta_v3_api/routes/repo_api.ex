@@ -5,8 +5,7 @@ defmodule MBTAV3API.Routes.RepoApi do
 
   @optional_callbacks by_stop_with_route_pattern: 1, by_stop_and_direction: 3
 
-  # alias MBTAV3API.Routes.{Route, Shape}
-  alias MBTAV3API.Routes.Route
+  alias MBTAV3API.Routes.{Route, Shape}
 
   @doc """
   Returns a list of all the routes
@@ -18,18 +17,16 @@ defmodule MBTAV3API.Routes.RepoApi do
   """
   @callback get(String.t()) :: Route.t() | nil
 
-  # TODO: Restore get_shapes once we've restored the implementation in Repo
-  # @doc """
-  # Returns a list of shapes
-  # """
-  # @callback get_shapes(String.t(), Keyword.t()) :: [Shape.t()]
-  # @callback get_shapes(String.t(), Keyword.t(), boolean) :: [Shape.t()]
+  @doc """
+  Returns a list of shapes
+  """
+  @callback get_shapes(String.t(), Keyword.t()) :: [Shape.t()]
+  @callback get_shapes(String.t(), Keyword.t(), boolean) :: [Shape.t()]
 
-  # TODO: Restore get_shape once we've restored the implementation in Repo
-  # @doc """
-  # Given a shape ID, returns a list of shapes matching it
-  # """
-  # @callback get_shape(String.t()) :: [Shape.t()]
+  @doc """
+  Given a shape ID, returns a list of shapes matching it
+  """
+  @callback get_shape(String.t()) :: [Shape.t()]
 
   @doc """
   Given a route_type (or list of route types), returns the list of routes matching that type.
