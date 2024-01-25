@@ -52,6 +52,15 @@ defmodule Util.Date do
     |> do_service_date()
   end
 
+  @spec time_is_greater_or_equal?(DateTime.t(), DateTime.t()) :: boolean
+  def time_is_greater_or_equal?(time, ref_time) do
+    case DateTime.compare(time, ref_time) do
+      :gt -> true
+      :eq -> true
+      :lt -> false
+    end
+  end
+
   defp do_service_date(%DateTime{hour: hour} = time) when hour < 3 do
     time
     |> Timex.shift(hours: -3)

@@ -30,7 +30,8 @@ defmodule MBTAV3API.Application do
       MBTAV3API.Stops.Repo,
       MBTAV3API.Routes.Supervisor,
       MBTAV3API.Services.Repo,
-      MBTAV3API.RoutePatterns.Repo
+      MBTAV3API.RoutePatterns.Repo,
+      MBTAV3API.Predictions.Supervisor
     ]
 
     opts = [strategy: :one_for_one, name: MBTAV3API.Supervisor]
