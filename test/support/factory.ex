@@ -244,6 +244,112 @@ defmodule MBTAV3API.Support.Factory do
     }
   end
 
+  def prediction_data_factory do
+    %Item{
+      type: "prediction",
+      id: "prediction-60392586-Braintree-02-1",
+      attributes: %{
+        "arrival_time" => nil,
+        "departure_time" => "2024-03-08T15:36:00-05:00",
+        "direction_id" => 1,
+        "schedule_relationship" => nil,
+        "status" => nil,
+        "stop_sequence" => 1
+      },
+      relationships: %{
+        "route" => [
+          %Item{
+            type: "route",
+            id: "Red",
+            attributes: nil,
+            relationships: nil
+          }
+        ],
+        "stop" => [
+          %Item{
+            type: "stop",
+            id: "Braintree-02",
+            attributes: %{"platform_code" => "2"},
+            relationships: %{
+              "facilities" => [],
+              "parent_station" => [
+                %Item{
+                  type: "stop",
+                  id: "place-brntn",
+                  attributes: nil,
+                  relationships: nil
+                }
+              ],
+              "zone" => [
+                %Item{
+                  type: "zone",
+                  id: "RapidTransit",
+                  attributes: nil,
+                  relationships: nil
+                }
+              ]
+            }
+          }
+        ],
+        "trip" => [
+          %Item{
+            type: "trip",
+            id: "60392586",
+            attributes: %{
+              "bikes_allowed" => 0,
+              "direction_id" => 1,
+              "headsign" => "Alewife",
+              "name" => ""
+            },
+            relationships: %{
+              "occupancies" => [],
+              "route" => [
+                %Item{
+                  type: "route",
+                  id: "Red",
+                  attributes: nil,
+                  relationships: nil
+                }
+              ],
+              "route_pattern" => [
+                %Item{
+                  type: "route_pattern",
+                  id: "Red-3-1",
+                  attributes: nil,
+                  relationships: nil
+                }
+              ],
+              "service" => [
+                %Item{
+                  type: "service",
+                  id: "WinterWeekday",
+                  attributes: nil,
+                  relationships: nil
+                }
+              ],
+              "shape" => [
+                %Item{
+                  type: "shape",
+                  id: "933_0016",
+                  attributes: nil,
+                  relationships: nil
+                }
+              ]
+            }
+          }
+        ],
+        "vehicle" => [
+          %Item{
+            type: "vehicle",
+            id: "R-547B05F6",
+            attributes: nil,
+            relationships: nil
+          }
+        ]
+      }
+    }
+  end
+
   def route_pattern_data_factory do
     %Item{
       id: "111-5-0",
