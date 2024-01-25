@@ -404,4 +404,53 @@ defmodule MBTAV3API.Support.Factory do
       }
     }
   end
+
+  def schedule_data_factory do
+    %Item{
+      id: "31174458-CR_MAY2016-hxl16011-Weekday-01-Lowell-schedule",
+      type: "schedule",
+      attributes: %{
+        "departure_time" => "2016-06-08T05:35:00-04:00",
+        "pickup_type" => 3,
+        "drop_off_type" => 1,
+        "timepoint" => false
+      },
+      relationships: %{
+        "stop" => [
+          %Item{
+            attributes: %{
+              "name" => "Lowell"
+            },
+            id: "Lowell",
+            relationships: %{"parent_station" => []},
+            type: "stop"
+          }
+        ],
+        "trip" => [
+          %Item{
+            attributes: %{
+              "headsign" => "North Station",
+              "name" => "300",
+              "direction_id" => 1
+            },
+            id: "31174458-CR_MAY2016-hxl16011-Weekday-01",
+            relationships: %{"predictions" => [], "service" => [], "vehicle" => []},
+            type: "trip"
+          }
+        ],
+        "route" => [
+          %Item{
+            id: "CR-Lowell",
+            type: "route",
+            attributes: %{
+              "long_name" => "Lowell Line",
+              "direction_names" => ["Outbound", "Inbound"],
+              "type" => 2
+            },
+            relationships: %{}
+          }
+        ]
+      }
+    }
+  end
 end
