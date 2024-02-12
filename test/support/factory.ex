@@ -453,4 +453,54 @@ defmodule MBTAV3API.Support.Factory do
       }
     }
   end
+
+  def trip_data_factory do
+    %JsonApi.Item{
+      id: "59813584",
+      type: "trip",
+      attributes: %{
+        "bikes_allowed" => 1,
+        "block_id" => "S39-22",
+        "direction_id" => 1,
+        "headsign" => "Back Bay",
+        "name" => "TEST NAME",
+        "revenue" => "REVENUE",
+        "wheelchair_accessible" => 1
+      },
+      relationships: %{
+        "route" => [
+          %JsonApi.Item{
+            type: "route",
+            id: "39",
+            attributes: nil,
+            relationships: nil
+          }
+        ],
+        "route_pattern" => [
+          %JsonApi.Item{
+            type: "route_pattern",
+            id: "39-3-1",
+            attributes: nil,
+            relationships: nil
+          }
+        ],
+        "service" => [
+          %JsonApi.Item{
+            type: "service",
+            id: "WinterSaturday",
+            attributes: nil,
+            relationships: nil
+          }
+        ],
+        "shape" => [
+          %JsonApi.Item{
+            type: "shape",
+            id: "390145",
+            attributes: nil,
+            relationships: nil
+          }
+        ]
+      }
+    }
+  end
 end
