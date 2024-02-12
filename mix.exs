@@ -15,7 +15,7 @@ defmodule MBTAV3API.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :con_cache],
       mod: {MBTAV3API.Application, []}
     ]
   end
