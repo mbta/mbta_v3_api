@@ -3,6 +3,7 @@ defmodule MBTAV3API.RoutePatterns.RepoTest do
   use ExUnit.Case, async: true
 
   import MBTAV3API.Support.Factory
+  import Test.Support.Helpers
 
   alias MBTAV3API.RoutePatterns.{Repo, RoutePattern}
 
@@ -91,6 +92,60 @@ defmodule MBTAV3API.RoutePatterns.RepoTest do
 
       assert stop_ids
       assert polyline
+    end
+  end
+
+  describe "included_stops_by_route_id/2" do
+    test "parses included stops out of route_patterns response" do
+      route_id = "Red"
+      response = File.read!(fixture_path("route_pattern_api_response.json")) |> JsonApi.parse()
+      opts = [direction_id: 0]
+
+      opts =
+        Keyword.put(opts, :route_patterns_all_fn, fn [
+                                                       sort: "typicality,sort_order",
+                                                       include: "representative_trip.stops",
+                                                       route: ^route_id,
+                                                       direction_id: 0
+                                                     ] ->
+          response
+        end)
+
+      result = Repo.included_stops_by_route_id(route_id, opts)
+
+      expected = [
+        "121",
+        "151",
+        "6564",
+        "70061",
+        "70063",
+        "70065",
+        "70067",
+        "70069",
+        "70071",
+        "70073",
+        "70075",
+        "70077",
+        "70079",
+        "70081",
+        "70083",
+        "70085",
+        "70087",
+        "70089",
+        "70091",
+        "70093",
+        "70095",
+        "70097",
+        "70099",
+        "70101",
+        "70103",
+        "70105",
+        "9070083",
+        "9170076"
+      ]
+
+      assert result |> Enum.map(& &1.id) |> Enum.sort() == expected
+      assert result |> length == 28
     end
   end
 end

@@ -154,11 +154,11 @@ defmodule MBTAV3API.Stops.Api do
   @spec parse_v3_response(Item.t() | {:ok, Item.t()} | {:error, any}) ::
           {:ok, Stop.t() | nil}
           | {:error, any}
-  defp parse_v3_response({:ok, %Item{} = item}), do: parse_v3_response(item)
-  defp parse_v3_response({:error, [%JsonApi.Error{code: "not_found"} | _]}), do: {:ok, nil}
-  defp parse_v3_response({:error, _} = error), do: error
+  def parse_v3_response({:ok, %Item{} = item}), do: parse_v3_response(item)
+  def parse_v3_response({:error, [%JsonApi.Error{code: "not_found"} | _]}), do: {:ok, nil}
+  def parse_v3_response({:error, _} = error), do: error
 
-  defp parse_v3_response(%Item{} = item) do
+  def parse_v3_response(%Item{} = item) do
     fare_facilities = fare_facilities(item)
 
     stop = %Stop{
