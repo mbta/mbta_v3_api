@@ -53,6 +53,22 @@ defmodule MBTAV3API.RoutePatterns.Repo do
     |> cache(&api_all/1)
   end
 
+  def included_stops_by_route_id(route_id, opts \\ [])
+
+  def included_stops_by_route_id("Green", opts) do
+    ~w(Green-B Green-C Green-D Green-E)s
+    |> Enum.join(",")
+    |> by_route_id(opts)
+  end
+
+  def included_stops_by_route_id(route_id, opts) do
+    opts
+    |> Keyword.put(:route, route_id)
+    |> Keyword.put(:include, "representative_trip.stops")
+    |> Keyword.put(:sort, "typicality,sort_order")
+    |> cache(&api_included_stops/1)
+  end
+
   defp api_all(opts) do
     {route_patterns_all_fn, opts} =
       Keyword.pop(opts, :route_patterns_all_fn, &RoutePatterns.all/1)
@@ -68,6 +84,30 @@ defmodule MBTAV3API.RoutePatterns.Repo do
 
       %JsonApi{data: data} ->
         Enum.map(data, &RoutePattern.new/1)
+    end
+  end
+
+  defp api_included_stops(opts) do
+    {route_patterns_all_fn, opts} =
+      Keyword.pop(opts, :route_patterns_all_fn, &RoutePatterns.all/1)
+
+    case route_patterns_all_fn.(opts) do
+      {:error, error} ->
+        _ =
+          Logger.warning(
+            "module=#{__MODULE__} RoutePatterns.all with opts #{inspect(opts)} returned :error -> #{inspect(error)}"
+          )
+
+        []
+
+      %JsonApi{data: data} ->
+        Enum.flat_map(data, fn data_item ->
+          data_item.relationships["representative_trip"]
+          |> Enum.flat_map(fn trip -> trip.relationships["stops"] end)
+        end)
+        |> Enum.uniq()
+        |> Enum.map(&MBTAV3API.Stops.Api.parse_v3_response(&1))
+        |> Enum.map(fn {:ok, stop} -> stop end)
     end
   end
 

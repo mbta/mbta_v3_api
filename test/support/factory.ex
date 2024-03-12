@@ -453,4 +453,1772 @@ defmodule MBTAV3API.Support.Factory do
       }
     }
   end
+
+  def raw_route_patterns_with_stops_factory do
+    %JsonApi{
+      links: %{},
+      data: [
+        %JsonApi.Item{
+          type: "route_pattern",
+          id: "Red-3-0",
+          attributes: %{
+            "canonical" => true,
+            "direction_id" => 0,
+            "name" => "Alewife - Braintree",
+            "sort_order" => 100_100_000,
+            "time_desc" => nil,
+            "typicality" => 1
+          },
+          relationships: %{
+            "representative_trip" => [
+              %JsonApi.Item{
+                type: "trip",
+                id: "canonical-Red-C1-0",
+                attributes: %{
+                  "bikes_allowed" => 0,
+                  "block_id" => "",
+                  "direction_id" => 0,
+                  "headsign" => "Braintree",
+                  "name" => "",
+                  "revenue" => "REVENUE",
+                  "wheelchair_accessible" => 1
+                },
+                relationships: %{
+                  "route" => [
+                    %JsonApi.Item{
+                      type: "route",
+                      id: "Red",
+                      attributes: nil,
+                      relationships: nil
+                    }
+                  ],
+                  "route_pattern" => [
+                    %JsonApi.Item{
+                      type: "route_pattern",
+                      id: "Red-3-0",
+                      attributes: %{
+                        "canonical" => true,
+                        "direction_id" => 0,
+                        "name" => "Alewife - Braintree",
+                        "sort_order" => 100_100_000,
+                        "time_desc" => nil,
+                        "typicality" => 1
+                      },
+                      relationships: %{}
+                    }
+                  ],
+                  "service" => [
+                    %JsonApi.Item{
+                      type: "service",
+                      id: "canonical",
+                      attributes: nil,
+                      relationships: nil
+                    }
+                  ],
+                  "shape" => [
+                    %JsonApi.Item{
+                      type: "shape",
+                      id: "canonical-933_0009",
+                      attributes: nil,
+                      relationships: nil
+                    }
+                  ],
+                  "stops" => [
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70061",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Alewife - Red Line",
+                        "latitude" => 42.396158,
+                        "location_type" => 0,
+                        "longitude" => -71.139971,
+                        "municipality" => "Cambridge",
+                        "name" => "Alewife",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Red Line",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-alfcl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70063",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Davis - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.39674,
+                        "location_type" => 0,
+                        "longitude" => -71.121815,
+                        "municipality" => "Somerville",
+                        "name" => "Davis",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-davis",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70065",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Porter - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.3884,
+                        "location_type" => 0,
+                        "longitude" => -71.119149,
+                        "municipality" => "Cambridge",
+                        "name" => "Porter",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-portr",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70067",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Harvard - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.373362,
+                        "location_type" => 0,
+                        "longitude" => -71.118956,
+                        "municipality" => "Cambridge",
+                        "name" => "Harvard",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-harsq",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70069",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Central - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.365304,
+                        "location_type" => 0,
+                        "longitude" => -71.103621,
+                        "municipality" => "Cambridge",
+                        "name" => "Central",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-cntsq",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70071",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Kendall/MIT - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.362355,
+                        "location_type" => 0,
+                        "longitude" => -71.085605,
+                        "municipality" => "Cambridge",
+                        "name" => "Kendall/MIT",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-knncl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70073",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Charles/MGH - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.361187,
+                        "location_type" => 0,
+                        "longitude" => -71.071505,
+                        "municipality" => "Boston",
+                        "name" => "Charles/MGH",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-chmnl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70075",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Park Street - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.356395,
+                        "location_type" => 0,
+                        "longitude" => -71.062424,
+                        "municipality" => "Boston",
+                        "name" => "Park Street",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-pktrm",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70077",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Downtown Crossing - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.355518,
+                        "location_type" => 0,
+                        "longitude" => -71.060225,
+                        "municipality" => "Boston",
+                        "name" => "Downtown Crossing",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-dwnxg",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70079",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "South Station - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.352271,
+                        "location_type" => 0,
+                        "longitude" => -71.055242,
+                        "municipality" => "Boston",
+                        "name" => "South Station",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-sstat",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70081",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Broadway - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.342622,
+                        "location_type" => 0,
+                        "longitude" => -71.056967,
+                        "municipality" => "Boston",
+                        "name" => "Broadway",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-brdwy",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70083",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Andrew - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.330154,
+                        "location_type" => 0,
+                        "longitude" => -71.057655,
+                        "municipality" => "Boston",
+                        "name" => "Andrew",
+                        "on_street" => nil,
+                        "platform_code" => "1",
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-andrw",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70095",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "JFK/UMass - Red Line - Braintree",
+                        "latitude" => 42.320418,
+                        "location_type" => 0,
+                        "longitude" => -71.052287,
+                        "municipality" => "Boston",
+                        "name" => "JFK/UMass",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-jfk",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70097",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "North Quincy - Red Line - Braintree",
+                        "latitude" => 42.27577,
+                        "location_type" => 0,
+                        "longitude" => -71.030194,
+                        "municipality" => "Quincy",
+                        "name" => "North Quincy",
+                        "on_street" => nil,
+                        "platform_code" => "2",
+                        "platform_name" => "Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-nqncy",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70099",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Wollaston - Red Line - Braintree",
+                        "latitude" => 42.266762,
+                        "location_type" => 0,
+                        "longitude" => -71.020542,
+                        "municipality" => "Quincy",
+                        "name" => "Wollaston",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-wlsta",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70101",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Quincy Center - Red Line - Braintree",
+                        "latitude" => 42.251809,
+                        "location_type" => 0,
+                        "longitude" => -71.005409,
+                        "municipality" => "Quincy",
+                        "name" => "Quincy Center",
+                        "on_street" => nil,
+                        "platform_code" => "2",
+                        "platform_name" => "Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-qnctr",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70103",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Quincy Adams - Red Line - Braintree",
+                        "latitude" => 42.233391,
+                        "location_type" => 0,
+                        "longitude" => -71.007153,
+                        "municipality" => "Quincy",
+                        "name" => "Quincy Adams",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-qamnl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70105",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Braintree - Red Line",
+                        "latitude" => 42.207424,
+                        "location_type" => 0,
+                        "longitude" => -71.001645,
+                        "municipality" => "Braintree",
+                        "name" => "Braintree",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Red Line",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-brntn",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            "route" => [
+              %JsonApi.Item{
+                type: "route",
+                id: "Red",
+                attributes: nil,
+                relationships: nil
+              }
+            ]
+          }
+        },
+        %JsonApi.Item{
+          type: "route_pattern",
+          id: "Red-1-0",
+          attributes: %{
+            "canonical" => true,
+            "direction_id" => 0,
+            "name" => "Alewife - Ashmont",
+            "sort_order" => 100_100_001,
+            "time_desc" => nil,
+            "typicality" => 1
+          },
+          relationships: %{
+            "representative_trip" => [
+              %JsonApi.Item{
+                type: "trip",
+                id: "canonical-Red-C2-0",
+                attributes: %{
+                  "bikes_allowed" => 0,
+                  "block_id" => "",
+                  "direction_id" => 0,
+                  "headsign" => "Ashmont",
+                  "name" => "",
+                  "revenue" => "REVENUE",
+                  "wheelchair_accessible" => 1
+                },
+                relationships: %{
+                  "route" => [
+                    %JsonApi.Item{
+                      type: "route",
+                      id: "Red",
+                      attributes: nil,
+                      relationships: nil
+                    }
+                  ],
+                  "route_pattern" => [
+                    %JsonApi.Item{
+                      type: "route_pattern",
+                      id: "Red-1-0",
+                      attributes: %{
+                        "canonical" => true,
+                        "direction_id" => 0,
+                        "name" => "Alewife - Ashmont",
+                        "sort_order" => 100_100_001,
+                        "time_desc" => nil,
+                        "typicality" => 1
+                      },
+                      relationships: %{}
+                    }
+                  ],
+                  "service" => [
+                    %JsonApi.Item{
+                      type: "service",
+                      id: "canonical",
+                      attributes: nil,
+                      relationships: nil
+                    }
+                  ],
+                  "shape" => [
+                    %JsonApi.Item{
+                      type: "shape",
+                      id: "canonical-931_0009",
+                      attributes: nil,
+                      relationships: nil
+                    }
+                  ],
+                  "stops" => [
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70061",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Alewife - Red Line",
+                        "latitude" => 42.396158,
+                        "location_type" => 0,
+                        "longitude" => -71.139971,
+                        "municipality" => "Cambridge",
+                        "name" => "Alewife",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Red Line",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-alfcl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70063",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Davis - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.39674,
+                        "location_type" => 0,
+                        "longitude" => -71.121815,
+                        "municipality" => "Somerville",
+                        "name" => "Davis",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-davis",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70065",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Porter - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.3884,
+                        "location_type" => 0,
+                        "longitude" => -71.119149,
+                        "municipality" => "Cambridge",
+                        "name" => "Porter",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-portr",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70067",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Harvard - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.373362,
+                        "location_type" => 0,
+                        "longitude" => -71.118956,
+                        "municipality" => "Cambridge",
+                        "name" => "Harvard",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-harsq",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70069",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Central - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.365304,
+                        "location_type" => 0,
+                        "longitude" => -71.103621,
+                        "municipality" => "Cambridge",
+                        "name" => "Central",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-cntsq",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70071",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Kendall/MIT - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.362355,
+                        "location_type" => 0,
+                        "longitude" => -71.085605,
+                        "municipality" => "Cambridge",
+                        "name" => "Kendall/MIT",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-knncl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70073",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Charles/MGH - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.361187,
+                        "location_type" => 0,
+                        "longitude" => -71.071505,
+                        "municipality" => "Boston",
+                        "name" => "Charles/MGH",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-chmnl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70075",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Park Street - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.356395,
+                        "location_type" => 0,
+                        "longitude" => -71.062424,
+                        "municipality" => "Boston",
+                        "name" => "Park Street",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-pktrm",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70077",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Downtown Crossing - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.355518,
+                        "location_type" => 0,
+                        "longitude" => -71.060225,
+                        "municipality" => "Boston",
+                        "name" => "Downtown Crossing",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-dwnxg",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70079",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "South Station - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.352271,
+                        "location_type" => 0,
+                        "longitude" => -71.055242,
+                        "municipality" => "Boston",
+                        "name" => "South Station",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-sstat",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70081",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Broadway - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.342622,
+                        "location_type" => 0,
+                        "longitude" => -71.056967,
+                        "municipality" => "Boston",
+                        "name" => "Broadway",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-brdwy",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70083",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Andrew - Red Line - Ashmont/Braintree",
+                        "latitude" => 42.330154,
+                        "location_type" => 0,
+                        "longitude" => -71.057655,
+                        "municipality" => "Boston",
+                        "name" => "Andrew",
+                        "on_street" => nil,
+                        "platform_code" => "1",
+                        "platform_name" => "Ashmont/Braintree",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-andrw",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70085",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "JFK/UMass - Red Line - Ashmont",
+                        "latitude" => 42.320632,
+                        "location_type" => 0,
+                        "longitude" => -71.052514,
+                        "municipality" => "Boston",
+                        "name" => "JFK/UMass",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-jfk",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70087",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Savin Hill - Red Line - Ashmont",
+                        "latitude" => 42.310603,
+                        "location_type" => 0,
+                        "longitude" => -71.053678,
+                        "municipality" => "Boston",
+                        "name" => "Savin Hill",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-shmnl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70089",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Fields Corner - Red Line - Ashmont",
+                        "latitude" => 42.299993,
+                        "location_type" => 0,
+                        "longitude" => -71.062021,
+                        "municipality" => "Boston",
+                        "name" => "Fields Corner",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-fldcr",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70091",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Shawmut - Red Line - Ashmont",
+                        "latitude" => 42.293126,
+                        "location_type" => 0,
+                        "longitude" => -71.065738,
+                        "municipality" => "Boston",
+                        "name" => "Shawmut",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-smmnl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70093",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Ashmont - Red Line - Exit Only",
+                        "latitude" => 42.284508,
+                        "location_type" => 0,
+                        "longitude" => -71.063833,
+                        "municipality" => "Boston",
+                        "name" => "Ashmont",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Exit Only",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-asmnl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            "route" => [
+              %JsonApi.Item{
+                type: "route",
+                id: "Red",
+                attributes: nil,
+                relationships: nil
+              }
+            ]
+          }
+        },
+        %JsonApi.Item{
+          type: "route_pattern",
+          id: "Red-A-0",
+          attributes: %{
+            "canonical" => false,
+            "direction_id" => 0,
+            "name" => "JFK/UMass - Ashmont",
+            "sort_order" => 100_100_130,
+            "time_desc" => "Weekends only",
+            "typicality" => 3
+          },
+          relationships: %{
+            "representative_trip" => [
+              %JsonApi.Item{
+                type: "trip",
+                id: "61203187",
+                attributes: %{
+                  "bikes_allowed" => 0,
+                  "block_id" => "S2832-11",
+                  "direction_id" => 0,
+                  "headsign" => "Ashmont",
+                  "name" => "",
+                  "revenue" => "REVENUE",
+                  "wheelchair_accessible" => 1
+                },
+                relationships: %{
+                  "route" => [
+                    %JsonApi.Item{
+                      type: "route",
+                      id: "Red",
+                      attributes: nil,
+                      relationships: nil
+                    }
+                  ],
+                  "route_pattern" => [
+                    %JsonApi.Item{
+                      type: "route_pattern",
+                      id: "Red-A-0",
+                      attributes: %{
+                        "canonical" => false,
+                        "direction_id" => 0,
+                        "name" => "JFK/UMass - Ashmont",
+                        "sort_order" => 100_100_130,
+                        "time_desc" => "Weekends only",
+                        "typicality" => 3
+                      },
+                      relationships: %{}
+                    }
+                  ],
+                  "service" => [
+                    %JsonApi.Item{
+                      type: "service",
+                      id: "RTL12024-hms14pj6-Saturday-01",
+                      attributes: nil,
+                      relationships: nil
+                    }
+                  ],
+                  "shape" => [
+                    %JsonApi.Item{
+                      type: "shape",
+                      id: "28320002",
+                      attributes: nil,
+                      relationships: nil
+                    }
+                  ],
+                  "stops" => [
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70085",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "JFK/UMass - Red Line - Ashmont",
+                        "latitude" => 42.320632,
+                        "location_type" => 0,
+                        "longitude" => -71.052514,
+                        "municipality" => "Boston",
+                        "name" => "JFK/UMass",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-jfk",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70087",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Savin Hill - Red Line - Ashmont",
+                        "latitude" => 42.310603,
+                        "location_type" => 0,
+                        "longitude" => -71.053678,
+                        "municipality" => "Boston",
+                        "name" => "Savin Hill",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-shmnl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70089",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Fields Corner - Red Line - Ashmont",
+                        "latitude" => 42.299993,
+                        "location_type" => 0,
+                        "longitude" => -71.062021,
+                        "municipality" => "Boston",
+                        "name" => "Fields Corner",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-fldcr",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70091",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Shawmut - Red Line - Ashmont",
+                        "latitude" => 42.293126,
+                        "location_type" => 0,
+                        "longitude" => -71.065738,
+                        "municipality" => "Boston",
+                        "name" => "Shawmut",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Ashmont",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-smmnl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    },
+                    %JsonApi.Item{
+                      type: "stop",
+                      id: "70093",
+                      attributes: %{
+                        "address" => nil,
+                        "at_street" => nil,
+                        "description" => "Ashmont - Red Line - Exit Only",
+                        "latitude" => 42.284508,
+                        "location_type" => 0,
+                        "longitude" => -71.063833,
+                        "municipality" => "Boston",
+                        "name" => "Ashmont",
+                        "on_street" => nil,
+                        "platform_code" => nil,
+                        "platform_name" => "Exit Only",
+                        "vehicle_type" => 1,
+                        "wheelchair_boarding" => 1
+                      },
+                      relationships: %{
+                        "facilities" => [],
+                        "parent_station" => [
+                          %JsonApi.Item{
+                            type: "stop",
+                            id: "place-asmnl",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ],
+                        "zone" => [
+                          %JsonApi.Item{
+                            type: "zone",
+                            id: "RapidTransit",
+                            attributes: nil,
+                            relationships: nil
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            "route" => [
+              %JsonApi.Item{
+                type: "route",
+                id: "Red",
+                attributes: nil,
+                relationships: nil
+              }
+            ]
+          }
+        }
+      ]
+    }
+  end
 end
