@@ -34,6 +34,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
     :shape_priority,
     :headsign,
     :stop_ids,
+    :stops,
     :route_id,
     :time_desc,
     :typicality,
@@ -53,6 +54,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
           shape_priority: number,
           headsign: String.t(),
           stop_ids: [Stop.id_t()],
+          stops: [Stop.t()],
           route_id: Route.id_t(),
           time_desc: String.t(),
           typicality: typicality_t(),
@@ -91,6 +93,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
       shape_id: shape_id(trip_relationships),
       headsign: headsign,
       stop_ids: stop_ids(trip_relationships),
+      stops: stops(trip_relationships),
       route_id: route_id,
       time_desc: time_desc,
       typicality: typicality,
@@ -155,6 +158,21 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
   end
 
   defp stop_ids(_), do: nil
+
+  @spec stops(map()) :: [Stop.t()] | nil
+  defp stops(%{"stops" => stops}) when is_list(stops) do
+    Enum.reduce(stops, [], fn stop_data, acc ->
+      case MBTAV3API.Stops.Api.parse_v3_response(stop_data) do
+        {:ok, %Stop{} = stop} ->
+          acc ++ [stop]
+
+        _ ->
+          acc
+      end
+    end)
+  end
+
+  defp stops(_), do: nil
 
   defp service_id(%{
          "service" => [

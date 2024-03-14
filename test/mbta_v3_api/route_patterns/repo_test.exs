@@ -69,6 +69,31 @@ defmodule MBTAV3API.RoutePatterns.RepoTest do
 
       assert [%RoutePattern{} | _] = Repo.by_route_id(route_id, opts)
     end
+
+    test "parses stops if included" do
+      route_id = "Red"
+      direction_id = 0
+
+      response = build(:raw_route_patterns_with_stops)
+
+      opts = [direction_id: direction_id, include: "representative_trip.stops"]
+
+      opts =
+        Keyword.put(opts, :route_patterns_all_fn, fn [
+                                                       sort: "typicality,sort_order",
+                                                       route: ^route_id,
+                                                       direction_id: ^direction_id,
+                                                       include: "representative_trip.stops"
+                                                     ] ->
+          response
+        end)
+
+      assert [%RoutePattern{stop_ids: stop_ids, stops: stops} | _] =
+               Repo.by_route_id(route_id, opts)
+
+      assert is_list(stop_ids)
+      assert is_list(stops)
+    end
   end
 
   describe "by_stop_id/1" do
