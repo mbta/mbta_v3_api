@@ -29,6 +29,7 @@ defmodule MBTAV3API.Stops.Stop do
             type: nil,
             platform_name: nil,
             platform_code: nil,
+            vehicle_type: nil,
             description: nil,
             zone: nil
 
@@ -58,6 +59,7 @@ defmodule MBTAV3API.Stops.Stop do
           type: stop_type,
           platform_name: String.t() | nil,
           platform_code: String.t() | nil,
+          vehicle_type: String.t() | nil,
           description: String.t() | nil,
           zone: String.t() | nil
         }
