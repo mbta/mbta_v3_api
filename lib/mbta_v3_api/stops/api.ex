@@ -24,7 +24,7 @@ defmodule MBTAV3API.Stops.Api do
     "fields[stop]":
       "address,name,latitude,longitude,address," <>
         "municipality,wheelchair_boarding,location_type," <>
-        "platform_name,platform_code,description"
+        "platform_name,platform_code,vehicle_type,description"
   ]
 
   @accessible_facilities ~w(elevator escalator ramp portable_boarding_lift
@@ -181,6 +181,7 @@ defmodule MBTAV3API.Stops.Api do
       type: type(item),
       platform_name: platform_name(item),
       platform_code: platform_code(item),
+      vehicle_type: vehicle_type(item),
       description: description(item),
       zone: zone_number(item)
     }
@@ -219,6 +220,8 @@ defmodule MBTAV3API.Stops.Api do
   defp platform_name(%Item{attributes: %{"platform_name" => name}}), do: name
 
   defp platform_code(%Item{attributes: %{"platform_code" => code}}), do: code
+
+  defp vehicle_type(%Item{attributes: %{"vehicle_type" => type}}), do: type
 
   defp description(%Item{attributes: %{"description" => description}}), do: description
 
