@@ -352,6 +352,30 @@ defmodule MBTAV3API.Support.Factory do
     }
   end
 
+  def route_data_factory do
+    %Item{
+      id: "Orange",
+      type: "route",
+      attributes: %{
+        "color" => "ED8B00",
+        "description" => "Rapid Transit",
+        "direction_destinations" => ["Forest Hills", "Oak Grove"],
+        "direction_names" => ["South", "North"],
+        "fare_class" => "Rapid Transit",
+        "long_name" => "Orange Line",
+        "short_name" => "",
+        "sort_order" => 10020,
+        "text_color" => "FFFFFF",
+        "type" => 1
+      },
+      relationships: %{
+        "line" => [
+          %Item{id: "line-Orange", type: "line"}
+        ]
+      }
+    }
+  end
+
   def route_pattern_data_factory do
     %Item{
       id: "111-5-0",
@@ -435,35 +459,7 @@ defmodule MBTAV3API.Support.Factory do
                 }
               ],
               "shape" => [
-                %Item{
-                  id: "canonical-933_0009",
-                  type: "shape",
-                  attributes: %{
-                    "direction_id" => 0,
-                    "name" => "Alewife - Braintree",
-                    "polyline" =>
-                      "}nwaG~|eqLGyNIqAAc@S_CAEWu@g@}@u@k@u@Wu@OMGIMISQkAOcAGw@SoDFkCf@sUXcJJuERwHPkENqCJmB^mDn@}D??D[TeANy@\\iAt@qB`AwBl@cAl@m@b@Yn@QrBEtCKxQ_ApMT??R?`m@hD`Np@jAF|@C`B_@hBi@n@s@d@gA`@}@Z_@RMZIl@@fBFlB\\tAP??~@L^?HCLKJWJ_@vC{NDGLQvG}HdCiD`@e@Xc@b@oAjEcPrBeGfAsCvMqVl@sA??jByD`DoGd@cAj@cBJkAHqBNiGXeHVmJr@kR~@q^HsB@U??NgDr@gJTcH`@aMFyCF}AL}DN}GL}CXkILaD@QFmA@[??DaAFiBDu@BkA@UB]Fc@Jo@BGJ_@Lc@\\}@vJ_OrCyDj@iAb@_AvBuF`@gA`@aAv@qBVo@Xu@??bDgI??Tm@~IsQj@cAr@wBp@kBj@kB??HWtDcN`@g@POl@UhASh@Eb@?t@FXHl@Px@b@he@h[pCC??bnAm@h@T??xF|BpBp@^PLBXAz@Yl@]l@e@|B}CT[p@iA|A}BZi@jBeDnAiBz@iAf@k@l@g@dAs@fAe@|@WpCe@l@GTCRE\\G??~@O`@ELA|AGf@A\\CjCGrEKz@AdEAxHY|BD~@JjB^fF~AdDbA|InCxCv@zD|@rWfEXDpB`@tANvAHx@AjBIx@M~@S~@a@fAi@HEnA{@fA{@|HuI|DwEbDqDpLkNhCyClEiFhLaN`@c@f@o@RURUbDsDbAiA`AgAv@_AHKHI~E}FdBoBfAgAfD{DxDoE~DcF|BkClAwALODEJOJK|@gATWvAoA`Au@fAs@hAk@n@QpAa@vDeAhA[x@Yh@Wv@a@b@YfAaAjCgCz@aAtByBz@{@??|FaGtCaDbL{LhI{IzHgJdAuAjC{CVYvAwA??JIl@a@NMNM\\[|AuArF_GlPyQrD_ErAwAd@e@nE{ErDuD\\a@nE_FZYPSRUvL{Mv@}@Z[JILKv@m@z@i@fCkAlBmAl@[t@[??h@WxBeAp@]dAi@p@YXIPEXKDALENEbAQl@Gz@ChADtAL~ARnCZbGx@xB`@TDL@PBzAVjIvA^FVDVB|@NjHlAlPnCnCd@vBXhBNv@JtAPL@|BXrAN??`@FRBj@Bp@FbADz@?dAIp@I|@Mx@Q`AWhAYlBs@pDaBzAs@nBgAZQJGJGhAs@RKVMNKTMf@YdHcEzBmApAw@`GmDLI@AHGlEwClAi@hA_@v@Up@ObB]z@Kr@Ir@EZCpA?dCRf@DpAHvANrE`@bDTr@DfMdA`CJvBRn@DnCLnBPfAFV@",
-                    "priority" => -1
-                  },
-                  relationships: %{
-                    "route" => [
-                      %Item{
-                        attributes: nil,
-                        id: "Red",
-                        relationships: nil,
-                        type: "route"
-                      }
-                    ],
-                    "stops" => [
-                      %Item{
-                        attributes: nil,
-                        id: "place-sstat",
-                        relationships: nil,
-                        type: "stop"
-                      }
-                    ]
-                  }
-                }
+                shape_data_factory()
               ],
               "stops" => [
                 %Item{
@@ -471,10 +467,12 @@ defmodule MBTAV3API.Support.Factory do
                   type: "stop",
                   attributes: %{
                     "name" => "South Station",
+                    "description" => "South Station - Red Line - Ashmont/Braintree",
                     "location_type" => 0,
                     "latitude" => 42.352271,
                     "longitude" => -71.055242,
                     "platform_name" => "Ashmont/Braintree",
+                    "platform_code" => nil,
                     "vehicle_type" => 1
                   },
                   relationships: %{
@@ -556,6 +554,38 @@ defmodule MBTAV3API.Support.Factory do
               "type" => 2
             },
             relationships: %{}
+          }
+        ]
+      }
+    }
+  end
+
+  def shape_data_factory do
+    %Item{
+      id: "canonical-933_0009",
+      type: "shape",
+      attributes: %{
+        "direction_id" => 0,
+        "name" => "Alewife - Braintree",
+        "polyline" =>
+          "}nwaG~|eqLGyNIqAAc@S_CAEWu@g@}@u@k@u@Wu@OMGIMISQkAOcAGw@SoDFkCf@sUXcJJuERwHPkENqCJmB^mDn@}D??D[TeANy@\\iAt@qB`AwBl@cAl@m@b@Yn@QrBEtCKxQ_ApMT??R?`m@hD`Np@jAF|@C`B_@hBi@n@s@d@gA`@}@Z_@RMZIl@@fBFlB\\tAP??~@L^?HCLKJWJ_@vC{NDGLQvG}HdCiD`@e@Xc@b@oAjEcPrBeGfAsCvMqVl@sA??jByD`DoGd@cAj@cBJkAHqBNiGXeHVmJr@kR~@q^HsB@U??NgDr@gJTcH`@aMFyCF}AL}DN}GL}CXkILaD@QFmA@[??DaAFiBDu@BkA@UB]Fc@Jo@BGJ_@Lc@\\}@vJ_OrCyDj@iAb@_AvBuF`@gA`@aAv@qBVo@Xu@??bDgI??Tm@~IsQj@cAr@wBp@kBj@kB??HWtDcN`@g@POl@UhASh@Eb@?t@FXHl@Px@b@he@h[pCC??bnAm@h@T??xF|BpBp@^PLBXAz@Yl@]l@e@|B}CT[p@iA|A}BZi@jBeDnAiBz@iAf@k@l@g@dAs@fAe@|@WpCe@l@GTCRE\\G??~@O`@ELA|AGf@A\\CjCGrEKz@AdEAxHY|BD~@JjB^fF~AdDbA|InCxCv@zD|@rWfEXDpB`@tANvAHx@AjBIx@M~@S~@a@fAi@HEnA{@fA{@|HuI|DwEbDqDpLkNhCyClEiFhLaN`@c@f@o@RURUbDsDbAiA`AgAv@_AHKHI~E}FdBoBfAgAfD{DxDoE~DcF|BkClAwALODEJOJK|@gATWvAoA`Au@fAs@hAk@n@QpAa@vDeAhA[x@Yh@Wv@a@b@YfAaAjCgCz@aAtByBz@{@??|FaGtCaDbL{LhI{IzHgJdAuAjC{CVYvAwA??JIl@a@NMNM\\[|AuArF_GlPyQrD_ErAwAd@e@nE{ErDuD\\a@nE_FZYPSRUvL{Mv@}@Z[JILKv@m@z@i@fCkAlBmAl@[t@[??h@WxBeAp@]dAi@p@YXIPEXKDALENEbAQl@Gz@ChADtAL~ARnCZbGx@xB`@TDL@PBzAVjIvA^FVDVB|@NjHlAlPnCnCd@vBXhBNv@JtAPL@|BXrAN??`@FRBj@Bp@FbADz@?dAIp@I|@Mx@Q`AWhAYlBs@pDaBzAs@nBgAZQJGJGhAs@RKVMNKTMf@YdHcEzBmApAw@`GmDLI@AHGlEwClAi@hA_@v@Up@ObB]z@Kr@Ir@EZCpA?dCRf@DpAHvANrE`@bDTr@DfMdA`CJvBRn@DnCLnBPfAFV@",
+        "priority" => 1
+      },
+      relationships: %{
+        "route" => [
+          %Item{
+            attributes: nil,
+            id: "Red",
+            relationships: nil,
+            type: "route"
+          }
+        ],
+        "stops" => [
+          %Item{
+            attributes: nil,
+            id: "place-sstat",
+            relationships: nil,
+            type: "stop"
           }
         ]
       }
