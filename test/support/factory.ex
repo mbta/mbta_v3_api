@@ -352,6 +352,40 @@ defmodule MBTAV3API.Support.Factory do
     }
   end
 
+  def facility_data_factory do
+    %Item{
+      type: "facility",
+      id: "349",
+      attributes: %{
+        "latitude" => nil,
+        "long_name" => "Alewife Escalator 349 (Platform to Russell Field)",
+        "longitude" => nil,
+        "properties" => [
+          %{"name" => "direction", "value" => "up"},
+          %{"name" => "excludes-stop", "value" => 141},
+          %{"name" => "excludes-stop", "value" => 9070061},
+          %{"name" => "excludes-stop", "value" => "door-alfcl-alewife"},
+          %{"name" => "excludes-stop", "value" => "door-alfcl-busway"},
+          %{"name" => "excludes-stop", "value" => "door-alfcl-cambridgepark"},
+          %{"name" => "excludes-stop", "value" => "door-alfcl-pathbusway"},
+          %{"name" => "excludes-stop", "value" => "door-alfcl-steel"}
+        ],
+        "short_name" => "Platform to Russell Field",
+        "type" => "ESCALATOR"
+      },
+      relationships: %{
+        "stop" => [
+          %Item{
+            type: "stop",
+            id: "place-alfcl",
+            attributes: nil,
+            relationships: nil
+          }
+        ]
+      }
+    }
+  end
+
   def route_data_factory do
     %Item{
       id: "Orange",
