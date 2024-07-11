@@ -20,8 +20,8 @@ defmodule Facilities.RepoTest do
       id: "place-alfcl",
       type: "stop",
     },
-    latitude: nil,
-    longitude: nil,
+    latitude: 42.395428,
+    longitude: -71.142483,
     properties: [
       %{name: "direction", value: "up"},
       %{name: "excludes-stop", value: 141},
@@ -48,23 +48,6 @@ defmodule Facilities.RepoTest do
     test "get a parsed facility from the api" do
       with_mock Facilities, [get: fn(_id, _opts) -> %JsonApi{data: [@item]} end] do
         assert @expected_response = Repo.get("349", [])
-      end
-    end
-  end
-
-  describe "get_excluded_stops/1" do
-    test "get list of excluded stops for facility" do
-      with_mock Facilities, [get: fn(_id, _opts) -> %JsonApi{data: [@item]} end] do
-        expected = [
-          "door-alfcl-steel",
-          "door-alfcl-pathbusway",
-          "door-alfcl-cambridgepark",
-          "door-alfcl-busway",
-          "door-alfcl-alewife",
-          9070061,
-          141
-        ]
-        assert expected == Repo.get_excluded_stops("349")
       end
     end
   end

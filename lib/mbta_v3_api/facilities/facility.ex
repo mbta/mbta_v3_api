@@ -29,7 +29,7 @@ defmodule MBTAV3API.Facilities.Facility do
     ]
   }
 
-  @spec parse(JsonApi.Item.t()) :: MBTAV3API.Facilities.Facility.t()
+  @spec parse(Item.t()) :: t()
   def parse(%Item{id: id, attributes: attributes, relationships: relationships}) do
     %__MODULE__{
       id: id,
@@ -37,7 +37,9 @@ defmodule MBTAV3API.Facilities.Facility do
       short_name: attributes["short_name"],
       long_name: attributes["long_name"],
       stop: parse_stop(relationships),
-      properties: parse_properties(attributes["properties"])
+      properties: parse_properties(attributes["properties"]),
+      latitude: attributes["latitude"],
+      longitude: attributes["longitude"]
     }
   end
 

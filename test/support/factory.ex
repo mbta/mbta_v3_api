@@ -357,9 +357,9 @@ defmodule MBTAV3API.Support.Factory do
       type: "facility",
       id: "349",
       attributes: %{
-        "latitude" => nil,
+        "latitude" => 42.395428,
         "long_name" => "Alewife Escalator 349 (Platform to Russell Field)",
-        "longitude" => nil,
+        "longitude" => -71.142483,
         "properties" => [
           %{"name" => "direction", "value" => "up"},
           %{"name" => "excludes-stop", "value" => 141},

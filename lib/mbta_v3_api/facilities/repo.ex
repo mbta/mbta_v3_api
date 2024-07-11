@@ -18,11 +18,6 @@ defmodule MBTAV3API.Facilities.Repo do
     end
   end
 
-  def get_excluded_stops(id) do
-    %{properties: properties} = get(id, [])
-    Enum.reduce(properties, [], fn %{name: name, value: value}, acc -> if name == "excludes-stop", do: [value | acc], else: acc end)
-  end
-
   def get_for_stop(stop_id, opts \\ []) do
     facilities_filter_by_fn =
       Keyword.get(opts, :facilities_filter_by_fn, &Facilities.filter_by/1)
