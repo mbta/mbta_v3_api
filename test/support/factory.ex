@@ -363,7 +363,7 @@ defmodule MBTAV3API.Support.Factory do
         "properties" => [
           %{"name" => "direction", "value" => "up"},
           %{"name" => "excludes-stop", "value" => 141},
-          %{"name" => "excludes-stop", "value" => 9070061},
+          %{"name" => "excludes-stop", "value" => 9_070_061},
           %{"name" => "excludes-stop", "value" => "door-alfcl-alewife"},
           %{"name" => "excludes-stop", "value" => "door-alfcl-busway"},
           %{"name" => "excludes-stop", "value" => "door-alfcl-cambridgepark"},

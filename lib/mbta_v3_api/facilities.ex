@@ -3,7 +3,7 @@ defmodule MBTAV3API.Facilities do
   Fetch Facilities data from the MBTA V3 API.
   """
 
-  @type api_response_t() :: JsonApi.t() | {:error, any}
+  @type api_response_t() :: JsonApi.t() | {:error, String.t()}
 
   def all(params \\ [], opts \\ []) do
     {get_json_fn, opts} = Keyword.pop(opts, :get_json_fn, &MBTAV3API.get_json/3)

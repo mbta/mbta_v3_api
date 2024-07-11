@@ -18,14 +18,14 @@ defmodule Facilities.RepoTest do
     long_name: "Alewife Escalator 349 (Platform to Russell Field)",
     stop: %MBTAV3API.Stops.Stop{
       id: "place-alfcl",
-      type: "stop",
+      type: "stop"
     },
     latitude: 42.395428,
     longitude: -71.142483,
     properties: [
       %{name: "direction", value: "up"},
       %{name: "excludes-stop", value: 141},
-      %{name: "excludes-stop", value: 9070061},
+      %{name: "excludes-stop", value: 9_070_061},
       %{name: "excludes-stop", value: "door-alfcl-alewife"},
       %{name: "excludes-stop", value: "door-alfcl-busway"},
       %{name: "excludes-stop", value: "door-alfcl-cambridgepark"},
@@ -46,7 +46,7 @@ defmodule Facilities.RepoTest do
 
   describe "get/1" do
     test "get a parsed facility from the api" do
-      with_mock Facilities, [get: fn(_id, _opts) -> %JsonApi{data: [@item]} end] do
+      with_mock Facilities, get: fn _id, _opts -> %JsonApi{data: [@item]} end do
         assert @expected_response = Repo.get("349", [])
       end
     end

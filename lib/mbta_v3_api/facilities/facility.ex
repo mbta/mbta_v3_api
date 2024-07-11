@@ -3,8 +3,8 @@ defmodule MBTAV3API.Facilities.Facility do
   alias MBTAV3API.Stops.Stop
   alias JsonApi.Item
 
-  defstruct id: nil,
-            type: nil,
+  defstruct id: "",
+            type: "",
             short_name: nil,
             long_name: nil,
             stop: nil,
@@ -12,22 +12,21 @@ defmodule MBTAV3API.Facilities.Facility do
             longitude: nil,
             properties: []
 
-
   @type id_t :: String.t()
   @type facility_property_t :: %{name: String.t(), value: String.t()}
 
   @type t :: %__MODULE__{
-    id: id_t,
-    type: String.t(),
-    short_name: String.t(),
-    long_name: String.t(),
-    stop: Stop.t(),
-    latitude: number(),
-    longitude: number(),
-    properties: [
-      facility_property_t
-    ]
-  }
+          id: id_t,
+          type: String.t(),
+          short_name: String.t() | nil,
+          long_name: String.t() | nil,
+          stop: Stop.t() | nil,
+          latitude: number() | nil,
+          longitude: number() | nil,
+          properties: [
+            facility_property_t
+          ]
+        }
 
   @spec parse(Item.t()) :: t()
   def parse(%Item{id: id, attributes: attributes, relationships: relationships}) do
@@ -44,10 +43,12 @@ defmodule MBTAV3API.Facilities.Facility do
   end
 
   defp parse_properties(properties) do
-    Enum.map(properties, &(%{name: &1["name"], value: &1["value"]}))
- end
+    Enum.map(properties, &%{name: &1["name"], value: &1["value"]})
+  end
 
-  defp parse_stop(%{"stop" => [%{id: id, type: type}]}) do
-    %Stop{id: id, type: type}
+  defp parse_stop(%{"stop" => []}), do: nil
+
+  defp parse_stop(%{"stop" => [%{id: id}]}) do
+    %Stop{id: id}
   end
 end
