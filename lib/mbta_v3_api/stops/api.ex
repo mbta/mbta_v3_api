@@ -64,6 +64,16 @@ defmodule MBTAV3API.Stops.Api do
     |> parse_v3_multiple()
   end
 
+  def by_ids({stop_ids, opts}) do
+    stops_filter_by_fn = Keyword.get(opts, :stops_filter_by_fn, &Stops.filter_by/2)
+
+    stop_ids = Enum.join(stop_ids, ",")
+    opts = @default_params |> Keyword.merge(opts)
+
+    stops_filter_by_fn.([{"id", stop_ids}], opts)
+    |> parse_v3_multiple()
+  end
+
   @spec by_route({Route.id_t(), 0 | 1, Keyword.t()}) :: [Stop.t()]
   def by_route({route_id, direction_id, opts}) do
     stops_all_fn = Keyword.get(opts, :stops_all_fn, &Stops.all/1)

@@ -149,6 +149,46 @@ defmodule MBTAV3API.Stops.RepoTest do
     end
   end
 
+  describe "by_stop_ids/2" do
+    test "returns a list of stops given list of stop ids" do
+      stop_a = %Stop{id: "stop-a"}
+      stop_b = %Stop{id: "stop-b"}
+      stop_ids = ["stop-a", "stop-b"]
+
+      opts = [by_ids_fn: fn {^stop_ids, []} -> [stop_a, stop_b] end]
+
+      assert [^stop_a, ^stop_b] = Repo.by_stop_ids(stop_ids, opts)
+    end
+
+    test "can take additional fields" do
+      stop_a = %Stop{id: "stop-a"}
+      stop_b = %Stop{id: "stop-b"}
+      stop_ids = ["stop-a", "stop-b"]
+      opts = [date: ~U[2021-01-01 11:00:00Z]]
+
+      opts = Keyword.put(opts, :by_ids_fn, fn {^stop_ids, ^opts} -> [stop_a, stop_b] end)
+
+      assert [^stop_a, ^stop_b] = Repo.by_stop_ids(stop_ids, opts)
+    end
+
+    test "caches per-stop as well" do
+      stop_id = "place-brntn"
+      stop = %Stop{id: stop_id}
+
+      get_opts = [stops_by_gtfs_id_fn: fn ^stop_id -> {:ok, %Stop{id: stop_id}} end]
+
+      ConCache.delete(Repo, {:by_stop_ids, {[stop_id], []}})
+      ConCache.put(Repo, {:stop, stop_id}, {:ok, "to-be-overwritten"})
+      assert Repo.get(stop_id, get_opts) == "to-be-overwritten"
+
+      by_id_opts = [by_ids_fn: fn {[^stop_id], []} -> [stop] end]
+
+      Repo.by_stop_ids([stop_id], by_id_opts)
+
+      assert %Stop{id: ^stop_id} = Repo.get(stop_id, get_opts)
+    end
+  end
+
   describe "by_trip/2" do
     test "can return stops from a trip" do
       trip_id = "trip-id"

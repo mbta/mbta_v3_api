@@ -3,8 +3,8 @@ defmodule MBTAV3API.Facilities.Facility do
   alias MBTAV3API.Stops.Stop
   alias JsonApi.Item
 
-  defstruct id: "",
-            type: "",
+  defstruct id: nil,
+            type: nil,
             short_name: nil,
             long_name: nil,
             stop: nil,
