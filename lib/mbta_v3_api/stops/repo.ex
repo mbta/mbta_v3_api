@@ -93,7 +93,7 @@ defmodule MBTAV3API.Stops.Repo do
     end)
   end
 
-  @spec by_stop_ids([Stop.id_t()], List.t()) :: stops_response()
+  @spec by_stop_ids([Stop.id_t()], list()) :: stops_response()
   def by_stop_ids(stop_ids, opts \\ []) do
     {by_ids_fn, opts} = Keyword.pop(opts, :by_ids_fn, &Api.by_ids/1)
 
