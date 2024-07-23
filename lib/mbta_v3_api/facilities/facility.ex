@@ -46,9 +46,9 @@ defmodule MBTAV3API.Facilities.Facility do
     Enum.map(properties, &%{name: &1["name"], value: &1["value"]})
   end
 
-  defp parse_stop(%{"stop" => []}), do: nil
-
   defp parse_stop(%{"stop" => [%{id: id}]}) do
     %Stop{id: id}
   end
+
+  defp parse_stop(%{"stop" => []}), do: nil
 end
