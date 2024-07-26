@@ -138,14 +138,6 @@ defmodule MBTAV3API.Stops.ApiTest do
     end
   end
 
-  describe "by_id/1" do
-    test "returns an error tuple if the V3 API returns an error" do
-      opts = [stops_filter_by_fn: fn _, _ -> {:error, "Error"} end]
-
-      assert {:error, _} = Api.by_ids({["1"], opts})
-    end
-  end
-
   describe "pretty_payment/1" do
     test "falls back to empty string" do
       assert Api.pretty_payment("invalid") == ""

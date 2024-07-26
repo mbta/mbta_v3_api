@@ -3,8 +3,8 @@ defmodule MBTAV3API.Facilities.Facility do
   alias MBTAV3API.Stops.Stop
   alias JsonApi.Item
 
-  defstruct id: nil,
-            type: nil,
+  defstruct id: "",
+            type: "",
             short_name: nil,
             long_name: nil,
             stop: nil,
@@ -44,6 +44,10 @@ defmodule MBTAV3API.Facilities.Facility do
 
   defp parse_properties(properties) do
     Enum.map(properties, &%{name: &1["name"], value: &1["value"]})
+  end
+
+  defp parse_stop(%{"stop" => [%{id: id, attributes: attributes}]}) do
+    %Stop{id: id, name: attributes["name"]}
   end
 
   defp parse_stop(%{"stop" => [%{id: id}]}) do

@@ -18,6 +18,7 @@ defmodule Facilities.RepoTest do
     long_name: "Alewife Escalator 349 (Platform to Russell Field)",
     stop: %MBTAV3API.Stops.Stop{
       id: "place-alfcl",
+      name: "Alewife"
     },
     latitude: 42.395428,
     longitude: -71.142483,
@@ -51,18 +52,10 @@ defmodule Facilities.RepoTest do
     end
   end
 
-  describe "get_all/1" do
-    test "get parsed facilities from the api" do
-      with_mock Facilities, all: fn _opts -> %JsonApi{data: [@item]} end do
-        assert [@expected_response] = Repo.get_all([])
-      end
-    end
-  end
-
   describe "get_by_type/1" do
     test "get parsed facilities from the api by type" do
-      with_mock Facilities, get: fn _type, _opts -> %JsonApi{data: [@item]} end do
-        assert @expected_response = Repo.get("ESCALATOR", [])
+      with_mock Facilities, filter_by: fn _type, _opts -> %JsonApi{data: [@item]} end do
+        assert [@expected_response] = Repo.get_by_type(["ESCALATOR"], include: "stop")
       end
     end
   end

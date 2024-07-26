@@ -378,8 +378,21 @@ defmodule MBTAV3API.Support.Factory do
           %Item{
             type: "stop",
             id: "place-alfcl",
-            attributes: nil,
-            relationships: nil
+            attributes: %{
+              "address" => "Alewife Brook Pkwy and Cambridge Park Dr, Cambridge, MA 02140",
+              "at_street" => nil,
+              "description" => nil,
+              "latitude" => 42.39583,
+              "location_type" => 1,
+              "longitude" => -71.141287,
+              "municipality" => "Cambridge",
+              "name" => "Alewife",
+              "on_street" => nil,
+              "platform_code" => nil,
+              "platform_name" => nil,
+              "vehicle_type" => nil,
+              "wheelchair_boarding" => 1
+            }
           }
         ]
       }

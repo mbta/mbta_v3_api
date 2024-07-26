@@ -18,17 +18,6 @@ defmodule MBTAV3API.Facilities.Repo do
     end
   end
 
-  def get_all(opts \\ []) do
-    case cache({opts}, fn {opts} ->
-           with %{data: facilities} <- Facilities.all(opts) do
-             {:ok, facilities}
-           end
-         end) do
-      {:ok, facilities} -> facilities |> Enum.map(&Facility.parse/1)
-      {:error, _} -> nil
-    end
-  end
-
   def get_for_stop(stop_id, opts \\ []) do
     facilities_filter_by_fn =
       Keyword.get(opts, :facilities_filter_by_fn, &Facilities.filter_by/1)
@@ -46,7 +35,7 @@ defmodule MBTAV3API.Facilities.Repo do
 
   def get_by_type(type, opts) do
     case cache(type, fn type ->
-           with %{data: facilities} <- Facilities.filter_by([{"type", type}], opts) do
+           with %{data: facilities} <- MBTAV3API.Facilities.filter_by([{"type", type}], opts) do
              {:ok, facilities}
            end
          end) do

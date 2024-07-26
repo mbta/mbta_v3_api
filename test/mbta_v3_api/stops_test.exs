@@ -15,25 +15,6 @@ defmodule MBTAV3API.StopsTest do
     end
   end
 
-  describe "filter_by/2" do
-    test "gets filtered stops" do
-      response = %JsonApi{data: [%Item{id: "123"}]}
-
-      opts = [
-        get_json_fn: fn "/stops/", [{"filter[route_type]", "3"}], [] ->
-          response
-        end
-      ]
-
-      assert Stops.filter_by(
-               [
-                 {"route_type", "3"}
-               ],
-               opts
-             ) == response
-    end
-  end
-
   describe "by_gtfs_id/1" do
     test "gets the parent station info" do
       params = [include: "parent_station,facilities"]
