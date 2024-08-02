@@ -26,4 +26,21 @@ defmodule MBTAV3API.Facilities.Repo do
       facilities_filter_by_fn.([{"stop", stop_id}])
     end)
   end
+
+  def get_by_type(type, opts \\ [])
+
+  def get_by_type(type, opts) when is_list(type) do
+    type |> Enum.join(",") |> get_by_type(opts)
+  end
+
+  def get_by_type(type, opts) do
+    case cache(type, fn type ->
+           with %{data: facilities} <- MBTAV3API.Facilities.filter_by([{"type", type}], opts) do
+             {:ok, facilities}
+           end
+         end) do
+      {:ok, facilities} -> facilities |> Enum.map(&Facility.parse/1)
+      {:error, _} -> nil
+    end
+  end
 end

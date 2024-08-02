@@ -16,6 +16,7 @@ defmodule MBTAV3API.Predictions.StreamParser do
   alias MBTAV3API.Schedules.Trip
   alias MBTAV3API.Stops.Repo, as: StopsRepo
   alias MBTAV3API.Stops.Stop
+  alias MBTAV3API.Vehicles.Vehicle
 
   @spec parse(Item.t()) :: Prediction.t()
   def parse(%Item{} = item) do
@@ -69,7 +70,7 @@ defmodule MBTAV3API.Predictions.StreamParser do
     dt
   end
 
-  @spec vehicle_id(Item.t()) :: Vehicles.Vehicle.id_t() | nil
+  @spec vehicle_id(Item.t()) :: Vehicle.id_t() | nil
   defp vehicle_id(%Item{relationships: %{"vehicle" => [%Item{id: id}]}}), do: id
 
   defp vehicle_id(_), do: nil

@@ -8,12 +8,13 @@ defmodule MBTAV3API.Predictions.Parser do
   alias MBTAV3API.Schedules.Parser, as: SchedulesParser
   alias MBTAV3API.Routes.Route
   alias MBTAV3API.Schedules.Trip
+  alias MBTAV3API.Stops.Stop
   alias MBTAV3API.Vehicles.Vehicle
 
   @type record :: {
           Prediction.id_t() | nil,
           Trip.id_t() | nil,
-          Stops.Stop.id_t(),
+          Stop.id_t(),
           Route.id_t(),
           0 | 1,
           DateTime.t() | nil,

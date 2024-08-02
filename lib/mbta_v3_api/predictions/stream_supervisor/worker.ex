@@ -4,7 +4,7 @@ defmodule MBTAV3API.Predictions.StreamSupervisor.Worker do
 
   alias MBTAV3API.Predictions.{Store, StreamTopic}
 
-  @spec start_link({Store.fetch_keys(), StreamTopic.filter_params()}, Tuple.t()) ::
+  @spec start_link({Store.fetch_keys(), StreamTopic.filter_params()}, tuple()) ::
           Supervisor.on_start()
   def start_link({keys, filters}, name) do
     Supervisor.start_link(__MODULE__, {keys, filters}, name: name)

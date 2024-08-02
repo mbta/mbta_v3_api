@@ -18,6 +18,7 @@ defmodule MBTAV3API.Facilities do
         {"filter[#{k}]", v}
       end)
 
+    params = [opts | params] |> List.flatten()
     get_json_fn.("/facilities/", params, opts)
   end
 
