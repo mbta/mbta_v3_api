@@ -93,8 +93,8 @@ defmodule MBTAV3API.Stops.Repo do
     end)
   end
 
-  @spec by_route_type(Route.route_type()) :: stops_response()
-  @spec by_route_type(Route.route_type(), Keyword.t()) :: stops_response()
+  @spec by_route_type(Route.type_int()) :: stops_response()
+  @spec by_route_type(Route.type_int(), Keyword.t()) :: stops_response()
   def by_route_type(route_type, opts \\ []) do
     {by_route_type_fn, opts} = Keyword.pop(opts, :by_route_type_fn, &Api.by_route_type/1)
 
