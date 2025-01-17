@@ -28,8 +28,8 @@ defmodule MBTAV3API.Routes.Repo do
   }
 
   @impl RepoApi
-  def all do
-    case cache(@default_opts, fn _ ->
+  def all(opts \\ []) do
+    case cache(@default_opts ++ opts, fn _ ->
            result = handle_response(Routes.all(@default_opts))
 
            for {:ok, routes} <- [result],
@@ -47,7 +47,9 @@ defmodule MBTAV3API.Routes.Repo do
   # Used to spoof any Massport route as the data doesn't exist in the API
   # But is in the GTFS data
   @impl RepoApi
-  def get("Massport-" <> id) do
+  def get(id, opts \\ [])
+
+  def get("Massport-" <> id, _opts) do
     %Route{
       description: "Massport Generated Route",
       id: "Massport-" <> id,
@@ -59,8 +61,8 @@ defmodule MBTAV3API.Routes.Repo do
     }
   end
 
-  def get(id) when is_binary(id) do
-    opts = @default_opts
+  def get(id, opts) when is_binary(id) do
+    opts = @default_opts ++ opts
 
     case cache({id, opts}, fn {id, opts} ->
            with %{data: [route]} <- Routes.get(id, opts) do

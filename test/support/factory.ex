@@ -639,6 +639,30 @@ defmodule MBTAV3API.Support.Factory do
     }
   end
 
+  def line_data_factory do
+    %Item{
+      id: "line-89",
+      attributes: %{
+        "long_name" => "Clarendon Hill or Davis - Sullivan",
+        "short_name" => "89",
+        "sort_order" => 50890
+      },
+      relationships: %{
+        "routes" => [
+          %Item{
+            id: "89",
+            type: "route"
+          },
+          %Item{
+            id: "8993",
+            type: "route"
+          }
+        ]
+      },
+      type: "line"
+    }
+  end
+
   def raw_route_patterns_with_stops_factory do
     %JsonApi{
       links: %{},
