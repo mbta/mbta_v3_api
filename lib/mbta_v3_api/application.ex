@@ -27,6 +27,7 @@ defmodule MBTAV3API.Application do
       MBTAV3API.Cache,
       MBTAV3API.Schedules.Repo,
       MBTAV3API.Facilities.Repo,
+      MBTAV3API.Lines.Repo,
       MBTAV3API.Stops.Repo,
       MBTAV3API.Routes.Supervisor,
       MBTAV3API.Services.Repo,
