@@ -11,7 +11,8 @@ defmodule MBTAV3API.Lines.Parser do
       name: name(attributes),
       long_name: attributes["long_name"],
       sort_order: attributes["sort_order"],
-      route_ids: parse_route_ids(relationships)
+      route_ids: parse_route_ids(relationships),
+      routes: Map.get(relationships, "routes", nil)
     }
   end
 
