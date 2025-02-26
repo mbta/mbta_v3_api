@@ -4,13 +4,15 @@ defmodule MBTAV3API.Lines.Line do
   """
 
   @derive Jason.Encoder
+  alias MBTAV3API.Routes.Route
 
   defstruct [
     :id,
     :name,
     :long_name,
     :sort_order,
-    :route_ids
+    :route_ids,
+    :routes
   ]
 
   @type t :: %__MODULE__{
@@ -18,6 +20,7 @@ defmodule MBTAV3API.Lines.Line do
           long_name: String.t(),
           name: String.t(),
           sort_order: integer(),
-          route_ids: [String.t()]
+          route_ids: [Route.id_t()],
+          routes: [Route.t()]
         }
 end
