@@ -103,7 +103,6 @@ defmodule MBTAV3API.Stops.Repo do
       fn stop ->
         stop
         |> by_route_type_fn.()
-        |> Enum.map(&get_parent/1)
         |> Enum.uniq_by(& &1.id)
       end
     )
