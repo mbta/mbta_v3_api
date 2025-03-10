@@ -103,6 +103,7 @@ defmodule MBTAV3API.Stops.Repo do
       fn stop ->
         stop
         |> by_route_type_fn.()
+        #removed "get parent call" to reduce number of API calls when getting stops
         |> Enum.uniq_by(& &1.id)
       end
     )
