@@ -133,16 +133,43 @@ defmodule MBTAV3API.Stops.RepoTest do
   end
 
   describe "by_route_type/2" do
-    test "returns stops filtered by route type" do
+    test "returns parent stops filtered by route type" do
       route_type = 2
       stop_id = "stop-id"
       stop = %Stop{id: stop_id, parent_id: nil}
+      child_stop_1_id = "child-id-1"
+      child_stop_1 = %Stop{id: child_stop_1_id, parent_id: stop_id}
+      child_stop_2_id = "child-id-2"
+      child_stop_2 = %Stop{id: child_stop_2_id, parent_id: stop_id}
 
-      opts = [by_route_type_fn: fn {^route_type, []} -> [stop, stop] end]
+      opts = [
+        by_route_type_fn: fn {^route_type, []} -> [child_stop_1, child_stop_2] end,
+        all_stops_fn: fn [filter: "stop-id"] -> [stop] end
+      ]
 
       response = Repo.by_route_type(route_type, opts)
 
       assert Enum.find(response, &(&1.id == stop_id))
+
+      # doesn't duplicate stops
+      assert Enum.uniq(response) == response
+    end
+  end
+
+  describe "child_stops_by_route_type/2" do
+    test "returns stops filtered by route type" do
+      route_type = 2
+      stop_id = "stop-id"
+      child_stop_1_id = "child-id-1"
+      child_stop_1 = %Stop{id: child_stop_1_id, parent_id: stop_id}
+      child_stop_2_id = "child-id-2"
+      child_stop_2 = %Stop{id: child_stop_2_id, parent_id: stop_id}
+
+      opts = [by_route_type_fn: fn {^route_type, []} -> [child_stop_1, child_stop_2] end]
+
+      response = Repo.child_stops_by_route_type(route_type, opts)
+
+      assert Enum.map(response, & &1.id) == [child_stop_1_id, child_stop_2_id]
 
       # doesn't duplicate stops
       assert Enum.uniq(response) == response
