@@ -113,7 +113,7 @@ defmodule MBTAV3API.Stops.Repo do
           |> Enum.uniq()
           |> Enum.join(",")
 
-        all_stops_fn.(filter: parent_ids)
+        all_stops_fn.(Keyword.put(opts, :filter, parent_ids))
         |> Enum.reject(&has_parent?/1)
         |> Enum.uniq_by(& &1.id)
       end
