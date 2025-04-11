@@ -60,6 +60,7 @@ defmodule MBTAV3API.Stops.Api do
     stops_all_fn = Keyword.get(opts, :stops_all_fn, &Stops.all/1)
 
     @default_params
+    |> Keyword.merge(opts)
     |> stops_all_fn.()
     |> parse_v3_multiple()
   end

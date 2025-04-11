@@ -96,16 +96,19 @@ defmodule MBTAV3API.Stops.Repo do
   @spec by_route_type(Route.type_int()) :: stops_response()
   @spec by_route_type(Route.type_int(), Keyword.t()) :: stops_response()
   def by_route_type(route_type, opts \\ []) do
-    # gets stops that belong to the route, then gets parent ids of stops.
-    # makes a call to get all the parent stops using those ids, returns result
+    # gets stops that have the given route type. if stops have parent ids, it gathers
+    # them and makes a separate call to get the parents, otherwise just uses the stop
     {by_route_type_fn, opts} = Keyword.pop(opts, :by_route_type_fn, &Api.by_route_type/1)
     {all_stops_fn, opts} = Keyword.pop(opts, :all_stops_fn, &Api.all/1)
 
     cache(
       {route_type, opts},
       fn {route_type, opts} ->
+        #get all stops of route type
         stops = by_route_type_fn.({route_type, opts})
-
+        #get stops with no parents
+        stops_without_parents = Enum.reject(stops, &has_parent?/1)
+        #get ids of stops with parents
         parent_ids =
           stops
           |> Enum.filter(&has_parent?/1)
@@ -113,9 +116,12 @@ defmodule MBTAV3API.Stops.Repo do
           |> Enum.uniq()
           |> Enum.join(",")
 
-        all_stops_fn.(Keyword.put(opts, :filter, parent_ids))
+        #get parent stops from above ids
+        parent_stops = all_stops_fn.(Keyword.put(opts, :"filter[id]", parent_ids))
         |> Enum.reject(&has_parent?/1)
         |> Enum.uniq_by(& &1.id)
+
+        stops_without_parents ++ parent_stops
       end
     )
   end
