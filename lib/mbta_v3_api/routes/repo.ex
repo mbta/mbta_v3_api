@@ -29,8 +29,10 @@ defmodule MBTAV3API.Routes.Repo do
 
   @impl RepoApi
   def all(opts \\ []) do
-    case cache(@default_opts ++ opts, fn _ ->
-           result = handle_response(Routes.all(@default_opts))
+    combined_opts = @default_opts ++ opts
+
+    case cache(combined_opts, fn _ ->
+           result = handle_response(Routes.all(combined_opts))
 
            for {:ok, routes} <- [result],
                route <- routes do
