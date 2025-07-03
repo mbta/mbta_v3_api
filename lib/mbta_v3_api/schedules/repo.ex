@@ -21,6 +21,14 @@ defmodule MBTAV3API.Schedules.Repo do
     "fields[trip]": "name,headsign,direction_id,bikes_allowed"
   ]
 
+  @spec all(Keyword.t()) :: [Schedule.t()] | {:error, any}
+  def all(opts \\ []) do
+    @default_params
+    |> Keyword.merge(opts)
+    |> cache(&all_from_params/1)
+    |> load_from_other_repos()
+  end
+
   @spec by_route_ids([Route.id_t()], Keyword.t()) :: [Schedule.t()] | {:error, any}
   def by_route_ids(route_ids, opts \\ []) when is_list(route_ids) do
     opts = Keyword.put_new(opts, :date, UtilDate.service_date())
