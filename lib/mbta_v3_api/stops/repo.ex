@@ -104,11 +104,11 @@ defmodule MBTAV3API.Stops.Repo do
     cache(
       {route_type, opts},
       fn {route_type, opts} ->
-        #get all stops of route type
+        # get all stops of route type
         stops = by_route_type_fn.({route_type, opts})
-        #get stops with no parents
+        # get stops with no parents
         stops_without_parents = Enum.reject(stops, &has_parent?/1)
-        #get ids of stops with parents
+        # get ids of stops with parents
         parent_ids =
           stops
           |> Enum.filter(&has_parent?/1)
@@ -116,10 +116,11 @@ defmodule MBTAV3API.Stops.Repo do
           |> Enum.uniq()
           |> Enum.join(",")
 
-        #get parent stops from above ids
-        parent_stops = all_stops_fn.(Keyword.put(opts, :"filter[id]", parent_ids))
-        |> Enum.reject(&has_parent?/1)
-        |> Enum.uniq_by(& &1.id)
+        # get parent stops from above ids
+        parent_stops =
+          all_stops_fn.(Keyword.put(opts, :"filter[id]", parent_ids))
+          |> Enum.reject(&has_parent?/1)
+          |> Enum.uniq_by(& &1.id)
 
         stops_without_parents ++ parent_stops
       end
