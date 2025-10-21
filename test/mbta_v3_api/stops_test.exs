@@ -9,9 +9,9 @@ defmodule MBTAV3API.StopsTest do
     test "gets all stops" do
       response = %JsonApi{data: [%Item{}]}
 
-      opts = [get_json_fn: fn "/stops/", [] -> response end]
+      opts = [get_json_fn: fn "/stops/", [], [] -> response end]
 
-      assert Stops.all(opts) == response
+      assert Stops.all([], opts) == response
     end
   end
 

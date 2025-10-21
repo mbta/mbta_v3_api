@@ -21,6 +21,23 @@ defmodule MBTAV3API.Stops.Repo do
   @type stops_response :: [Stop.t()] | {:error, any}
   @type stop_by_route :: (Route.id_t(), 0 | 1, Keyword.t() -> stops_response)
 
+  # def all(params \\ [], opts \\ []) do
+
+  #   case cache(params, fn _ ->
+  #          result = Stops.all(params, opts)
+
+  #          for {:ok, stops} <- [result],
+  #              stop <- stops do
+  #            ConCache.put(__MODULE__, {:get, stop.id}, {:ok, stop})
+  #          end
+
+  #          result
+  #        end) do
+  #     {:ok, stops} -> stops
+  #     {:error, _} -> []
+  #   end
+  # end
+
   @spec get(Stop.id_t()) :: Stop.t() | nil
   @spec get(Stop.id_t(), keyword()) :: Stop.t() | nil
   def get(id, opts \\ []) when is_binary(id) do
@@ -95,17 +112,17 @@ defmodule MBTAV3API.Stops.Repo do
 
   @spec by_route_type(Route.type_int()) :: stops_response()
   @spec by_route_type(Route.type_int(), Keyword.t()) :: stops_response()
-  def by_route_type(route_type, opts \\ []) do
+  def by_route_type(route_type, params \\ []) do
     # gets stops that have the given route type. if stops have parent ids, it gathers
     # them and makes a separate call to get the parents, otherwise just uses the stop
-    {by_route_type_fn, opts} = Keyword.pop(opts, :by_route_type_fn, &Api.by_route_type/1)
-    {all_stops_fn, opts} = Keyword.pop(opts, :all_stops_fn, &Api.all/1)
+    {by_route_type_fn, params} = Keyword.pop(params, :by_route_type_fn, &Api.by_route_type/1)
+    {all_stops_fn, params} = Keyword.pop(params, :all_stops_fn, &Api.all/2)
 
     cache(
-      {route_type, opts},
-      fn {route_type, opts} ->
+      {route_type, params},
+      fn {route_type, params} ->
         # get all stops of route type
-        stops = by_route_type_fn.({route_type, opts})
+        stops = by_route_type_fn.({route_type, params})
         # get stops with no parents
         stops_without_parents = Enum.reject(stops, &has_parent?/1)
         # get ids of stops with parents
@@ -118,7 +135,7 @@ defmodule MBTAV3API.Stops.Repo do
 
         # get parent stops from above ids
         parent_stops =
-          all_stops_fn.(Keyword.put(opts, :"filter[id]", parent_ids))
+          all_stops_fn.(Keyword.put(params, :"filter[id]", parent_ids), [])
           |> Enum.reject(&has_parent?/1)
           |> Enum.uniq_by(& &1.id)
 
