@@ -8,9 +8,9 @@ defmodule MBTAV3API.Routes do
   @type api_response_t() :: JsonApi.t() | {:error, any}
 
   @spec all(keyword()) :: api_response_t()
-  def all(opts \\ []) do
-    {get_json_fn, opts} = Keyword.pop(opts, :get_json_fn, &MBTAV3API.get_json/2)
-    get_json_fn.("/routes/", opts)
+  def all(params \\ [], opts \\ []) do
+    {get_json_fn, opts} = Keyword.pop(opts, :get_json_fn, &MBTAV3API.get_json/3)
+    get_json_fn.("/routes/", params, opts)
   end
 
   @spec get(Route.id_t(), keyword()) :: api_response_t()
