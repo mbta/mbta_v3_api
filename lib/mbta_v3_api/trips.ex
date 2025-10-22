@@ -3,6 +3,7 @@ defmodule MBTAV3API.Trips do
   Responsible for fetching Trip data from the MBTA V3 API.
   """
 
+  @spec by_ids(list() | binary(), keyword(), keyword()) :: JsonApi.t() | {:error, any}
   def by_ids(ids, params \\ [], opts \\ [])
 
   def by_ids(ids, params, opts) when is_list(ids) do

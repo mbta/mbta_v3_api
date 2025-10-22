@@ -28,6 +28,7 @@ defmodule MBTAV3API.Routes.Repo do
   }
 
   @impl RepoApi
+  @spec all(keyword(), keyword()) :: [Route.t()]
   def all(params \\ [], opts \\ []) do
     combined_params = @default_params ++ params
 

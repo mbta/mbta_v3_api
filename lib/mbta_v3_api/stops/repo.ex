@@ -21,22 +21,19 @@ defmodule MBTAV3API.Stops.Repo do
   @type stops_response :: [Stop.t()] | {:error, any}
   @type stop_by_route :: (Route.id_t(), 0 | 1, Keyword.t() -> stops_response)
 
-  # def all(params \\ [], opts \\ []) do
+  @spec all(keyword(), keyword()) :: [Stop.t()]
+  def all(params \\ [], opts \\ []) do
+    cache({params, opts}, fn {params, opts} ->
+      result = Api.all(params, opts)
 
-  #   case cache(params, fn _ ->
-  #          result = Stops.all(params, opts)
+      for stops <- [result],
+          stop <- stops do
+        ConCache.put(__MODULE__, {:get, stop.id}, {:ok, stop})
+      end
 
-  #          for {:ok, stops} <- [result],
-  #              stop <- stops do
-  #            ConCache.put(__MODULE__, {:get, stop.id}, {:ok, stop})
-  #          end
-
-  #          result
-  #        end) do
-  #     {:ok, stops} -> stops
-  #     {:error, _} -> []
-  #   end
-  # end
+      result
+    end)
+  end
 
   @spec get(Stop.id_t()) :: Stop.t() | nil
   @spec get(Stop.id_t(), keyword()) :: Stop.t() | nil

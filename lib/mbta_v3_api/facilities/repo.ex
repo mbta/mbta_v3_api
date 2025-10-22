@@ -7,6 +7,7 @@ defmodule MBTAV3API.Facilities.Repo do
   alias MBTAV3API.Facilities
   alias MBTAV3API.Facilities.Facility
 
+  @spec all(keyword(), keyword()) :: [Facility.t()]
   def all(params \\ [], opts \\ []) do
     case cache({params, opts}, fn {params, opts} ->
            with %{data: facilities} <- MBTAV3API.Facilities.all(params, opts) do
@@ -14,7 +15,7 @@ defmodule MBTAV3API.Facilities.Repo do
            end
          end) do
       {:ok, facilities} -> facilities |> Enum.map(&Facility.parse/1)
-      {:error, _} -> nil
+      {:error, _} -> []
     end
   end
 
