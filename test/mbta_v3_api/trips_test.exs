@@ -5,11 +5,11 @@ defmodule MBTAV3API.TripsTest do
   alias JsonApi.Item
   alias MBTAV3API.Trips
 
-    describe "by_ids" do
+  describe "by_ids" do
     test "gets trips by their ids" do
       response = %JsonApi{data: [%Item{id: "123"}]}
 
-    opts = [get_json_fn: fn "/trips/", ["filter[id]": "123"], [] -> response end]
+      opts = [get_json_fn: fn "/trips/", ["filter[id]": "123"], [] -> response end]
 
       assert Trips.by_ids(["123"], [], opts) == response
     end

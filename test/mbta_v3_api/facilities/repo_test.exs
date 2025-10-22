@@ -34,6 +34,14 @@ defmodule Facilities.RepoTest do
     ]
   }
 
+  describe "get_all/1" do
+    test "get parsed facilities from the api" do
+      with_mock Facilities, all: fn _params, _opts -> %JsonApi{data: [@item]} end do
+        assert [@expected_response] = Repo.all(include: "stop")
+      end
+    end
+  end
+
   describe "get_for_stop/1" do
     test "get facilities from the api" do
       response = %JsonApi{data: [%Item{}]}

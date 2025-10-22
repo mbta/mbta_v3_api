@@ -3,7 +3,8 @@ defmodule MBTAV3API.Trips do
   Responsible for fetching Trip data from the MBTA V3 API.
   """
 
-def by_ids(ids, params \\ [], opts \\ [])
+  def by_ids(ids, params \\ [], opts \\ [])
+
   def by_ids(ids, params, opts) when is_list(ids) do
     by_ids(Enum.join(ids, ","), params, opts)
   end

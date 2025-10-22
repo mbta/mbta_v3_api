@@ -31,7 +31,7 @@ defmodule MBTAV3API.Routes.Repo do
   def all(params \\ [], opts \\ []) do
     combined_params = @default_params ++ params
 
-    case cache(combined_params, fn _ ->
+    case cache({combined_params, opts}, fn {combined_params, opts} ->
            result = handle_response(Routes.all(combined_params, opts))
 
            for {:ok, routes} <- [result],
