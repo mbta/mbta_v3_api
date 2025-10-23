@@ -56,12 +56,13 @@ defmodule MBTAV3API.Stops.Api do
     |> parse_v3_response()
   end
 
-  def all(opts \\ []) do
-    stops_all_fn = Keyword.get(opts, :stops_all_fn, &Stops.all/1)
+  @spec all(Keyword.t(), Keyword.t()) :: [Stop.t()]
+  def all(params \\ [], opts \\ []) do
+    stops_all_fn = Keyword.get(opts, :stops_all_fn, &Stops.all/2)
 
     @default_params
-    |> Keyword.merge(opts)
-    |> stops_all_fn.()
+    |> Keyword.merge(params)
+    |> stops_all_fn.(opts)
     |> parse_v3_multiple()
   end
 

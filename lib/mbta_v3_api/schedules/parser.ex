@@ -55,6 +55,25 @@ defmodule MBTAV3API.Schedules.Parser do
   end
 
   def trip(%Item{
+        id: id,
+        attributes:
+          %{"name" => name, "headsign" => headsign, "direction_id" => direction_id} =
+            attributes,
+        relationships: relationships
+      }) do
+    %Trip{
+      id: id,
+      headsign: headsign,
+      name: name,
+      direction_id: direction_id,
+      bikes_allowed?: bikes_allowed?(attributes),
+      route_pattern_id: route_pattern_id(relationships),
+      shape_id: shape_id(relationships),
+      occupancy: occupancy(relationships)
+    }
+  end
+
+  def trip(%Item{
         relationships: %{
           "trip" => [
             %Item{

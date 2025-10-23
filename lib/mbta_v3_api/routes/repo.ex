@@ -13,7 +13,7 @@ defmodule MBTAV3API.Routes.Repo do
   alias MBTAV3API.Routes.{RepoApi, Route, Shape}
   alias MBTAV3API.Shapes
 
-  @default_opts [include: "route_patterns"]
+  @default_params [include: "route_patterns"]
 
   @green_line_virtual_route %Route{
     id: "Green",
@@ -28,11 +28,12 @@ defmodule MBTAV3API.Routes.Repo do
   }
 
   @impl RepoApi
-  def all(opts \\ []) do
-    combined_opts = @default_opts ++ opts
+  @spec all(keyword(), keyword()) :: [Route.t()]
+  def all(params \\ [], opts \\ []) do
+    combined_params = @default_params ++ params
 
-    case cache(combined_opts, fn _ ->
-           result = handle_response(Routes.all(combined_opts))
+    case cache({combined_params, opts}, fn {combined_params, opts} ->
+           result = handle_response(Routes.all(combined_params, opts))
 
            for {:ok, routes} <- [result],
                route <- routes do
@@ -64,7 +65,7 @@ defmodule MBTAV3API.Routes.Repo do
   end
 
   def get(id, opts) when is_binary(id) do
-    opts = @default_opts ++ opts
+    opts = @default_params ++ opts
 
     case cache({id, opts}, fn {id, opts} ->
            with %{data: [route]} <- Routes.get(id, opts) do
@@ -149,7 +150,7 @@ defmodule MBTAV3API.Routes.Repo do
 
   @impl RepoApi
   def by_stop(stop_id, opts \\ []) do
-    opts = Keyword.merge(@default_opts, opts)
+    opts = Keyword.merge(@default_params, opts)
 
     case cache({stop_id, opts}, fn {stop_id, opts} ->
            stop_id |> Routes.by_stop(opts) |> handle_response
@@ -161,7 +162,7 @@ defmodule MBTAV3API.Routes.Repo do
 
   @impl RepoApi
   def by_stop_and_direction(stop_id, direction_id, opts \\ []) do
-    opts = Keyword.merge(@default_opts, opts)
+    opts = Keyword.merge(@default_params, opts)
 
     case cache({stop_id, direction_id, opts}, fn {stop_id, direction_id, opts} ->
            stop_id

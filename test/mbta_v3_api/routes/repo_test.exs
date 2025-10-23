@@ -13,13 +13,13 @@ defmodule MBTAV3API.Routes.RepoTest do
 
   describe "all/0" do
     test "returns a list of Routes" do
-      with_mock(Routes, all: fn _opts -> %JsonApi{data: [@item]} end) do
+      with_mock(Routes, all: fn _params, _opts -> %JsonApi{data: [@item]} end) do
         assert [%Route{} | _] = Repo.all()
       end
     end
 
     test "parses the data into Route structs" do
-      with_mock(Routes, all: fn _opts -> %JsonApi{data: [@item]} end) do
+      with_mock(Routes, all: fn _params, _opts -> %JsonApi{data: [@item]} end) do
         assert Repo.all() |> List.first() == %Route{
                  id: "Orange",
                  type: 1,
@@ -69,7 +69,7 @@ defmodule MBTAV3API.Routes.RepoTest do
 
   describe "by_type/1" do
     test "only returns routes of a given type" do
-      with_mock(Routes, all: fn _opts -> %JsonApi{data: [@item]} end) do
+      with_mock(Routes, all: fn _params, _opts -> %JsonApi{data: [@item]} end) do
         one = Repo.by_type(1)
         assert one |> Enum.all?(fn route -> route.type == 1 end)
         assert one != []

@@ -144,7 +144,7 @@ defmodule MBTAV3API.Stops.RepoTest do
 
       opts = [
         by_route_type_fn: fn {^route_type, []} -> [child_stop_1, child_stop_2] end,
-        all_stops_fn: fn ["filter[id]": "stop-id"] -> [stop] end
+        all_stops_fn: fn ["filter[id]": "stop-id"], [] -> [stop] end
       ]
 
       response = Repo.by_route_type(route_type, opts)

@@ -9,11 +9,10 @@ defmodule MBTAV3API.RoutesTest do
 
   describe "all/1" do
     test "gets all routes" do
+      params = @opts
       response = %JsonApi{data: [%Item{}]}
-
-      opts = Keyword.put(@opts, :get_json_fn, fn "/routes/", @opts -> response end)
-
-      assert Routes.all(opts) == response
+      opts = [get_json_fn: fn "/routes/", params, [] -> response end]
+      assert Routes.all(params, opts) == response
     end
   end
 

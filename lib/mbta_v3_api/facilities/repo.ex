@@ -7,6 +7,18 @@ defmodule MBTAV3API.Facilities.Repo do
   alias MBTAV3API.Facilities
   alias MBTAV3API.Facilities.Facility
 
+  @spec all(keyword(), keyword()) :: [Facility.t()]
+  def all(params \\ [], opts \\ []) do
+    case cache({params, opts}, fn {params, opts} ->
+           with %{data: facilities} <- MBTAV3API.Facilities.all(params, opts) do
+             {:ok, facilities}
+           end
+         end) do
+      {:ok, facilities} -> facilities |> Enum.map(&Facility.parse/1)
+      {:error, _} -> []
+    end
+  end
+
   def get(id, opts \\ []) when is_binary(id) do
     case cache({id, opts}, fn {id, opts} ->
            with %{data: [facility]} <- Facilities.get(id, opts) do
