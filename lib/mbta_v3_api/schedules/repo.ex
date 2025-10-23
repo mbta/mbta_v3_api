@@ -78,9 +78,9 @@ defmodule MBTAV3API.Schedules.Repo do
     |> load_from_other_repos()
   end
 
-  @spec trips_by_ids(keyword(), keyword()) :: [Facility.t()]
+  @spec trips_by_ids(keyword(), keyword()) :: [Trip.t()]
   def trips_by_ids(trip_ids, params \\ [], opts \\ []) do
-    case cache({trip_ids, params, opts}, fn {params, opts} ->
+    case cache({trip_ids, params, opts}, fn {trip_ids, params, opts} ->
            with %{data: trips} <- MBTAV3API.Trips.by_ids(trip_ids, params, opts) do
              {:ok, trips}
            end

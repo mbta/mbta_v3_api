@@ -25,9 +25,7 @@ defmodule MBTAV3API.Stops.Repo do
   def all(params \\ [], opts \\ []) do
     cache({params, opts}, fn {params, opts} ->
       result = Api.all(params, opts)
-
-      for stops <- [result],
-          stop <- stops do
+      for stops <- [result], stop <- stops do
         ConCache.put(__MODULE__, {:get, stop.id}, {:ok, stop})
       end
 
