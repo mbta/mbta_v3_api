@@ -19,9 +19,9 @@ defmodule MBTAV3API.Facilities.Repo do
     end
   end
 
-  def get(id, opts \\ []) when is_binary(id) do
-    case cache({id, opts}, fn {id, opts} ->
-           with %{data: [facility]} <- Facilities.get(id, opts) do
+  def get(id, params \\ [], opts \\ []) when is_binary(id) do
+    case cache({id, params, opts}, fn {id, params, opts} ->
+           with %{data: [facility]} <- Facilities.get(id, params, opts) do
              {:ok, facility}
            end
          end) do

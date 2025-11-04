@@ -42,12 +42,12 @@ defmodule MBTAV3API.FacilitiesTest do
       response = %JsonApi{data: [%Item{id: "349"}]}
 
       opts = [
-        get_json_fn: fn "/facilities/349", [] ->
+        get_json_fn: fn "/facilities/349", [], [] ->
           response
         end
       ]
 
-      assert Facilities.get("349", opts) == response
+      assert Facilities.get("349", [], opts) == response
     end
   end
 end

@@ -23,8 +23,8 @@ defmodule MBTAV3API.Facilities do
   end
 
   @spec get(String.t(), keyword()) :: api_response_t()
-  def get(id, opts \\ []) do
-    {get_json_fn, opts} = Keyword.pop(opts, :get_json_fn, &MBTAV3API.get_json/2)
-    get_json_fn.("/facilities/#{id}", opts)
+  def get(id, params \\ [], opts \\ []) do
+    {get_json_fn, opts} = Keyword.pop(opts, :get_json_fn, &MBTAV3API.get_json/3)
+    get_json_fn.("/facilities/#{id}", params, opts)
   end
 end

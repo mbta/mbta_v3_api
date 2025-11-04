@@ -54,7 +54,7 @@ defmodule Facilities.RepoTest do
 
   describe "get/1" do
     test "get a parsed facility from the api" do
-      with_mock Facilities, get: fn _id, _opts -> %JsonApi{data: [@item]} end do
+      with_mock Facilities, get: fn _id, _params, _opts -> %JsonApi{data: [@item]} end do
         assert @expected_response = Repo.get("349", [])
       end
     end
