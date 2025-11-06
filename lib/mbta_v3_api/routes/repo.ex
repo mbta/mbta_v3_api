@@ -33,6 +33,8 @@ defmodule MBTAV3API.Routes.Repo do
     combined_params = @default_params ++ params
 
     case cache({combined_params, opts}, fn {combined_params, opts} ->
+           # if reject_hidden keyword is true, reject routes
+           # listed in Route.hidden?. Defaults to true.
            reject_hidden = Keyword.get(opts, :reject_hidden, true)
            result = handle_response(Routes.all(combined_params, opts), reject_hidden)
 
