@@ -33,7 +33,10 @@ defmodule MBTAV3API.Routes.Repo do
     combined_params = @default_params ++ params
 
     case cache({combined_params, opts}, fn {combined_params, opts} ->
-           result = handle_response(Routes.all(combined_params, opts))
+           # if reject_hidden keyword is true, reject routes
+           # listed in Route.hidden?. Defaults to true.
+           reject_hidden = Keyword.get(opts, :reject_hidden, true)
+           result = handle_response(Routes.all(combined_params, opts), reject_hidden)
 
            for {:ok, routes} <- [result],
                route <- routes do
@@ -187,16 +190,21 @@ defmodule MBTAV3API.Routes.Repo do
   @doc """
   Parses json into a list of routes, or an error if it happened.
   """
-  @spec handle_response(JsonApi.t() | {:error, any}) :: {:ok, [Route.t()]} | {:error, any}
-  def handle_response({:error, reason}) do
+  @spec handle_response(JsonApi.t() | {:error, any}, boolean()) ::
+          {:ok, [Route.t()]} | {:error, any}
+  def handle_response(data, reject_hidden? \\ true)
+
+  def handle_response({:error, reason}, _) do
     {:error, reason}
   end
 
-  def handle_response(%{data: data}) do
+  def handle_response(%{data: data}, reject_hidden?) do
     {:ok,
      data
      |> Enum.flat_map(&fetch_connecting_routes_via_stop/1)
-     |> Enum.reject(&Route.hidden?/1)
+     |> then(fn data ->
+       if reject_hidden?, do: Enum.reject(data, &Route.hidden?/1), else: data
+     end)
      |> Enum.map(&parse_route/1)
      |> Enum.uniq()
      |> Enum.sort_by(& &1.sort_order)}
