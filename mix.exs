@@ -40,7 +40,6 @@ defmodule MBTAV3API.MixProject do
       {:phoenix_pubsub, "~> 2.1"},
       {:plug, "~> 1.15", only: :test},
       {:quixir, "~> 0.9", only: :test},
-      {:sentry, "~> 7.0"},
       {:server_sent_event_stage, "~> 1.0"},
       {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
       {:timex, "~> 3.7"}
