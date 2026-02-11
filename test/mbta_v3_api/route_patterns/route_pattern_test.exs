@@ -17,6 +17,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePatternTest do
         name: "Haymarket Station - Woodlawn",
         representative_trip_id: "60311384",
         route_id: "111",
+        listed_route: true,
         typicality: 1,
         sort_order: 511_100_000
       }
@@ -34,6 +35,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePatternTest do
                headsign: "Braintree",
                representative_trip_id: "canonical-Red-C1-0",
                route_id: "Red",
+               listed_route: true,
                service_id: "canonical",
                shape_id: "canonical-933_0009",
                sort_order: 100_100_000,
