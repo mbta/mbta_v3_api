@@ -445,7 +445,8 @@ defmodule MBTAV3API.Support.Factory do
         "route" => [
           %Item{
             id: "111",
-            type: "route"
+            type: "route",
+            attributes: %{"listed_route" => true}
           }
         ]
       }
@@ -476,10 +477,10 @@ defmodule MBTAV3API.Support.Factory do
             relationships: %{
               "route" => [
                 %Item{
-                  attributes: nil,
                   id: "Red",
                   relationships: nil,
-                  type: "route"
+                  type: "route",
+                  attributes: %{}
                 }
               ],
               "route_pattern" => [
@@ -548,7 +549,7 @@ defmodule MBTAV3API.Support.Factory do
         ],
         "route" => [
           %Item{
-            attributes: nil,
+            attributes: %{"listed_route" => true},
             id: "Red",
             relationships: nil,
             type: "route"
@@ -697,7 +698,7 @@ defmodule MBTAV3API.Support.Factory do
                     %JsonApi.Item{
                       type: "route",
                       id: "Red",
-                      attributes: nil,
+                      attributes: %{},
                       relationships: nil
                     }
                   ],
@@ -1425,7 +1426,7 @@ defmodule MBTAV3API.Support.Factory do
               %JsonApi.Item{
                 type: "route",
                 id: "Red",
-                attributes: nil,
+                attributes: %{"listed_route" => true},
                 relationships: nil
               }
             ]
@@ -1461,7 +1462,7 @@ defmodule MBTAV3API.Support.Factory do
                     %JsonApi.Item{
                       type: "route",
                       id: "Red",
-                      attributes: nil,
+                      attributes: %{},
                       relationships: nil
                     }
                   ],
@@ -2151,7 +2152,7 @@ defmodule MBTAV3API.Support.Factory do
               %JsonApi.Item{
                 type: "route",
                 id: "Red",
-                attributes: nil,
+                attributes: %{"listed_route" => true},
                 relationships: nil
               }
             ]
@@ -2187,7 +2188,7 @@ defmodule MBTAV3API.Support.Factory do
                     %JsonApi.Item{
                       type: "route",
                       id: "Red",
-                      attributes: nil,
+                      attributes: %{},
                       relationships: nil
                     }
                   ],
@@ -2421,7 +2422,7 @@ defmodule MBTAV3API.Support.Factory do
               %JsonApi.Item{
                 type: "route",
                 id: "Red",
-                attributes: nil,
+                attributes: %{"listed_route" => true},
                 relationships: nil
               }
             ]

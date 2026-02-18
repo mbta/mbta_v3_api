@@ -145,7 +145,7 @@ defmodule MBTAV3API.Routes.ParserTest do
               },
               relationships: %{
                 "representative_trip" => [%Item{id: "id"}],
-                "route" => [%Item{id: "id"}]
+                "route" => [%Item{id: "id", attributes: %{}}]
               }
             }
           ]

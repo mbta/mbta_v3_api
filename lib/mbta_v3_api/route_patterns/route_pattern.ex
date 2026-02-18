@@ -36,6 +36,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
     :stop_ids,
     :stops,
     :route_id,
+    :listed_route,
     :time_desc,
     :typicality,
     :service_id,
@@ -56,6 +57,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
           stop_ids: [Stop.id_t()],
           stops: [Stop.t()],
           route_id: Route.id_t(),
+          listed_route: boolean() | nil,
           time_desc: String.t(),
           typicality: typicality_t(),
           sort_order: integer(),
@@ -81,7 +83,9 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
               relationships: trip_relationships
             }
           ],
-          "route" => [%Item{id: route_id}]
+          "route" => [
+            %Item{id: route_id, attributes: route_attributes}
+          ]
         }
       }) do
     %__MODULE__{
@@ -95,6 +99,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
       stop_ids: stop_ids(trip_relationships),
       stops: stops(trip_relationships),
       route_id: route_id,
+      listed_route: Map.get(route_attributes, "listed_route"),
       time_desc: time_desc,
       typicality: typicality,
       sort_order: sort_order,
@@ -113,7 +118,9 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
         },
         relationships: %{
           "representative_trip" => [%Item{id: representative_trip_id}],
-          "route" => [%Item{id: route_id}]
+          "route" => [
+            %Item{id: route_id, attributes: route_attributes}
+          ]
         }
       }) do
     %__MODULE__{
@@ -122,6 +129,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
       name: name,
       representative_trip_id: representative_trip_id,
       route_id: route_id,
+      listed_route: Map.get(route_attributes, "listed_route"),
       time_desc: time_desc,
       typicality: typicality,
       sort_order: sort_order
