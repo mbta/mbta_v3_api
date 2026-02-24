@@ -130,22 +130,24 @@ defmodule MBTAV3API.Routes.Repo do
   end
 
   @impl RepoApi
-  def by_type(types) when is_list(types) do
+  def by_type(types, params \\ [])
+
+  def by_type(types, params) when is_list(types) do
     types = Enum.sort(types)
 
-    case cache(types, &by_type_uncached/1) do
+    case cache({types, params}, &by_type_uncached/1) do
       {:ok, routes} -> routes
       {:error, _} -> []
     end
   end
 
-  def by_type(type) do
-    by_type([type])
+  def by_type(type, params) do
+    by_type([type], params)
   end
 
-  @spec by_type_uncached([0..4]) :: {:ok, [Route.t()]} | {:error, any}
-  defp by_type_uncached(types) do
-    case all() do
+  @spec by_type_uncached({[0..4], list()}) :: {:ok, [Route.t()]} | {:error, any}
+  defp by_type_uncached({types, params}) do
+    case all(params) do
       [] -> {:error, "no routes"}
       routes -> {:ok, Enum.filter(routes, fn route -> route.type in types end)}
     end

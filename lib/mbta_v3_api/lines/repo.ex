@@ -5,6 +5,7 @@ defmodule MBTAV3API.Lines.Repo do
   use RepoCache, ttl: :timer.hours(1)
   alias JsonApi
   alias MBTAV3API.Lines
+  alias MBTAV3API.Lines.Line
   alias MBTAV3API.Lines.Parser
 
   @default_opts [include: "routes"]
