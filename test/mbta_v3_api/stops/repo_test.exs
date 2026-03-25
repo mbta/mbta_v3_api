@@ -110,26 +110,6 @@ defmodule MBTAV3API.Stops.RepoTest do
 
       assert Repo.by_route(route_id, direction_id, opts) == response
     end
-
-    test "caches per-stop as well" do
-      route_id = "Red"
-      direction_id = 1
-      stop_id = "place-brntn"
-
-      get_opts = [stops_by_gtfs_id_fn: fn ^stop_id -> {:ok, %Stop{id: stop_id}} end]
-
-      ConCache.delete(Repo, {:by_route, {route_id, direction_id, []}})
-      ConCache.put(Repo, {:stop, stop_id}, {:ok, "to-be-overwritten"})
-      assert Repo.get(stop_id, get_opts) == "to-be-overwritten"
-
-      by_route_opts = [
-        by_route_fn: fn {^route_id, ^direction_id, []} -> [%Stop{id: stop_id}] end
-      ]
-
-      Repo.by_route(route_id, direction_id, by_route_opts)
-
-      assert %Stop{id: ^stop_id} = Repo.get("place-brntn", get_opts)
-    end
   end
 
   describe "by_route_type/2" do

@@ -94,16 +94,7 @@ defmodule MBTAV3API.Stops.Repo do
   def by_route(route_id, direction_id, opts \\ []) do
     {by_route_fn, opts} = Keyword.pop(opts, :by_route_fn, &Api.by_route/1)
 
-    cache({route_id, direction_id, opts}, fn args ->
-      with stops when is_list(stops) <- by_route_fn.(args) do
-        for stop <- stops do
-          # Put the stop in the cache under {:stop, id} key as well so it will
-          # also be cached for Stops.Repo.get/1 calls
-          ConCache.put(__MODULE__, {:stop, stop.id}, {:ok, stop})
-          stop
-        end
-      end
-    end)
+    cache({route_id, direction_id, opts}, by_route_fn)
   end
 
   @spec by_route_type(Route.type_int()) :: stops_response()
