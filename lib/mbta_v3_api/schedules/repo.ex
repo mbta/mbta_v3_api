@@ -167,19 +167,19 @@ defmodule MBTAV3API.Schedules.Repo do
     end
   end
 
-  def has_trip?({_, trip_id, _, _, _, _, _, _, _, _, _}) when is_nil(trip_id) do
+  def has_trip?({_, trip_id, _, _, _, _, _, _, _, _, _, _}) when is_nil(trip_id) do
     false
   end
 
-  def has_trip?({_, _, _, _, _, _, _, _, _, _, _}) do
+  def has_trip?({_, _, _, _, _, _, _, _, _, _, _, _}) do
     true
   end
 
-  defp date_sorter({_, _, _, _, _, %DateTime{} = time, _, _, _, _, _}) do
+  defp date_sorter({_, _, _, _, _, %DateTime{} = time, _, _, _, _, _, _}) do
     DateTime.to_unix(time)
   end
 
-  defp date_sorter({_, _, _, _, _, _, _, _, _, _, _}) do
+  defp date_sorter({_, _, _, _, _, _, _, _, _, _, _, _}) do
     0
   end
 
@@ -261,7 +261,7 @@ defmodule MBTAV3API.Schedules.Repo do
   defp load_from_other_repos(schedules) do
     schedules
     |> Enum.map(fn {route_id, trip_id, stop_id, arrival_time, departure_time, time, flag?,
-                    early_departure?, last_stop?, stop_sequence, pickup_type} ->
+                    early_departure?, last_stop?, stop_sequence, pickup_type, added_route_ids} ->
       Task.async(fn ->
         %Schedule{
           route: RoutesRepo.get(route_id),
@@ -275,7 +275,8 @@ defmodule MBTAV3API.Schedules.Repo do
           early_departure?: early_departure?,
           last_stop?: last_stop?,
           stop_sequence: stop_sequence,
-          pickup_type: pickup_type
+          pickup_type: pickup_type,
+          added_route_ids: added_route_ids
         }
       end)
     end)
