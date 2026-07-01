@@ -570,6 +570,7 @@ defmodule MBTAV3API.Support.Factory do
         "timepoint" => false
       },
       relationships: %{
+        "added_routes" => [],
         "stop" => [
           %Item{
             attributes: %{
