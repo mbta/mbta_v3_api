@@ -279,7 +279,7 @@ defmodule MBTAV3API.Schedules.RepoTest do
       assert Repo.has_trip?(
                {"CR-Lowell", "CR-Weekday-Fall-18-348", "place-NHRML-0254", nil,
                 "2018-11-05 23:05:00-05:00 -05 Etc/GMT+5",
-                "2018-11-05 23:05:00-05:00 -05 Etc/GMT+5", false, false, false, 1, 0}
+                "2018-11-05 23:05:00-05:00 -05 Etc/GMT+5", false, false, false, 1, 0, []}
              )
     end
 
@@ -287,7 +287,7 @@ defmodule MBTAV3API.Schedules.RepoTest do
       refute Repo.has_trip?(
                {"CR-Lowell", nil, "place-NHRML-0254", nil,
                 "2018-11-05 23:05:00-05:00 -05 Etc/GMT+5",
-                "2018-11-05 23:05:00-05:00 -05 Etc/GMT+5", false, false, false, 1, 0}
+                "2018-11-05 23:05:00-05:00 -05 Etc/GMT+5", false, false, false, 1, 0, []}
              )
     end
   end

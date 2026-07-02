@@ -20,7 +20,8 @@ defmodule MBTAV3API.Schedules.Schedule do
             last_stop?: false,
             stop_sequence: 0,
             pickup_type: 0,
-            platform_stop_id: nil
+            platform_stop_id: nil,
+            added_route_ids: []
 
   @typedoc "If the scheduled stop has a parent stop (station), then the `stop` field will contain that parent stop. Otherwise it will contain the scheduled platform stop. Whether or not the stop has a parent, the unmodified stop id can be found in platform_stop_id field."
   @type stop :: Stop.t()
@@ -37,7 +38,8 @@ defmodule MBTAV3API.Schedules.Schedule do
           last_stop?: boolean,
           stop_sequence: non_neg_integer,
           pickup_type: integer,
-          platform_stop_id: Stop.id_t()
+          platform_stop_id: Stop.id_t(),
+          added_route_ids: [Route.id_t()]
         }
 
   def flag?(%__MODULE__{flag?: value}), do: value

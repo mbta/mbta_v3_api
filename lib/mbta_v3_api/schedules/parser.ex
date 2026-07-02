@@ -22,7 +22,8 @@ defmodule MBTAV3API.Schedules.Parser do
           early_departure? :: boolean,
           last_stop? :: boolean,
           stop_sequence :: integer,
-          pickup_type :: integer
+          pickup_type :: integer,
+          added_route_ids :: [Route.id_t()]
         }
 
   @spec parse(Item.t()) :: record
@@ -42,12 +43,17 @@ defmodule MBTAV3API.Schedules.Parser do
       early_departure?(item),
       last_stop?(item),
       item.attributes["stop_sequence"] || 0,
-      pickup_type(item)
+      pickup_type(item),
+      added_route_ids(item)
     }
   end
 
   def route_id(%Item{relationships: %{"route" => [%Item{id: id} | _]}}) do
     id
+  end
+
+  def added_route_ids(%Item{relationships: %{"added_routes" => routes}}) do
+    Enum.map(routes, fn route -> route.id end)
   end
 
   def trip_id(%Item{relationships: %{"trip" => [%Item{id: id} | _]}}) do

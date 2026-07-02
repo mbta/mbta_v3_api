@@ -23,7 +23,27 @@ defmodule MBTAV3API.Schedules.ParserTest do
         assert {"CR-Lowell", "31174458-CR_MAY2016-hxl16011-Weekday-01", "Lowell", nil,
                 Timex.to_datetime({{2016, 6, 8}, {5, 35, 0}}, "Etc/UTC-4"),
                 Timex.to_datetime({{2016, 6, 8}, {5, 35, 0}}, "Etc/UTC-4"), true, true, false, 0,
-                3} == actual
+                3, []} == actual
+      end
+    end
+
+    test "parse converts a JsonApi.Item into a tuple including added routes" do
+      with_mock(RoutesRepo, get: fn _ -> %Route{type: 2} end) do
+        api_item = build(:schedule_data)
+
+        relationships =
+          Map.merge(api_item.relationships, %{
+            "added_routes" => [%JsonApi.Item{id: "Boat-F1", type: "route"}]
+          })
+
+        api_item = %{api_item | relationships: relationships}
+
+        actual = Parser.parse(api_item)
+
+        assert {"CR-Lowell", "31174458-CR_MAY2016-hxl16011-Weekday-01", "Lowell", nil,
+                Timex.to_datetime({{2016, 6, 8}, {5, 35, 0}}, "Etc/UTC-4"),
+                Timex.to_datetime({{2016, 6, 8}, {5, 35, 0}}, "Etc/UTC-4"), true, true, false, 0,
+                3, ["Boat-F1"]} == actual
       end
     end
   end
