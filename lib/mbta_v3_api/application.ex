@@ -16,11 +16,11 @@ defmodule MBTAV3API.Application do
           {ConCache, :start_link,
            [
              [
-               ttl: :timer.seconds(60),
-               ttl_check: :timer.seconds(5),
-               ets_options: [read_concurrency: true]
-             ],
-             [name: :line_diagram_realtime_cache]
+               global_ttl: :timer.seconds(60),
+               ttl_check_interval: :timer.seconds(5),
+               ets_options: [read_concurrency: true],
+               name: :line_diagram_realtime_cache
+             ]
            ]}
       },
       RepoCache.Log,
