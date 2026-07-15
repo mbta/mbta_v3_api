@@ -11,7 +11,7 @@ defmodule MBTAV3API.Schedules.Parser do
   alias MBTAV3API.Stops.Stop
   alias MBTAV3API.Vehicles.Vehicle
 
-  @type record :: {
+  @type record_t :: {
           route_id :: Route.id_t(),
           trip_id :: String.t(),
           stop_id :: Stop.id_t(),
@@ -26,7 +26,7 @@ defmodule MBTAV3API.Schedules.Parser do
           added_route_ids :: [Route.id_t()]
         }
 
-  @spec parse(Item.t()) :: record
+  @spec parse(Item.t()) :: record_t
   def parse(item) do
     arrival = arrival_time(item)
     departure = departure_time(item)
