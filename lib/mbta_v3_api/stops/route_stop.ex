@@ -381,11 +381,15 @@ defmodule MBTAV3API.Stops.RouteStop do
 
   @spec do_stitch([RouteStop.t()], [RouteStop.t()]) :: [RouteStop.t()]
   defp do_stitch(first, second) do
-    {first_last, first_body} = List.pop_at(first, -1)
+    {%RouteStop{} = first_last, first_body} = List.pop_at(first, -1)
 
     first_body ++
       [%RouteStop{first_last | is_terminus?: false}] ++
-      (second |> tl() |> Enum.map(&%RouteStop{&1 | branch: branch(first)}))
+      (second
+       |> tl()
+       |> Enum.map(fn %RouteStop{} = route_stop ->
+         %RouteStop{route_stop | branch: branch(first)}
+       end))
   end
 
   @spec branch([RouteStop.t()]) :: RouteStop.branch_name_t()
