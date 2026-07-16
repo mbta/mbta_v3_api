@@ -1,7 +1,6 @@
 defmodule MBTAV3API.Lines.Repo do
   @moduledoc "Repo for fetching Line resources and their associated data from the MBTA V3 API."
 
-  require Logger
   use RepoCache, ttl: :timer.hours(1)
   alias JsonApi
   alias MBTAV3API.Lines
