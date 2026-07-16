@@ -3,7 +3,6 @@ defmodule MBTAV3API.Routes.Repo do
 
   @behaviour MBTAV3API.Routes.RepoApi
 
-  require Logger
   use RepoCache, ttl: :timer.hours(1)
 
   import MBTAV3API.Routes.Parser

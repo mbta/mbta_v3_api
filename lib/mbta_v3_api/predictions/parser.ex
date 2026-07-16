@@ -11,7 +11,7 @@ defmodule MBTAV3API.Predictions.Parser do
   alias MBTAV3API.Stops.Stop
   alias MBTAV3API.Vehicles.Vehicle
 
-  @type record :: {
+  @type record_t :: {
           Prediction.id_t() | nil,
           Trip.id_t() | nil,
           Stop.id_t(),
@@ -28,7 +28,7 @@ defmodule MBTAV3API.Predictions.Parser do
           Vehicle.id_t() | nil
         }
 
-  @spec parse(Item.t()) :: record
+  @spec parse(Item.t()) :: record_t
   def parse(%Item{} = item) do
     arrival = arrival_time(item)
     departure = departure_time(item)
