@@ -9,7 +9,7 @@ defmodule MBTAV3API.Schedules.Schedule do
 
   @derive Jason.Encoder
 
-  defstruct route: nil,
+  defstruct route_id: nil,
             trip: nil,
             stop: nil,
             arrival_time: nil,
@@ -24,12 +24,11 @@ defmodule MBTAV3API.Schedules.Schedule do
             added_route_ids: []
 
   @typedoc "If the scheduled stop has a parent stop (station), then the `stop` field will contain that parent stop. Otherwise it will contain the scheduled platform stop. Whether or not the stop has a parent, the unmodified stop id can be found in platform_stop_id field."
-  @type stop :: Stop.t()
 
   @type t :: %__MODULE__{
-          route: Route.t(),
+          route_id: Route.id_t(),
           trip: Trip.t(),
-          stop: stop,
+          stop: Stop.t(),
           arrival_time: DateTime.t() | nil,
           departure_time: DateTime.t() | nil,
           time: DateTime.t(),
