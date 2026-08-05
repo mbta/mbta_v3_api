@@ -38,6 +38,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
     :route_id,
     :listed_route,
     :time_desc,
+    :canonical,
     :typicality,
     :service_id,
     sort_order: 0
@@ -60,6 +61,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
           listed_route: boolean() | nil,
           time_desc: String.t(),
           typicality: typicality_t(),
+          canonical: boolean(),
           sort_order: integer(),
           service_id: String.t()
         }
@@ -71,6 +73,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
           "name" => name,
           "time_desc" => time_desc,
           "typicality" => typicality,
+          "canonical" => canonical,
           "sort_order" => sort_order
         },
         relationships: %{
@@ -101,6 +104,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
       route_id: route_id,
       listed_route: Map.get(route_attributes, "listed_route"),
       time_desc: time_desc,
+      canonical: canonical,
       typicality: typicality,
       sort_order: sort_order,
       service_id: service_id(trip_relationships)
@@ -114,6 +118,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
           "name" => name,
           "time_desc" => time_desc,
           "typicality" => typicality,
+          "canonical" => canonical,
           "sort_order" => sort_order
         },
         relationships: %{
@@ -132,6 +137,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
       listed_route: Map.get(route_attributes, "listed_route"),
       time_desc: time_desc,
       typicality: typicality,
+      canonical: canonical,
       sort_order: sort_order
     }
   end
