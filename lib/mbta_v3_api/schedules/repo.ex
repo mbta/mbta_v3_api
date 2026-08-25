@@ -3,7 +3,6 @@ defmodule MBTAV3API.Schedules.Repo do
   import Kernel, except: [to_string: 1]
   use RepoCache, ttl: :timer.hours(1)
 
-  alias MBTAV3API.Routes.Repo, as: RoutesRepo
   alias MBTAV3API.Routes.Route
   alias MBTAV3API.Schedules
   alias MBTAV3API.Schedules.{HoursOfOperation, Parser, Schedule, Trip}
@@ -264,7 +263,7 @@ defmodule MBTAV3API.Schedules.Repo do
                     early_departure?, last_stop?, stop_sequence, pickup_type, added_route_ids} ->
       Task.async(fn ->
         %Schedule{
-          route: RoutesRepo.get(route_id),
+          route_id: route_id,
           trip: trip(trip_id),
           platform_stop_id: stop_id,
           stop: StopsRepo.get_parent(stop_id),
