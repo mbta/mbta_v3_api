@@ -1,7 +1,7 @@
 defmodule MBTAV3API.Schedules.Repo do
   @moduledoc "Repo for V3 API Schedule resources."
   import Kernel, except: [to_string: 1]
-  use RepoCache, ttl: :timer.hours(1)
+  use RepoCache, [ttl: :timer.hours(1), acquire_lock_timeout: 20_000]
 
   alias MBTAV3API.Routes.Route
   alias MBTAV3API.Schedules
