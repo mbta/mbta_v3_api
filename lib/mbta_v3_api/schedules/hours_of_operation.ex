@@ -226,17 +226,14 @@ defmodule MBTAV3API.Schedules.HoursOfOperation do
          description,
          special_service_params
        ) do
-    with {:ok, special_service_depature_maps} <-
-           special_service_departures_parser(
-             special_service_responses,
-             headsigns,
-             description,
-             special_service_params
-           ) do
-      {
-        :ok,
-        special_service_depature_maps
-      }
+    case special_service_departures_parser(
+           special_service_responses,
+           headsigns,
+           description,
+           special_service_params
+         ) do
+      {:ok, special_service_depature_maps} -> {:ok, special_service_depature_maps}
+      {:error, error} -> {:error, error}
     end
   end
 

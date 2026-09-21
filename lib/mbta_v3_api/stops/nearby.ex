@@ -189,16 +189,18 @@ defmodule MBTAV3API.Stops.Nearby do
         if still_valid_keys == [] do
           {existing, all_keys}
         else
-          updated_keys =
-            still_valid_keys
-            |> Enum.reduce(all_keys, fn key, keys ->
-              Map.update(keys, key, 1, &(&1 + 1))
-            end)
-
+          updated_keys = update_keys(still_valid_keys, all_keys)
           {[item | existing], updated_keys}
         end
       end)
 
     Enum.reverse(items)
+  end
+
+  defp update_keys(still_valid_keys, all_keys) do
+    still_valid_keys
+    |> Enum.reduce(all_keys, fn key, keys ->
+      Map.update(keys, key, 1, &(&1 + 1))
+    end)
   end
 end

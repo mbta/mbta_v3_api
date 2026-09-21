@@ -82,11 +82,9 @@ defmodule MBTAV3API.Predictions.Repo do
   end
 
   defp parse(item) do
-    try do
-      [Parser.parse(item)]
-    rescue
-      e -> warn_error(item, e)
-    end
+    [Parser.parse(item)]
+  rescue
+    e -> warn_error(item, e)
   end
 
   defp warn_error(item, e) do
