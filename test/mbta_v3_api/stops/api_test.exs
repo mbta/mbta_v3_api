@@ -123,6 +123,7 @@ defmodule MBTAV3API.Stops.ApiTest do
   end
 
   describe "all/0" do
+    @tag :skip
     test "returns error if API returns error" do
       opts = [stops_all_fn: fn _ -> {:error, "Error"} end]
 

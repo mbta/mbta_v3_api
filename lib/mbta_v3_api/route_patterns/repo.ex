@@ -9,6 +9,7 @@ defmodule MBTAV3API.RoutePatterns.Repo do
 
   alias MBTAV3API.RoutePatterns
   alias MBTAV3API.RoutePatterns.RoutePattern
+  alias MBTAV3API.Stops.Api
 
   @doc """
   Returns a single route pattern by ID
@@ -106,7 +107,7 @@ defmodule MBTAV3API.RoutePatterns.Repo do
           |> Enum.flat_map(fn trip -> trip.relationships["stops"] end)
         end)
         |> Enum.uniq()
-        |> Enum.map(&MBTAV3API.Stops.Api.parse_v3_response(&1))
+        |> Enum.map(&Api.parse_v3_response(&1))
         |> Enum.map(fn {:ok, stop} -> stop end)
     end
   end

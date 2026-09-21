@@ -411,7 +411,7 @@ defmodule MBTAV3API.Support.Factory do
         "fare_class" => "Rapid Transit",
         "long_name" => "Orange Line",
         "short_name" => "",
-        "sort_order" => 10020,
+        "sort_order" => 10_020,
         "text_color" => "FFFFFF",
         "type" => 1
       },
@@ -647,7 +647,7 @@ defmodule MBTAV3API.Support.Factory do
       attributes: %{
         "long_name" => "Clarendon Hill or Davis - Sullivan",
         "short_name" => "89",
-        "sort_order" => 50890
+        "sort_order" => 50_890
       },
       relationships: %{
         "routes" => [

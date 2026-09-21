@@ -5,9 +5,9 @@ defmodule MBTAV3API.Predictions.PredictionsPubSubTest do
   import Test.Support.Helpers
 
   alias MBTAV3API.Predictions.{Prediction, PredictionsPubSub, Store, StreamSupervisor}
-  alias MBTAV3API.Routes.Route
   alias MBTAV3API.RoutePatterns.Repo, as: RoutePatternsRepo
   alias MBTAV3API.RoutePatterns.RoutePattern
+  alias MBTAV3API.Routes.Route
   alias MBTAV3API.Stops.Stop
 
   @stop_id "place-where"
@@ -103,42 +103,42 @@ defmodule MBTAV3API.Predictions.PredictionsPubSubTest do
     # end
   end
 
-  defp count_workers() do
-    Supervisor.count_children(StreamSupervisor)
-    |> Map.get(:active)
-  end
+  # defp count_workers() do
+  #   Supervisor.count_children(StreamSupervisor)
+  #   |> Map.get(:active)
+  # end
 
-  defp count_subscribers(pid) do
-    Registry.lookup(:prediction_subscriptions_registry, pid)
-    |> Enum.count()
-  end
+  # defp count_subscribers(pid) do
+  #   Registry.lookup(:prediction_subscriptions_registry, pid)
+  #   |> Enum.count()
+  # end
 
-  defp subscribe_task(channel, subscriber_server) do
-    parent = self()
+  # defp subscribe_task(channel, subscriber_server) do
+  #   parent = self()
 
-    {:ok, task} =
-      Task.start(fn ->
-        send(parent, PredictionsPubSub.subscribe(channel, subscriber_server))
-        Process.sleep(:infinity)
-      end)
+  #   {:ok, task} =
+  #     Task.start(fn ->
+  #       send(parent, PredictionsPubSub.subscribe(channel, subscriber_server))
+  #       Process.sleep(:infinity)
+  #     end)
 
-    # depends on predictions being empty or mocked to an empty list
-    assert_receive []
-    # worker takes time to start, subscriber takes time to be registered
-    Process.sleep(2000)
-    task
-  end
+  #   # depends on predictions being empty or mocked to an empty list
+  #   assert_receive []
+  #   # worker takes time to start, subscriber takes time to be registered
+  #   Process.sleep(2000)
+  #   task
+  # end
 
-  defp shutdown_subscribe_task([_ | _] = tasks, pid) do
-    Enum.each(tasks, &shutdown_subscribe_task(&1, pid))
-  end
+  # defp shutdown_subscribe_task([_ | _] = tasks, pid) do
+  #   Enum.each(tasks, &shutdown_subscribe_task(&1, pid))
+  # end
 
-  defp shutdown_subscribe_task(task, pid) do
-    GenServer.cast(pid, {:closed_channel, task})
-    ref = Process.monitor(task)
-    Process.exit(task, :brutal_kill)
-    assert_receive {:DOWN, ^ref, :process, ^task, :brutal_kill}, 5000
-    # subscriber takes time to be unregistered
-    Process.sleep(1000)
-  end
+  # defp shutdown_subscribe_task(task, pid) do
+  #   GenServer.cast(pid, {:closed_channel, task})
+  #   ref = Process.monitor(task)
+  #   Process.exit(task, :brutal_kill)
+  #   assert_receive {:DOWN, ^ref, :process, ^task, :brutal_kill}, 5000
+  #   # subscriber takes time to be unregistered
+  #   Process.sleep(1000)
+  # end
 end

@@ -9,7 +9,7 @@ defmodule MBTAV3API.Predictions.PredictionsPubSub do
 
   use GenServer
 
-  alias MBTAV3API.Predictions.{Prediction, Store, StreamTopic, StreamSupervisor}
+  alias MBTAV3API.Predictions.{Prediction, Store, StreamSupervisor, StreamTopic}
 
   @broadcast_interval_ms 10_000
   @subscribers :prediction_subscriptions_registry
