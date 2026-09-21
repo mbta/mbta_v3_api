@@ -92,8 +92,8 @@ defmodule MBTAV3API.Predictions.Repo do
     []
   end
 
-  @spec filter_by_min_time([Parser.record()] | {:error, any}, DateTime.t() | nil) ::
-          [Parser.record()] | {:error, any}
+  @spec filter_by_min_time([Parser.record_t()] | {:error, any}, DateTime.t() | nil) ::
+          [Parser.record_t()] | {:error, any}
   defp filter_by_min_time({:error, error}, _) do
     {:error, error}
   end
