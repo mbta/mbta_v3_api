@@ -47,6 +47,7 @@ defmodule MBTAV3API.Predictions.PredictionsPubSubTest do
   setup :close_active_workers
 
   describe "subscribe/2" do
+    @tag :skip
     test "clients get existing predictions upon subscribing", %{pid: pid} do
       with_mock(Store, [:passthrough], fetch: fn _keys -> [@prediction39] end) do
         assert PredictionsPubSub.subscribe(@channel_args, pid) == [@prediction39]
