@@ -192,7 +192,6 @@ defmodule MBTAV3API.Services.Service do
     removed_dates = parse_listed_dates(removed_dates)
 
     (dates ++ parse_listed_dates(added_dates))
-    # |> Enum.reject(&Enum.member?(removed_dates, &1))
     |> Enum.reject(fn date ->
       # if valid_days is an empty array, the service's dates are likely those in
       # added_dates, so we can ignore evaluating the day of the week here

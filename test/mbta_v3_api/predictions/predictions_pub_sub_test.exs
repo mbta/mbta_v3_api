@@ -47,7 +47,6 @@ defmodule MBTAV3API.Predictions.PredictionsPubSubTest do
   setup :close_active_workers
 
   describe "subscribe/2" do
-    @tag :skip
     test "clients get existing predictions upon subscribing", %{pid: pid} do
       with_mock(Store, [:passthrough], fetch: fn _keys -> [@prediction39] end) do
         assert PredictionsPubSub.subscribe(@channel_args, pid) == [@prediction39]
@@ -104,7 +103,7 @@ defmodule MBTAV3API.Predictions.PredictionsPubSubTest do
     # end
   end
 
-  # defp count_workers() do
+  # defp count_workers do
   #   Supervisor.count_children(StreamSupervisor)
   #   |> Map.get(:active)
   # end
@@ -134,12 +133,12 @@ defmodule MBTAV3API.Predictions.PredictionsPubSubTest do
   #   Enum.each(tasks, &shutdown_subscribe_task(&1, pid))
   # end
 
-  # defp shutdown_subscribe_task(task, pid) do
-  #   GenServer.cast(pid, {:closed_channel, task})
-  #   ref = Process.monitor(task)
-  #   Process.exit(task, :brutal_kill)
-  #   assert_receive {:DOWN, ^ref, :process, ^task, :brutal_kill}, 5000
-  #   # subscriber takes time to be unregistered
-  #   Process.sleep(1000)
-  # end
+  defp shutdown_subscribe_task(task, pid) do
+    GenServer.cast(pid, {:closed_channel, task})
+    ref = Process.monitor(task)
+    Process.exit(task, :brutal_kill)
+    assert_receive {:DOWN, ^ref, :process, ^task, :brutal_kill}, 5000
+    # subscriber takes time to be unregistered
+    Process.sleep(1000)
+  end
 end

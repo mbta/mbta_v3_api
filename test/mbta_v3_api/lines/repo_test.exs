@@ -9,8 +9,8 @@ defmodule MBTAV3API.Lines.RepoTest do
 
   @item build(:line_data)
 
-  @tag :skip
   describe "all/0" do
+    @tag :skip
     test "returns a list of Lines" do
       with_mock(Lines, all: fn _opts -> %JsonApi{data: [@item]} end) do
         assert [%Line{} | _] = Repo.all()
@@ -42,7 +42,6 @@ defmodule MBTAV3API.Lines.RepoTest do
       end
     end
 
-    @tag :skip
     test "returns nil for an unknown line" do
       with_mock(Lines, get: fn _id, _opts -> {:error, "not found"} end) do
         refute Repo.get("_unknown_line")
