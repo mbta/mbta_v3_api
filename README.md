@@ -35,3 +35,14 @@ You can also set the following optional confuration values.
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/mbta_v3_api>.
+
+## Running the tests
+
+Running the tests all at once leads to timeouts. You can partition the tests with 
+
+```
+MIX_TEST_PARTITION=1 mix test --partitions 4
+MIX_TEST_PARTITION=2 mix test --partitions 4
+MIX_TEST_PARTITION=3 mix test --partitions 4
+MIX_TEST_PARTITION=4 mix test --partitions 4
+```

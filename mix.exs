@@ -8,7 +8,8 @@ defmodule MBTAV3API.MixProject do
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -43,6 +44,17 @@ defmodule MBTAV3API.MixProject do
       {:server_sent_event_stage, "~> 1.0"},
       {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
       {:timex, "~> 3.7"}
+    ]
+  end
+
+  defp aliases do
+    [
+      check: [
+        "compile --force --all-warnings --warnings-as-errors",
+        "format",
+        "credo --strict",
+        "dialyzer"
+      ]
     ]
   end
 end

@@ -133,12 +133,12 @@ defmodule MBTAV3API.Predictions.PredictionsPubSubTest do
   #   Enum.each(tasks, &shutdown_subscribe_task(&1, pid))
   # end
 
-  defp shutdown_subscribe_task(task, pid) do
-    GenServer.cast(pid, {:closed_channel, task})
-    ref = Process.monitor(task)
-    Process.exit(task, :brutal_kill)
-    assert_receive {:DOWN, ^ref, :process, ^task, :brutal_kill}, 5000
-    # subscriber takes time to be unregistered
-    Process.sleep(1000)
-  end
+  # defp shutdown_subscribe_task(task, pid) do
+  #   GenServer.cast(pid, {:closed_channel, task})
+  #   ref = Process.monitor(task)
+  #   Process.exit(task, :brutal_kill)
+  #   assert_receive {:DOWN, ^ref, :process, ^task, :brutal_kill}, 5000
+  #   # subscriber takes time to be unregistered
+  #   Process.sleep(1000)
+  # end
 end
