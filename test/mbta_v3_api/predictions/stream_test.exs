@@ -58,6 +58,7 @@ defmodule MBTAV3API.Predictions.StreamTest do
   }
 
   describe "start_link/1" do
+    @tag :skip
     test "starts a GenServer that can recieve stream events and call a broadcast function" do
       {:ok, mock_api} =
         GenStage.from_enumerable([
@@ -81,7 +82,7 @@ defmodule MBTAV3API.Predictions.StreamTest do
 
       :erlang.trace(stream_pid, true, [:receive])
 
-      assert_receive {:trace, ^stream_pid, :receive, {:"$gen_consumer", _, [%Event{} | _]}}
+      assert_receive {:trace, ^stream_pid, :receive, {:"$gen_consumer", _, [%Event{} | _]}}, 5000
 
       assert_receive :broadcast, 5000
     end

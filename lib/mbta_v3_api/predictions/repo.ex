@@ -82,11 +82,9 @@ defmodule MBTAV3API.Predictions.Repo do
   end
 
   defp parse(item) do
-    try do
-      [Parser.parse(item)]
-    rescue
-      e -> warn_error(item, e)
-    end
+    [Parser.parse(item)]
+  rescue
+    e -> warn_error(item, e)
   end
 
   defp warn_error(item, e) do
@@ -94,8 +92,8 @@ defmodule MBTAV3API.Predictions.Repo do
     []
   end
 
-  @spec filter_by_min_time([Parser.record()] | {:error, any}, DateTime.t() | nil) ::
-          [Parser.record()] | {:error, any}
+  @spec filter_by_min_time([Parser.record_t()] | {:error, any}, DateTime.t() | nil) ::
+          [Parser.record_t()] | {:error, any}
   defp filter_by_min_time({:error, error}, _) do
     {:error, error}
   end

@@ -8,7 +8,8 @@ defmodule MBTAV3API.MixProject do
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -44,5 +45,25 @@ defmodule MBTAV3API.MixProject do
       {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
       {:timex, "~> 3.7"}
     ]
+  end
+
+  defp aliases do
+    [
+      check: [
+        "compile --force --all-warnings --warnings-as-errors",
+        "format",
+        "credo --strict",
+        "dialyzer"
+      ],
+      "test.all": [
+        &run_partitioned_tests/1
+      ]
+    ]
+  end
+
+  defp run_partitioned_tests(_) do
+    Enum.map(1..4, fn x ->
+      Mix.Task.run("cmd", ["MIX_TEST_PARTITION=#{x}", "mix test", "--partitions 4", "--color"])
+    end)
   end
 end

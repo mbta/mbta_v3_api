@@ -3,9 +3,9 @@ defmodule MBTAV3API.Stops.RouteStopTest do
 
   import Mock
 
+  alias MBTAV3API.RoutePatterns.RoutePattern
   alias MBTAV3API.Routes.Repo, as: RoutesRepo
   alias MBTAV3API.Routes.{Route, Shape}
-  alias MBTAV3API.RoutePatterns.RoutePattern
   alias MBTAV3API.Stops.{Repo, RouteStop, Stop}
   alias MBTAV3API.Stops.RouteStop
   alias Util.Position

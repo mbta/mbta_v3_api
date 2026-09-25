@@ -18,9 +18,9 @@ defmodule MBTAV3API.Stops.RouteStop do
   ```
 
   """
+  alias MBTAV3API.RoutePatterns.RoutePattern
   alias MBTAV3API.Routes.Repo, as: RoutesRepo
   alias MBTAV3API.Routes.{Route, Shape}
-  alias MBTAV3API.RoutePatterns.RoutePattern
   alias MBTAV3API.Stops.{Repo, Stop}
   alias Util.EnumHelpers
 
@@ -90,7 +90,8 @@ defmodule MBTAV3API.Stops.RouteStop do
         _direction_id,
         use_route_id_for_branch_name?
       ) do
-    # If there is only one route pattern, we know that we won't need to deal with merging branches so we just return whatever the list of stops is without calling &merge_branch_list/2.
+    # If there is only one route pattern, we know that we won't need to deal with merging branches
+    # so we just return whatever the list of stops is without calling &merge_branch_list/2.
     list_from_route_pattern(
       route_pattern_with_stops,
       route,
@@ -308,8 +309,7 @@ defmodule MBTAV3API.Stops.RouteStop do
       |> Repo.get_parent()
       |> Map.get(:id)
       |> RoutesRepo.by_stop(include: "stop.connecting_stops")
-      |> Enum.reject(&(&1.id == route_stop.route.id))
-      |> Enum.reject(&(&1.description == :rail_replacement_bus))
+      |> Enum.reject(&(&1.id == route_stop.route.id || &1.description == :rail_replacement_bus))
 
     %{route_stop | connections: connections}
   end

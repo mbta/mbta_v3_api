@@ -9,6 +9,7 @@ defmodule MBTAV3API.RoutePatterns.Repo do
 
   alias MBTAV3API.RoutePatterns
   alias MBTAV3API.RoutePatterns.RoutePattern
+  alias MBTAV3API.Stops.Api
 
   @doc """
   Returns a single route pattern by ID
@@ -102,13 +103,16 @@ defmodule MBTAV3API.RoutePatterns.Repo do
 
       %JsonApi{data: data} ->
         Enum.flat_map(data, fn data_item ->
-          data_item.relationships["representative_trip"]
-          |> Enum.flat_map(fn trip -> trip.relationships["stops"] end)
+          get_representative_stops(data_item.relationships["representative_trip"])
         end)
         |> Enum.uniq()
-        |> Enum.map(&MBTAV3API.Stops.Api.parse_v3_response(&1))
+        |> Enum.map(&Api.parse_v3_response(&1))
         |> Enum.map(fn {:ok, stop} -> stop end)
     end
+  end
+
+  defp get_representative_stops(trips) do
+    Enum.flat_map(trips, fn trip -> trip.relationships["stops"] end)
   end
 
   @spec reorder_mrts(RoutePattern.t(), RoutePattern.t(), String.t()) :: boolean()
