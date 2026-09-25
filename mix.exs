@@ -54,7 +54,16 @@ defmodule MBTAV3API.MixProject do
         "format",
         "credo --strict",
         "dialyzer"
+      ],
+      "test.all": [
+        &run_partitioned_tests/1
       ]
     ]
+  end
+
+  defp run_partitioned_tests(_) do
+    Enum.map(1..4, fn x ->
+      Mix.Task.run("cmd", ["MIX_TEST_PARTITION=#{x}", "mix test", "--partitions 4", "--color"])
+    end)
   end
 end

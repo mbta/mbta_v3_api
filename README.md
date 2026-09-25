@@ -38,11 +38,5 @@ be found at <https://hexdocs.pm/mbta_v3_api>.
 
 ## Running the tests
 
-Running the tests all at once leads to timeouts. You can partition the tests with 
-
-```
-MIX_TEST_PARTITION=1 mix test --partitions 4
-MIX_TEST_PARTITION=2 mix test --partitions 4
-MIX_TEST_PARTITION=3 mix test --partitions 4
-MIX_TEST_PARTITION=4 mix test --partitions 4
-```
+While you can run the tests with `mix.test`, this will usually lead to timeout issues. You can use the alias `mix test.all` to 
+run the tests in 4 separate partitions which usually does the trick.
