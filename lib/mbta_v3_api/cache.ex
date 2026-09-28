@@ -1,6 +1,6 @@
 defmodule MBTAV3API.Cache do
   @moduledoc """
-  Cache HTTP responses from the V3 API.
+  Cache HTTP responses from the MBTA V3 API.
 
   Static data such as schedules and stops do not change frequently. However,
   we do want to check in with the API periodically to make sure we have the

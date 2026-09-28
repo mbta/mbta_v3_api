@@ -1,12 +1,14 @@
 defmodule MBTAV3API do
-  @moduledoc "Handles fetching and caching generic JSON:API responses from the V3 API."
+  @moduledoc "Handles fetching and caching generic JSON:API responses from the MBTA V3 API."
 
   use HTTPoison.Base
   require Logger
   alias MBTAV3API.Cache
   alias Util
 
+  @spec get_json(String.t()) :: JsonApi.t() | {:error, any}
   @spec get_json(String.t(), Keyword.t()) :: JsonApi.t() | {:error, any}
+  @spec get_json(String.t(), Keyword.t(), Keyword.t()) :: JsonApi.t() | {:error, any}
   def get_json(url, params \\ [], opts \\ []) do
     _ =
       Logger.debug(fn ->
