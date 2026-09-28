@@ -5,8 +5,8 @@ defmodule MBTAV3API.Stops.Api do
   require Logger
 
   alias JsonApi.Item
-  alias MBTAV3API.{Stops, Trips}
   alias MBTAV3API.Routes.Route
+  alias MBTAV3API.{Stops, Trips}
   alias MBTAV3API.Stops.{Helpers, Stop}
   alias MBTAV3API.Stops.Stop.ParkingLot
   alias MBTAV3API.Stops.Stop.ParkingLot.{Capacity, Manager, Payment, Utilization}

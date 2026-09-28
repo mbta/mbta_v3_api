@@ -153,7 +153,7 @@ defmodule MBTAV3API.Schedules.Repo do
     |> error_default(%HoursOfOperation{})
   end
 
-  @spec all_from_params(Keyword.t()) :: [Parser.record()] | {:error, any}
+  @spec all_from_params(Keyword.t()) :: [Parser.record_t()] | {:error, any}
   defp all_from_params(params) do
     with %JsonApi{data: data} <- Schedules.all(params) do
       data = Enum.filter(data, &valid?/1)
@@ -217,7 +217,7 @@ defmodule MBTAV3API.Schedules.Repo do
 
   defp to_string(list) when is_list(list) do
     list
-    |> Enum.map(&to_string/1)
+    |> Enum.map_join(&to_string/1)
     |> Enum.join(",")
   end
 
@@ -225,8 +225,8 @@ defmodule MBTAV3API.Schedules.Repo do
     Integer.to_string(int)
   end
 
-  @spec filter_by_min_time([Parser.record()] | {:error, any}, DateTime.t() | nil) ::
-          [Parser.record()] | {:error, any}
+  @spec filter_by_min_time([Parser.record_t()] | {:error, any}, DateTime.t() | nil) ::
+          [Parser.record_t()] | {:error, any}
   defp filter_by_min_time({:error, error}, _) do
     {:error, error}
   end

@@ -1,7 +1,7 @@
 defmodule MBTAV3API.Facilities.Facility do
   @moduledoc "Data model and helpers corresponding to the MBTA V3 API Facility resource."
-  alias MBTAV3API.Stops.Stop
   alias JsonApi.Item
+  alias MBTAV3API.Stops.Stop
 
   defstruct id: "",
             type: "",

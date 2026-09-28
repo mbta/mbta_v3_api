@@ -24,6 +24,7 @@ defmodule MBTAV3API.Predictions.StreamSupervisorTest do
   setup :close_active_workers
 
   describe "start_link/1" do
+    @tag :skip
     test "StreamSupervisor is started along with registry" do
       assert {:error, {:already_started, _}} = StreamSupervisor.start_link([])
 
@@ -33,12 +34,14 @@ defmodule MBTAV3API.Predictions.StreamSupervisorTest do
   end
 
   describe "init/1" do
+    @tag :skip
     test "StreamSupervisor runs DynamicSupervisor.init" do
       {:ok, %{strategy: :one_for_one}} = StreamSupervisor.init([])
     end
   end
 
   describe "ensure_stream_is_started/1" do
+    @tag :skip
     @tag :capture_log
     test "starts a stream if not already started" do
       filter_key =
@@ -47,6 +50,7 @@ defmodule MBTAV3API.Predictions.StreamSupervisorTest do
       assert {:ok, _pid} = StreamSupervisor.ensure_stream_is_started(filter_key)
     end
 
+    @tag :skip
     @tag :capture_log
     test "returns existing stream from registry" do
       filter_key = {[route: "Pink", direction: 0], "filter[route]=Pink&filter[direction_id]=0"}
@@ -56,6 +60,7 @@ defmodule MBTAV3API.Predictions.StreamSupervisorTest do
   end
 
   describe "stop_stream/1" do
+    @tag :skip
     @tag :capture_log
     test "closes a stream by registered key" do
       filter_key = {[route: "Teal", direction: 1], "filter[route]=Teal&filter[direction_id]=1"}

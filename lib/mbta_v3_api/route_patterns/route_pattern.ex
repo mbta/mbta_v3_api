@@ -22,7 +22,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
   alias JsonApi.Item
   alias MBTAV3API.Routes.Route
   alias MBTAV3API.Schedules.Trip
-  alias MBTAV3API.Stops.Stop
+  alias MBTAV3API.Stops.{Api, Stop}
 
   defstruct [
     :direction_id,
@@ -170,7 +170,7 @@ defmodule MBTAV3API.RoutePatterns.RoutePattern do
   @spec stops(map()) :: [Stop.t()] | nil
   defp stops(%{"stops" => stops}) when is_list(stops) do
     Enum.reduce(stops, [], fn stop_data, acc ->
-      case MBTAV3API.Stops.Api.parse_v3_response(stop_data) do
+      case Api.parse_v3_response(stop_data) do
         {:ok, %Stop{} = stop} ->
           acc ++ [stop]
 

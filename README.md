@@ -35,3 +35,8 @@ You can also set the following optional confuration values.
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/mbta_v3_api>.
+
+## Running the tests
+
+While you can run the tests with `mix.test`, this will usually lead to timeout issues. You can use the alias `mix test.all` to 
+run the tests in 4 separate partitions which usually does the trick.

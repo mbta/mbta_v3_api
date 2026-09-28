@@ -8,12 +8,10 @@ defmodule MBTAV3API.Predictions.RepoTest do
   alias JsonApi.Item
   alias MBTAV3API.Predictions
   alias MBTAV3API.Predictions.Repo
-  # alias MBTAV3API.Predictions.Prediction
   alias MBTAV3API.Routes.Repo, as: RoutesRepo
   alias MBTAV3API.Routes.Route
   alias MBTAV3API.Stops.Repo, as: StopsRepo
   alias MBTAV3API.Stops.Stop
-  # alias Plug.Conn
 
   describe "all/1" do
     @tag :capture_log
@@ -117,8 +115,11 @@ defmodule MBTAV3API.Predictions.RepoTest do
     #             ~s(
     #               {
     #                 "included": [
-    #                   {"type": "route", "id": "Red", "attributes": {"type": 1, "long_name": "Red Line", "direction_names": ["South", "North"], "description": "Rapid Transit"}, "relationships": {}},
-    #                   {"type": "trip", "id": "trip", "attributes": {"headsign": "headsign", "name": "name", "direction_id": "1"}, "relationships": {}},
+    #                   {"type": "route", "id": "Red", "attributes": {"type": 1, "long_name": "Red Line",
+    #                   "direction_names": ["South", "North"], "description": "Rapid Transit"}, "relationships": {}},
+    #                   {"type": "trip", "id": "trip", "attributes":
+    #                     {"headsign": "headsign", "name": "name", "direction_id": "1"},
+    #                     "relationships": {}},
     #                   {"type": "stop", "id": "stop", "attributes": {"platform_code": null}, "relationships": {}}
     #                 ],
     #                 "data": [
@@ -189,8 +190,12 @@ defmodule MBTAV3API.Predictions.RepoTest do
     #           Conn.resp(conn, 200, ~s(
     #           {
     #             "included": [
-    #               {"type": "route", "id": "Red", "attributes": {"type": 1, "long_name": "Red Line", "direction_names": ["South", "North"], "description": "Rapid Transit"}, "relationships": {}},
-    #               {"type": "trip", "id": "trip", "attributes": {"headsign": "headsign", "name": "name", "direction_id": "1"}, "relationships": {}},
+    #               {"type": "route", "id": "Red", "attributes": {"type": 1, "long_name": "Red Line",
+    #                 "direction_names": ["South", "North"], "description": "Rapid Transit"},
+    #                 "relationships": {}},
+    #               {"type": "trip", "id": "trip", "attributes":
+    #                 {"headsign": "headsign", "name": "name", "direction_id": "1"},
+    #                 "relationships": {}},
     #               {"type": "stop", "id": "stop", "attributes": {"platform_code": null}, "relationships": {}}
     #             ],
     #             "data": [

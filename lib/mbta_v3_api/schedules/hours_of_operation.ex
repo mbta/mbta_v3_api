@@ -142,9 +142,7 @@ defmodule MBTAV3API.Schedules.HoursOfOperation do
   end
 
   defp get_valid_day(check_date, days_to_avoid) do
-    if !Enum.member?(days_to_avoid, check_date) do
-      check_date
-    else
+    if Enum.member?(days_to_avoid, check_date) do
       next_date =
         case Date.day_of_week(check_date) do
           d when d in 1..4 -> Date.add(check_date, 1)
@@ -155,6 +153,8 @@ defmodule MBTAV3API.Schedules.HoursOfOperation do
         end
 
       get_valid_day(next_date, days_to_avoid)
+    else
+      check_date
     end
   end
 
@@ -226,17 +226,14 @@ defmodule MBTAV3API.Schedules.HoursOfOperation do
          description,
          special_service_params
        ) do
-    with {:ok, special_service_depature_maps} <-
-           special_service_departures_parser(
-             special_service_responses,
-             headsigns,
-             description,
-             special_service_params
-           ) do
-      {
-        :ok,
-        special_service_depature_maps
-      }
+    case special_service_departures_parser(
+           special_service_responses,
+           headsigns,
+           description,
+           special_service_params
+         ) do
+      {:ok, special_service_depature_maps} -> {:ok, special_service_depature_maps}
+      {:error, error} -> {:error, error}
     end
   end
 
