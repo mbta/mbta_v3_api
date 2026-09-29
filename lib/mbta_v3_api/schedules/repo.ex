@@ -216,9 +216,7 @@ defmodule MBTAV3API.Schedules.Repo do
   end
 
   defp to_string(list) when is_list(list) do
-    list
-    |> Enum.map_join(&to_string/1)
-    |> Enum.join(",")
+    Enum.map_join(list, ",", &to_string/1)
   end
 
   defp to_string(int) when is_integer(int) do
