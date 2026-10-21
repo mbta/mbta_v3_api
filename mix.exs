@@ -35,7 +35,7 @@ defmodule MBTAV3API.MixProject do
       {:csv, "~> 3.2"},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.7.0", only: :test},
-      {:httpoison, "~> 1.5"},
+      {:httpoison, "~> 3.0.0"},
       {:jason, "~> 1.1"},
       {:mock, "~> 0.3", only: :test},
       {:phoenix_pubsub, "~> 2.1"},
