@@ -64,7 +64,11 @@ defmodule MBTAV3API.MixProject do
 
   defp run_partitioned_tests(_) do
     Enum.map(1..6, fn x ->
-      Mix.Shell.cmd("mix test --partitions 6 --color", [env: [{"MIX_TEST_PARTITION", Integer.to_string(x)}]], &IO.write(&1))
+      Mix.Shell.cmd(
+        "mix test --partitions 6 --color",
+        [env: [{"MIX_TEST_PARTITION", Integer.to_string(x)}]],
+        &IO.write(&1)
+      )
     end)
   end
 end
