@@ -5,7 +5,7 @@ defmodule MBTAV3API.MixProject do
     [
       app: :mbta_v3_api,
       version: "0.0.1",
-      elixir: "~> 1.14",
+      elixir: "~> 1.20",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -31,13 +31,14 @@ defmodule MBTAV3API.MixProject do
       {:bypass, "~> 2.1", only: :test},
       {:castore, "~> 1.0.22"},
       {:con_cache, "~> 1.1.1"},
-      {:credo, "1.7.1", only: [:dev, :test]},
+      {:credo, "~> 1.7.1", only: [:dev, :test]},
       {:csv, "~> 3.2"},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.7.0", only: :test},
       {:httpoison, "~> 3.0.0"},
       {:jason, "~> 1.1"},
-      {:mock, "~> 0.3", only: :test},
+      {:meck, "~> 1.2.0", only: :test, override: true},
+      {:mock, "~> 0.3.9", only: :test},
       {:phoenix_pubsub, "~> 2.1"},
       {:plug, "~> 1.15", only: :test},
       {:quixir, "~> 0.9", only: :test},
@@ -63,7 +64,7 @@ defmodule MBTAV3API.MixProject do
 
   defp run_partitioned_tests(_) do
     Enum.map(1..6, fn x ->
-      Mix.Task.run("cmd", ["MIX_TEST_PARTITION=#{x}", "mix test", "--partitions 6", "--color"])
+      Mix.Shell.cmd("mix test --partitions 6 --color", [env: [{"MIX_TEST_PARTITION", Integer.to_string(x)}]], &IO.write(&1))
     end)
   end
 end
