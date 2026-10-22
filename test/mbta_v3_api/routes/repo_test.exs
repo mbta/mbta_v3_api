@@ -22,14 +22,18 @@ defmodule MBTAV3API.Routes.RepoTest do
 
   describe "all/0" do
     test "returns a list of Routes" do
-      with_mock(Routes, all: fn _params, _opts -> %JsonApi{data: [@item, @rejectable_item]} end) do
+      with_mock(Routes,
+        all: fn _params, _opts -> %JsonApi{data: [@item, @rejectable_item]} end
+      ) do
         assert [%Route{} = route] = Repo.all()
         assert route.id == @item.id
       end
     end
 
     test "includes rejectable routes if reject_hidden is false" do
-      with_mock(Routes, all: fn _params, _opts -> %JsonApi{data: [@item, @rejectable_item]} end) do
+      with_mock(Routes,
+        all: fn _params, _opts -> %JsonApi{data: [@item, @rejectable_item]} end
+      ) do
         assert [%Route{} = route1, %Route{} = route2] = Repo.all([], reject_hidden: false)
         assert route1.id == @item.id
         assert route2.id == @rejectable_item.id

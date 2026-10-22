@@ -218,7 +218,9 @@ defmodule MBTAV3API.Schedules.RepoTest do
     end
 
     test "returns an %HoursOfOperation{} struct for an invalid route" do
-      with_mock(HoursOfOperation, hours_of_operation: fn _, _, _ -> {:error, "bad response"} end) do
+      with_mock(HoursOfOperation,
+        hours_of_operation: fn _, _, _ -> {:error, "bad response"} end
+      ) do
         assert %HoursOfOperation{} =
                  Repo.hours_of_operation("unknown route ID", Date.utc_today(), :desc)
       end
