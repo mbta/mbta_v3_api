@@ -31,7 +31,7 @@ defmodule MBTAV3API.MixProject do
       {:bypass, "~> 2.1", only: :test},
       {:castore, "~> 1.0.22"},
       {:con_cache, "~> 1.1.1"},
-      {:credo, "~> 1.7", only: [:dev, :test]},
+      {:credo, "1.7.1", only: [:dev, :test]},
       {:csv, "~> 3.2"},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.7.0", only: :test},
