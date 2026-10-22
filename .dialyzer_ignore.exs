@@ -1,7 +1,6 @@
 # .dialyzer_ignore.exs
 [
-  # {file}
+  {"lib/mbta_v3_api/stops/api.ex", :call_without_opaque, 445},
   {"deps/httpoison/lib/httpoison/base.ex"},
-  # {file}
   {"lib/mbta_v3_api.ex"}
 ]
