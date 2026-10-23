@@ -72,8 +72,8 @@ jobs:
         run: mix compile --force --warnings-as-errors
       - name: Check formatting
         run: mix format --check-formatted
-      # - name: Credo
-      #   run: mix credo --strict
+      - name: Credo
+        run: mix credo --strict
       - name: Sobelow
         run: mix sobelow
       - name: Run tests

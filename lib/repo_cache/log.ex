@@ -103,22 +103,26 @@ defmodule RepoCache.Log do
 
   def output_cache_hit_rates(values) do
     for value <- values do
-      _ =
-        Logger.info(fn ->
-          {{mod, name}, hit, miss} = value
-          total = hit + miss
-
-          hit_rate =
-            case total do
-              0 -> 0.0
-              _ -> Float.round(hit / total, 2)
-            end
-
-          "repocache_report mod=#{mod} fun=#{name} hit=#{hit} miss=#{miss} total=#{total} hit_rate=#{hit_rate}"
-        end)
+      output_cache_hit_rate(value)
     end
 
     values
+  end
+
+  defp output_cache_hit_rate(value) do
+    _ =
+      Logger.info(fn ->
+        {{mod, name}, hit, miss} = value
+        total = hit + miss
+
+        hit_rate =
+          case total do
+            0 -> 0.0
+            _ -> Float.round(hit / total, 2)
+          end
+
+        "repocache_report mod=#{mod} fun=#{name} hit=#{hit} miss=#{miss} total=#{total} hit_rate=#{hit_rate}"
+      end)
   end
 
   def output_sizes(values) do
