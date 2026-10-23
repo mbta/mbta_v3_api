@@ -9,26 +9,25 @@ defmodule MBTAV3API.Facilities.Repo do
 
   @spec all(keyword(), keyword()) :: [Facility.t()]
   def all(params \\ [], opts \\ []) do
-    case cache({params, opts}, fn {params, opts} ->
-           with %{data: facilities} <- MBTAV3API.Facilities.all(params, opts) do
-             {:ok, facilities}
-           end
-         end) do
-      {:ok, facilities} -> facilities |> Enum.map(&Facility.parse/1)
-      {:error, _} -> []
-    end
+    cache({params, opts}, fn {params, opts} ->
+      with %{data: facilities} <- MBTAV3API.Facilities.all(params, opts) do
+        {:ok, facilities}
+      end
+    end)
+    |> cache_facilities_result
   end
 
   def get(id, params \\ [], opts \\ []) when is_binary(id) do
-    case cache({id, params, opts}, fn {id, params, opts} ->
-           with %{data: [facility]} <- Facilities.get(id, params, opts) do
-             {:ok, facility}
-           end
-         end) do
-      {:ok, facility} -> Facility.parse(facility)
-      {:error, _} -> nil
-    end
+    cache({id, params, opts}, fn {id, params, opts} ->
+      with %{data: [facility]} <- Facilities.get(id, params, opts) do
+        {:ok, facility}
+      end
+    end)
+    |> cache_facility_result
   end
+
+  defp cache_facility_result({:ok, facility}), do: Facility.parse(facility)
+  defp cache_facility_result({:error, _}), do: nil
 
   def get_for_stop(stop_id, opts \\ []) do
     facilities_filter_by_fn =
@@ -46,13 +45,14 @@ defmodule MBTAV3API.Facilities.Repo do
   end
 
   def get_by_type(type, opts) do
-    case cache(type, fn type ->
-           with %{data: facilities} <- MBTAV3API.Facilities.filter_by([{"type", type}], opts) do
-             {:ok, facilities}
-           end
-         end) do
-      {:ok, facilities} -> facilities |> Enum.map(&Facility.parse/1)
-      {:error, _} -> nil
-    end
+    cache(type, fn type ->
+      with %{data: facilities} <- MBTAV3API.Facilities.filter_by([{"type", type}], opts) do
+        {:ok, facilities}
+      end
+    end)
+    |> cache_facilities_result
   end
+
+  defp cache_facilities_result({:ok, facilities}), do: Enum.map(facilities, &Facility.parse/1)
+  defp cache_facilities_result({:error, _}), do: nil
 end

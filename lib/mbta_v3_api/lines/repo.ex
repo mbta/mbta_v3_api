@@ -12,33 +12,35 @@ defmodule MBTAV3API.Lines.Repo do
   def all(opts \\ []) do
     opts = @default_opts ++ opts
 
-    case cache(opts, fn _ ->
-           result = handle_response(Lines.all(@default_opts))
+    cache(opts, fn _ ->
+      result = handle_response(Lines.all(@default_opts))
 
-           for {:ok, lines} <- [result],
-               line <- lines do
-             ConCache.put(__MODULE__, {:get, line.id}, {:ok, line})
-           end
+      for {:ok, lines} <- [result],
+          line <- lines do
+        ConCache.put(__MODULE__, {:get, line.id}, {:ok, line})
+      end
 
-           result
-         end) do
-      {:ok, lines} -> lines
-      {:error, _} -> []
-    end
+      result
+    end)
+    |> cache_lines_result
   end
+
+  defp cache_lines_result({:ok, lines}), do: lines
+  defp cache_lines_result({:error, _}), do: []
 
   def get(id, opts \\ []) when is_binary(id) do
     opts = @default_opts ++ opts
 
-    case cache({id, opts}, fn {id, opts} ->
-           with %{data: [line]} <- Lines.get(id, opts) do
-             {:ok, line}
-           end
-         end) do
-      {:ok, line} -> Parser.parse_line(line)
-      {:error, _} -> nil
-    end
+    cache({id, opts}, fn {id, opts} ->
+      with %{data: [line]} <- Lines.get(id, opts) do
+        {:ok, line}
+      end
+    end)
+    |> cache_line_result
   end
+
+  defp cache_line_result({:ok, line}), do: Parser.parse_line(line)
+  defp cache_line_result({:error, _}), do: nil
 
   @doc """
   Parses json into a list of lines, or an error if it happened.

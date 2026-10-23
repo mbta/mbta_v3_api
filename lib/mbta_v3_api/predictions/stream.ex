@@ -6,9 +6,9 @@ defmodule MBTAV3API.Predictions.Stream do
   use GenStage
   require Logger
 
-  alias Phoenix.PubSub
   alias MBTAV3API.Predictions.{Repo, Store, StreamParser, StreamTopic}
   alias MBTAV3API.Stream.Event
+  alias Phoenix.PubSub
 
   @type event_type :: :reset | :add | :update | :remove
 

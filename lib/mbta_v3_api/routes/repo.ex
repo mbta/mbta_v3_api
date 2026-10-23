@@ -31,23 +31,24 @@ defmodule MBTAV3API.Routes.Repo do
   def all(params \\ [], opts \\ []) do
     combined_params = @default_params ++ params
 
-    case cache({combined_params, opts}, fn {combined_params, opts} ->
-           # if reject_hidden keyword is true, reject routes
-           # listed in Route.hidden?. Defaults to true.
-           reject_hidden = Keyword.get(opts, :reject_hidden, true)
-           result = handle_response(Routes.all(combined_params, opts), reject_hidden)
+    cache({combined_params, opts}, fn {combined_params, opts} ->
+      # if reject_hidden keyword is true, reject routes
+      # listed in Route.hidden?. Defaults to true.
+      reject_hidden = Keyword.get(opts, :reject_hidden, true)
+      result = handle_response(Routes.all(combined_params, opts), reject_hidden)
 
-           for {:ok, routes} <- [result],
-               route <- routes do
-             ConCache.put(__MODULE__, {:get, route.id}, {:ok, route})
-           end
+      for {:ok, routes} <- [result],
+          route <- routes do
+        ConCache.put(__MODULE__, {:get, route.id}, {:ok, route})
+      end
 
-           result
-         end) do
-      {:ok, routes} -> routes
-      {:error, _} -> []
-    end
+      result
+    end)
+    |> cache_routes_result
   end
+
+  defp cache_routes_result({:ok, routes}), do: routes
+  defp cache_routes_result({:error, _}), do: []
 
   # Used to spoof any Massport route as the data doesn't exist in the API
   # But is in the GTFS data
@@ -69,15 +70,16 @@ defmodule MBTAV3API.Routes.Repo do
   def get(id, opts) when is_binary(id) do
     opts = @default_params ++ opts
 
-    case cache({id, opts}, fn {id, opts} ->
-           with %{data: [route]} <- Routes.get(id, opts) do
-             {:ok, parse_route(route)}
-           end
-         end) do
-      {:ok, route} -> route
-      {:error, _} -> nil
-    end
+    cache({id, opts}, fn {id, opts} ->
+      with %{data: [route]} <- Routes.get(id, opts) do
+        {:ok, parse_route(route)}
+      end
+    end)
+    |> cache_route_result
   end
+
+  defp cache_route_result({:ok, route}), do: route
+  defp cache_route_result({:error, _}), do: nil
 
   @impl RepoApi
   def get_shapes(route_id, opts, filter_negative_priority? \\ true) do
@@ -85,22 +87,22 @@ defmodule MBTAV3API.Routes.Repo do
 
     shapes =
       cache(Enum.sort(opts), fn _ ->
-        case Shapes.all(opts) do
-          {:error, _} ->
-            []
-
-          %JsonApi{data: data} ->
-            shapes = Enum.flat_map(data, &parse_shape/1)
-
-            for shape <- shapes do
-              ConCache.put(__MODULE__, {:get_shape, shape.id}, [shape])
-            end
-
-            shapes
-        end
+        Shapes.all(opts) |> cache_shape_result
       end)
 
     filter_shapes_by_priority(shapes, filter_negative_priority?)
+  end
+
+  defp cache_shape_result({:error, _}), do: []
+
+  defp cache_shape_result(%JsonApi{data: data}) do
+    shapes = Enum.flat_map(data, &parse_shape/1)
+
+    for shape <- shapes do
+      ConCache.put(__MODULE__, {:get_shape, shape.id}, [shape])
+    end
+
+    shapes
   end
 
   @spec filter_shapes_by_priority([Shape.t()], boolean) :: [Shape.t()]

@@ -79,15 +79,16 @@ defmodule MBTAV3API.Schedules.Repo do
 
   @spec trips_by_ids(keyword(), keyword()) :: [Trip.t()]
   def trips_by_ids(trip_ids, params \\ [], opts \\ []) do
-    case cache({trip_ids, params, opts}, fn {trip_ids, params, opts} ->
-           with %{data: trips} <- MBTAV3API.Trips.by_ids(trip_ids, params, opts) do
-             {:ok, trips}
-           end
-         end) do
-      {:ok, trips} -> trips |> Enum.map(&Parser.trip/1)
-      {:error, _} -> []
-    end
+    cache({trip_ids, params, opts}, fn {trip_ids, params, opts} ->
+      with %{data: trips} <- MBTAV3API.Trips.by_ids(trip_ids, params, opts) do
+        {:ok, trips}
+      end
+    end)
+    |> cache_trips_result
   end
+
+  defp cache_trips_result({:ok, trips}), do: Enum.map(trips, &Parser.trip/1)
+  defp cache_trips_result({:error, _}), do: []
 
   @spec trip(String.t()) :: Trip.t() | nil
   @spec trip(String.t(), any()) :: Trip.t() | nil
