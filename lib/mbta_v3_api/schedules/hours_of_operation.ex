@@ -381,7 +381,7 @@ defmodule MBTAV3API.Schedules.HoursOfOperation do
     error
   end
 
-  defp is_terminus?(stop_name, headsigns) do
+  defp terminus?(stop_name, headsigns) do
     Enum.member?(headsigns, stop_name)
   end
 
@@ -441,7 +441,7 @@ defmodule MBTAV3API.Schedules.HoursOfOperation do
         last_departure: max,
         stop_name: stop.name,
         parent_stop_id: stop.parent_id,
-        is_terminus: is_terminus?(stop.name, headsigns)
+        is_terminus: terminus?(stop.name, headsigns)
       }
     end)
   end

@@ -33,10 +33,10 @@ defmodule MBTAV3API.Predictions.StoreTest do
     @tag :capture_log
     test "removes all predictions for a specified route and direction" do
       predictions = Store.fetch(route: "yellow", direction: 1)
-      assert length(predictions) > 0
+      refute Enum.empty?(predictions)
       Store.clear(route: "yellow", direction: 1)
       new_predictions = Store.fetch(route: "yellow", direction: 1)
-      refute length(new_predictions) > 0
+      assert Enum.empty?(new_predictions)
     end
   end
 

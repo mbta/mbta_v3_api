@@ -20,15 +20,16 @@ defmodule MBTAV3API.RoutePatterns.Repo do
     {route_patterns_get_fn, opts} =
       Keyword.pop(opts, :route_patterns_get_fn, &RoutePatterns.get/2)
 
-    case cache({id, opts}, fn {id, opts} ->
-           with %{data: [route_pattern]} <- route_patterns_get_fn.(id, opts) do
-             {:ok, RoutePattern.new(route_pattern)}
-           end
-         end) do
-      {:ok, route_pattern} -> route_pattern
-      {:error, _} -> nil
-    end
+    cache({id, opts}, fn {id, opts} ->
+      with %{data: [route_pattern]} <- route_patterns_get_fn.(id, opts) do
+        {:ok, RoutePattern.new(route_pattern)}
+      end
+    end)
+    |> cache_route_pattern_result
   end
+
+  defp cache_route_pattern_result({:ok, route_pattern}), do: route_pattern
+  defp cache_route_pattern_result({:error, _}), do: nil
 
   @impl RoutePatterns.RepoApi
   def by_route_id(route_id, opts \\ [])
