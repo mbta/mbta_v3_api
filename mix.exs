@@ -34,7 +34,7 @@ defmodule MBTAV3API.MixProject do
       {:credo, "~> 1.7.1", only: [:dev, :test]},
       {:csv, "~> 3.2"},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:ex_machina, "~> 2.7.0", only: :test},
+      {:ex_machina, "~> 2.8.2", only: :test},
       {:httpoison, "~> 3.0.0"},
       {:jason, "~> 1.1"},
       {:meck, "~> 1.2.0", only: :test, override: true},
