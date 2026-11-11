@@ -44,7 +44,7 @@ defmodule MBTAV3API.MixProject do
       {:quixir, "~> 0.9", only: :test},
       {:server_sent_event_stage, "~> 1.3.0"},
       {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
-      {:timex, "~> 3.7"}
+      {:timex, "~> 4.0"}
     ]
   end
 
