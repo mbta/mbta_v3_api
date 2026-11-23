@@ -148,7 +148,9 @@ defmodule MBTAV3API.Services.Service do
   defp type("Weekday"), do: :weekday
   defp type("Saturday"), do: :saturday
   defp type("Sunday"), do: :sunday
+  defp type("Weekend"), do: :weekend
   defp type("Other"), do: :other
+  defp type(_), do: :other
 
   defp typicality(0), do: :unknown
   defp typicality(1), do: :typical_service
@@ -162,6 +164,13 @@ defmodule MBTAV3API.Services.Service do
   @spec serves_date?(t(), Date.t()) :: boolean
   def serves_date?(service, date) do
     date in all_valid_dates_for_service(service)
+  end
+
+  @spec upcoming_or_in_effect?(t(), Date.t()) :: boolean
+  def upcoming_or_in_effect?(service, date) do
+    # returns true if any of the valid dates for a service are still upcoming or current
+    last_date = all_valid_dates_for_service(service) |> Enum.sort() |> Enum.reverse() |> hd()
+    Date.compare(date, last_date) in [:lt, :eq]
   end
 
   @spec all_valid_dates_for_service(t()) :: [Date.t()]

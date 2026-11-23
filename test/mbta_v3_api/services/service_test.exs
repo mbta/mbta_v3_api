@@ -138,6 +138,51 @@ defmodule MBTAV3API.Services.ServiceTest do
     end
   end
 
+  describe "upcoming_or_in_effect?/2" do
+    test "computes if a date is before any of a Service's dates" do
+      assert Service.upcoming_or_in_effect?(
+               %Service{
+                 added_dates: [],
+                 start_date: ~D[2022-12-14],
+                 end_date: ~D[2022-12-15],
+                 valid_days: []
+               },
+               ~D[2022-12-15]
+             )
+
+      refute Service.upcoming_or_in_effect?(
+               %Service{
+                 added_dates: [],
+                 start_date: ~D[2022-12-14],
+                 end_date: ~D[2022-12-15],
+                 valid_days: []
+               },
+               ~D[2022-12-16]
+             )
+
+      # with added dates
+      assert Service.upcoming_or_in_effect?(
+               %Service{
+                 added_dates: ["2022-12-22", "2022-12-23"],
+                 start_date: ~D[2022-12-14],
+                 end_date: ~D[2022-12-15],
+                 valid_days: []
+               },
+               ~D[2022-12-16]
+             )
+
+      refute Service.serves_date?(
+               %Service{
+                 added_dates: ["2022-12-22", "2022-12-23"],
+                 start_date: ~D[2022-12-14],
+                 end_date: ~D[2022-12-15],
+                 valid_days: []
+               },
+               ~D[2022-12-24]
+             )
+    end
+  end
+
   defp test_services(_) do
     [
       %Service{
