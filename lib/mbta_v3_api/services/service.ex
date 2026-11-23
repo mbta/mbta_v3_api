@@ -166,11 +166,13 @@ defmodule MBTAV3API.Services.Service do
     date in all_valid_dates_for_service(service)
   end
 
-  @spec upcoming_or_in_effect?(t(), Date.t()) :: boolean
-  def upcoming_or_in_effect?(service, date) do
-    # returns true if any of the valid dates for a service are still upcoming or current
-    last_date = all_valid_dates_for_service(service) |> Enum.sort() |> Enum.reverse() |> hd()
-    Date.compare(date, last_date) in [:lt, :eq]
+  @spec last_service_date(t()) :: boolean
+  def last_service_date(service) do
+    service
+    |> all_valid_dates_for_service()
+    |> Enum.sort()
+    |> Enum.reverse()
+    |> List.first()
   end
 
   @spec all_valid_dates_for_service(t()) :: [Date.t()]
