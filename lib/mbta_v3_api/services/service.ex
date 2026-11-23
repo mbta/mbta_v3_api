@@ -170,7 +170,7 @@ defmodule MBTAV3API.Services.Service do
   def last_service_date(service) do
     service
     |> all_valid_dates_for_service()
-    |> Enum.sort(:desc)
+    |> Enum.sort({:desc, Date})
     |> List.first()
   end
 
