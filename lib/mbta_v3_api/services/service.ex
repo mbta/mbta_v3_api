@@ -166,7 +166,7 @@ defmodule MBTAV3API.Services.Service do
     date in all_valid_dates_for_service(service)
   end
 
-  @spec last_service_date(t()) :: boolean
+  @spec last_service_date(t()) :: Date.t() | nil
   def last_service_date(service) do
     service
     |> all_valid_dates_for_service()
