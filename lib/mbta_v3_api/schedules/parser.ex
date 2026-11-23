@@ -75,7 +75,8 @@ defmodule MBTAV3API.Schedules.Parser do
       bikes_allowed?: bikes_allowed?(attributes),
       route_pattern_id: route_pattern_id(relationships),
       shape_id: shape_id(relationships),
-      occupancy: occupancy(relationships)
+      occupancy: occupancy(relationships),
+      service_id: service_id(relationships)
     }
   end
 
@@ -101,7 +102,8 @@ defmodule MBTAV3API.Schedules.Parser do
       bikes_allowed?: bikes_allowed?(attributes),
       route_pattern_id: route_pattern_id(relationships),
       shape_id: shape_id(relationships),
-      occupancy: occupancy(relationships)
+      occupancy: occupancy(relationships),
+      service_id: service_id(relationships)
     }
   end
 
@@ -127,7 +129,8 @@ defmodule MBTAV3API.Schedules.Parser do
       shape_id: shape_id(relationships),
       route_pattern_id: route_pattern_id(relationships),
       bikes_allowed?: bikes_allowed?(attributes),
-      occupancy: occupancy(relationships)
+      occupancy: occupancy(relationships),
+      service_id: service_id(relationships)
     }
   end
 
@@ -212,6 +215,10 @@ defmodule MBTAV3API.Schedules.Parser do
   @spec shape_id(any) :: String.t() | nil
   defp shape_id(%{"shape" => [%Item{id: id}]}), do: id
   defp shape_id(_), do: nil
+
+  @spec service_id(any) :: String.t() | nil
+  defp service_id(%{"service" => [%Item{id: id}]}), do: id
+  defp service_id(_), do: nil
 
   @spec route_pattern_id(any) :: String.t() | nil
   defp route_pattern_id(%{"route_pattern" => [%Item{id: id}]}), do: id

@@ -6,6 +6,7 @@ defmodule MBTAV3API.Schedules.Trip do
   alias MBTAV3API.RoutePatterns.RoutePattern
   alias MBTAV3API.Routes.Shape
   alias MBTAV3API.Vehicles.Vehicle
+  alias MBTAV3API.Services.Service
 
   @derive Jason.Encoder
 
@@ -17,6 +18,7 @@ defmodule MBTAV3API.Schedules.Trip do
     :shape_id,
     :route_pattern_id,
     :occupancy,
+    :service_id,
     bikes_allowed?: false
   ]
 
@@ -31,6 +33,7 @@ defmodule MBTAV3API.Schedules.Trip do
           shape_id: Shape.id_t() | nil,
           route_pattern_id: RoutePattern.id_t() | nil,
           bikes_allowed?: boolean,
-          occupancy: Vehicle.crowding() | nil
+          occupancy: Vehicle.crowding() | nil,
+          service_id: Service.id_t() | nil
         }
 end

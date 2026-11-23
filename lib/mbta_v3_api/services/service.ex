@@ -46,14 +46,14 @@ defmodule MBTAV3API.Services.Service do
 
   # 1 = Monday, 7 = Sunday
   @type valid_day :: 1 | 2 | 3 | 4 | 5 | 6 | 7
-
+  @type id_t :: String.t()
   @type t :: %__MODULE__{
           added_dates: [String.t()],
           added_dates_notes: date_notes,
           description: String.t(),
           end_date: Date.t() | nil,
           name: String.t(),
-          id: String.t(),
+          id: id_t(),
           removed_dates: [String.t()],
           removed_dates_notes: date_notes,
           start_date: Date.t() | nil,
