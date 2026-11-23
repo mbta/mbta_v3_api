@@ -5,8 +5,8 @@ defmodule MBTAV3API.Schedules.Trip do
 
   alias MBTAV3API.RoutePatterns.RoutePattern
   alias MBTAV3API.Routes.Shape
-  alias MBTAV3API.Vehicles.Vehicle
   alias MBTAV3API.Services.Service
+  alias MBTAV3API.Vehicles.Vehicle
 
   @derive Jason.Encoder
 
