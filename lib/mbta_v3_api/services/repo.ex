@@ -20,6 +20,17 @@ defmodule MBTAV3API.Services.Repo do
     |> List.first()
   end
 
+  def by_ids(service_ids, params \\ [], opts \\ []) do
+    services_by_ids_fn =
+      Keyword.get(opts, :services_by_ids_fn, &Services.by_ids/3)
+
+    cache({service_ids, params, opts}, fn _ ->
+      service_ids
+      |> services_by_ids_fn.(params, opts)
+      |> handle_response()
+    end)
+  end
+
   def by_route_id(route_id, params \\ [], opts \\ [])
 
   def by_route_id([route_id] = route, params, opts) when is_list(route) do
