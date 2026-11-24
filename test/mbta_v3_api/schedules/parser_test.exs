@@ -88,7 +88,8 @@ defmodule MBTAV3API.Schedules.ParserTest do
                id: "31562821",
                name: "",
                bikes_allowed?: true,
-               occupancy: nil
+               occupancy: nil,
+               service_id: "RTL42016-hms46016-Saturday-01"
              }
     end
 
@@ -160,7 +161,8 @@ defmodule MBTAV3API.Schedules.ParserTest do
                id: "31174458-CR_MAY2016-hxl16011-Weekday-01",
                name: "300",
                bikes_allowed?: true,
-               occupancy: :not_crowded
+               occupancy: :not_crowded,
+               service_id: nil
              }
     end
 

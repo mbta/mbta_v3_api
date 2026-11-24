@@ -138,6 +138,37 @@ defmodule MBTAV3API.Services.ServiceTest do
     end
   end
 
+  describe "last_service_date/s" do
+    test "computes the last valid date out of a Service's dates" do
+      assert ~D[2022-12-15] ===
+               Service.last_service_date(%Service{
+                 added_dates: [],
+                 start_date: ~D[2022-11-14],
+                 end_date: ~D[2022-12-15],
+                 valid_days: []
+               })
+
+      # with added dates
+      assert ~D[2022-12-23] ===
+               Service.last_service_date(%Service{
+                 added_dates: ["2022-12-22", "2022-12-23"],
+                 start_date: ~D[2022-12-14],
+                 end_date: ~D[2022-12-15],
+                 valid_days: []
+               })
+
+      # with removed dates
+      assert ~D[2022-12-14] ===
+               Service.last_service_date(%Service{
+                 added_dates: [],
+                 start_date: ~D[2022-12-14],
+                 end_date: ~D[2022-12-15],
+                 removed_dates: ["2022-12-15"],
+                 valid_days: []
+               })
+    end
+  end
+
   defp test_services(_) do
     [
       %Service{

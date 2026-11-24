@@ -46,14 +46,14 @@ defmodule MBTAV3API.Services.Service do
 
   # 1 = Monday, 7 = Sunday
   @type valid_day :: 1 | 2 | 3 | 4 | 5 | 6 | 7
-
+  @type id_t :: String.t()
   @type t :: %__MODULE__{
           added_dates: [String.t()],
           added_dates_notes: date_notes,
           description: String.t(),
           end_date: Date.t() | nil,
           name: String.t(),
-          id: String.t(),
+          id: id_t(),
           removed_dates: [String.t()],
           removed_dates_notes: date_notes,
           start_date: Date.t() | nil,
@@ -148,7 +148,9 @@ defmodule MBTAV3API.Services.Service do
   defp type("Weekday"), do: :weekday
   defp type("Saturday"), do: :saturday
   defp type("Sunday"), do: :sunday
+  defp type("Weekend"), do: :weekend
   defp type("Other"), do: :other
+  defp type(_), do: :other
 
   defp typicality(0), do: :unknown
   defp typicality(1), do: :typical_service
@@ -162,6 +164,14 @@ defmodule MBTAV3API.Services.Service do
   @spec serves_date?(t(), Date.t()) :: boolean
   def serves_date?(service, date) do
     date in all_valid_dates_for_service(service)
+  end
+
+  @spec last_service_date(t()) :: Date.t() | nil
+  def last_service_date(service) do
+    service
+    |> all_valid_dates_for_service()
+    |> Enum.sort({:desc, Date})
+    |> List.first()
   end
 
   @spec all_valid_dates_for_service(t()) :: [Date.t()]
