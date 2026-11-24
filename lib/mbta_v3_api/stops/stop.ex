@@ -1,6 +1,8 @@
 defmodule MBTAV3API.Stops.Stop do
   @moduledoc """
   Domain model for a Stop.
+  NOTE: the direction_id is not filled in by the API- a stop only has a direction in relation to a particular route or route pattern.
+  However it's provided here for convenience if you need to give it one.
   """
 
   alias MBTAV3API.Stops.{Api, Repo}
@@ -13,6 +15,7 @@ defmodule MBTAV3API.Stops.Stop do
             child_ids: [],
             name: nil,
             note: nil,
+            direction_id: nil,
             accessibility: [],
             address: nil,
             municipality: nil,
@@ -43,6 +46,7 @@ defmodule MBTAV3API.Stops.Stop do
           child_ids: [id_t],
           name: String.t() | nil,
           note: String.t() | nil,
+          direction_id: 0 | 1 | nil,
           accessibility: [String.t()],
           address: String.t() | nil,
           municipality: String.t() | nil,
