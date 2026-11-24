@@ -143,7 +143,7 @@ defmodule MBTAV3API.Services.ServiceTest do
       assert ~D[2022-12-15] ===
                Service.last_service_date(%Service{
                  added_dates: [],
-                 start_date: ~D[2022-12-14],
+                 start_date: ~D[2022-11-14],
                  end_date: ~D[2022-12-15],
                  valid_days: []
                })
