@@ -30,6 +30,16 @@ defmodule MBTAV3API.Services.RepoTest do
     end
   end
 
+  describe "by_ids" do
+    test "fetches service by multiple IDs" do
+      response = %JsonApi{data: [@item]}
+
+      opts = [services_by_ids_fn: fn ["1", "2", "3"], _, _ -> response end]
+
+      assert [%Service{} | _] = Repo.by_ids(["1", "2", "3"], [], opts)
+    end
+  end
+
   describe "by_route_id" do
     test "fetches services for a route" do
       response = %JsonApi{data: [@item]}
